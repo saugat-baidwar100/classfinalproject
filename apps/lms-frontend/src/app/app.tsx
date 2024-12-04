@@ -1,7 +1,7 @@
 import { Course } from './Course';
 import { Home } from './Home';
 import NxWelcome from './nx-welcome';
-import { Link, Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { Button, NextUIProvider } from '@nextui-org/react';
 import Counter from './counter';
 import {
