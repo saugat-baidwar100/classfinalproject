@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="bg-black p-4">
+    <nav className="bg-black p-2">
       <NavLink
         to="/"
         className={({ isActive }) =>
