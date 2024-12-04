@@ -2,7 +2,10 @@
   "name": "@skillprompt-lms/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev:frontend": "npx nx run lms-frontend:serve",
+    "dev:backend": "npx nx run lms-backend:serve"
+  },
   "private": true,
   "dependencies": {
     "@nextui-org/button": "^2.0.38",

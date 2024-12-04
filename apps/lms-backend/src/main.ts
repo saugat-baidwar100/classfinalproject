@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { apiContract } from '@api-contract';
+import { apiContract } from '@skillprompt-lms/libs/api-contract/index';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -8,6 +8,7 @@ import { APIError } from './utils/error';
 import { env } from './utils/config';
 import { generateOpenApi } from '@ts-rest/open-api';
 import * as swaggerUi from 'swagger-ui-express';
+import { courseRepo } from '@skillprompt-lms/libs/lms-prisma/repositories/course-repo';
 
 const app = express();
 
@@ -45,6 +46,8 @@ app.use(cookieParser());
 
 // ------------------------- Testing Routes -------------------------
 app.get('/', (req: Request, res: Response) => {
+  courseRepo.create();
+
   res.json({
     message: 'Welcome to Backend',
     data: null,
