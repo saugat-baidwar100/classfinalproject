@@ -77,7 +77,7 @@
 
 ### **Examples of Payloads**
 
-#### **Add New Course** (`POST /api/courses`)
+#### **Add New Course** (`POST /api/add-courses`)
 
 ```json
 {
@@ -91,7 +91,7 @@
 }
 ```
 
-#### **Add New Chapter** (`POST /api/courses/:id/chapters`)
+#### **Add New Chapter** (`POST /api/courses/:id/add-chapters`)
 
 ```json
 {
@@ -101,7 +101,7 @@
 }
 ```
 
-#### **Add New Lesson** (`POST /api/chapters/:id/lessons`)
+#### **Add New Lesson** (`POST /api/chapters/:id/add-lessons`)
 
 ```json
 {
@@ -113,7 +113,7 @@
 }
 ```
 
-#### **Add Quiz** (`POST /api/lessons/:id/quiz`)
+#### **Add Quiz** (`POST /api/lessons/:id/add-quiz`)
 
 ```json
 {
