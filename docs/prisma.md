@@ -54,12 +54,16 @@ model User {
   createdAt DateTime @default(now())
 }
 ```
+Step 6: Add Prisma Client
 
-Step 6: Generate the Prisma Client
+``` yarn add @prisma/client```
+
+
+Step 7: Generate the Prisma Client
 
 ``` yarn prisma generate```
 
-Step 7: Migrate the Database
+Step 8: Migrate the Database
 
 Creates Migration File,
 
