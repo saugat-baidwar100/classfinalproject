@@ -1,9 +1,12 @@
-
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import Navbar from './components/Navbar';
-import LoginPage from './pages/login-page';
 import { Home } from './pages/home';
+import ForgotPassword from './modules/auth/forget-password';
+import { ResetPassword } from './modules/auth/reset-password';
+import { Navbar } from '@nextui-org/react';
+import { LoginPage } from './pages/login-page';
+import { OTP } from './modules/auth/otp';
+
 
 const router = createBrowserRouter([
   {
@@ -13,7 +16,7 @@ const router = createBrowserRouter([
         <Navbar />
         <Home />
 
-        <LoginPage/>
+        <LoginPage />
       </>
     ),
   },
@@ -25,6 +28,18 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/forgetpassword',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/reset',
+    element: <ResetPassword />,
+  },
+  {
+    path: '/otp',
+    element: <OTP />,
   },
 ]);
 function Approuter() {
