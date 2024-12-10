@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <nav className="bg-black p-2">
       <NavLink
@@ -23,4 +23,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+
