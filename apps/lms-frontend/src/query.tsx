@@ -1,4 +1,5 @@
 import {
+
   QueryClient,
   QueryClientProvider as QueryClientProviderRc,
 } from "@tanstack/react-query";
@@ -18,3 +19,4 @@ export function QueryClientProvider({
     </QueryClientProviderRc>
   );
 }
+
