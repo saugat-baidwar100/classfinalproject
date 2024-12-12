@@ -1,14 +1,20 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { apiContract } from '@skillprompt-lms/libs/api-contract/index';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/index';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { APIError } from './utils/error';
-import { env } from './utils/config';
+import { env } from './utils/env';
 import { generateOpenApi } from '@ts-rest/open-api';
 import * as swaggerUi from 'swagger-ui-express';
-import { courseRepo } from '@skillprompt-lms/libs/lms-prisma/repositories/course-repo';
+import { courseRepo } from '@skillprompt-lms/libs/lms-prisma/course-repo';
+import { createAuth } from './auth';
+import { courseRouter } from './routers/course-router';
+import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
+import { generateEndPoints } from './routers/merge';
+
+// logger.debug(env,'Environment variables');
 
 const app = express();
 
@@ -22,7 +28,7 @@ app.use(compression());
 
 //-------ts-rest with swagger----------
 
-const openApiDocument = generateOpenApi(apiContract, {
+const openApiDocument = generateOpenApi(courseContract, {
   info: {
     title: 'Posts API',
     version: '1.0.0',
@@ -44,16 +50,18 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// generateEndPoints(app)
+
 // ------------------------- Testing Routes -------------------------
 app.get('/', (req: Request, res: Response) => {
-  courseRepo.create();
-
   res.json({
     message: 'Welcome to Backend',
     data: null,
     isSuccess: true,
   });
 });
+
+createAuth(app)
 
 // ------------------------- Routes -------------------------
 // Add your application routes here
@@ -81,6 +89,6 @@ app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
 // Start Server
 app.listen(env.PORT, () => {
   console.log(
-    `Server starting at port ${env.PORT} \nhttp://${env.HOST}:${env.PORT}`
+    `Server starting at port ${env.PORT} http://localhost:${env.PORT}`
   );
 });
