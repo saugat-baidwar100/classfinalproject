@@ -35,7 +35,6 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
 ]);
-function Approuter() {
+export function Approuter() {
   return <RouterProvider router={router} />;
 }
-
