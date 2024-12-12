@@ -8,7 +8,7 @@ export const userRepo = {
   findById,
   findByEmail,
   findByUsername,
-  updateByUsername
+  updateByUsername,
 };
 
 async function create(input: Prisma.UserCreateInput) {
@@ -49,19 +49,22 @@ async function findByEmail(email: string) {
   });
 }
 
-async function findByUsername(username:string){
-    return db.user.findUnique({
-        where:{
-            username,
-        },
-    });
+async function findByUsername(username: string) {
+  return db.user.findUnique({
+    where: {
+      username,
+    },
+  });
 }
 
-async function updateByUsername(username: string, input: Prisma.UserUpdateInput) {
-    return db.user.update({
-      where: {
-        username,
-      },
-      data: input,
-    });
-  }
+async function updateByUsername(
+  username: string,
+  input: Prisma.UserUpdateInput
+) {
+  return db.user.update({
+    where: {
+      username,
+    },
+    data: input,
+  });
+}

@@ -1,55 +1,55 @@
 import { Prisma } from '@prisma/client';
-import {db} from './client'
+import { db } from './client';
 
-export const courseRepo={
-    create,
-    updateById,
-    deleteById,
-    findById,
-    findAll,
-    updateCourse,
+export const courseRepo = {
+  create,
+  updateById,
+  deleteById,
+  findById,
+  findAll,
+  updateCourse,
 };
 
-async function create(input:Prisma.CourseCreateInput){
-    return db.course.create({
-        data:input
-    })
+async function create(input: Prisma.CourseCreateInput) {
+  return db.course.create({
+    data: input,
+  });
 }
 
 async function updateById(id: string, input: Prisma.CourseUpdateInput) {
-    return db.course.update({
-      where: {
-        id,
-      },
-      data: input,
-    });
-  }
-  
-  async function deleteById(id: string) {
-    return db.course.delete({
-      where: {
-        id,
-      },
-    });
-  }
-  
-  async function findById(id: string) {
-    return db.course.findUnique({
-      where: {
-        id,
-      },
-    });
-  }
-  async function findAll(input: Prisma.CourseWhereInput) {
-    return db.course.findMany({
-      where: input,
-    });
-  }
-  async function updateCourse(id: string, input: Prisma.CourseUpdateInput) {
-    await db.course.update({
-      where: {
-        id,
-      },
-      data: input,
-    });
-  }
+  return db.course.update({
+    where: {
+      id,
+    },
+    data: input,
+  });
+}
+
+async function deleteById(id: string) {
+  return db.course.delete({
+    where: {
+      id,
+    },
+  });
+}
+
+async function findById(id: string) {
+  return db.course.findUnique({
+    where: {
+      id,
+    },
+  });
+}
+async function findAll(input: Prisma.CourseWhereInput) {
+  return db.course.findMany({
+    where: input,
+  });
+}
+async function updateCourse(id: string, input: Prisma.CourseUpdateInput) {
+  await db.course.update({
+    where: {
+      id,
+    },
+    data: input,
+  });
+}
