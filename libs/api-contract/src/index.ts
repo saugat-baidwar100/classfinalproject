@@ -1,35 +1,91 @@
-// contract.ts
+import {initContract} from '@ts-rest/core'
+import {z} from "zod";
+const c=initContract();
 
-import { initContract } from '@ts-rest/core';
-import { z } from 'zod';
+const errorSchema=z.object({
+message:z.string(),
+isSuccess:z.boolean(),
+})
+const SuccessSchema=z.object({
+  message:z.string(),
+  isSuccess:z.boolean()
+})
+export const courseSchema=z.object({
+  id:z.string(),
+  title:z.string(),
+  description:z.string(),
+  category:z.string(),
+  level:z.string(),
+  price:z.string(),
+  completed:z.boolean()
+})
+export type TcourseSchema=z.infer<typeof courseSchema>;
 
-const c = initContract();
-
-const PostSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  body: z.string(),
-});
-
-export const apiContract = c.router({
-  createPost: {
-    method: 'POST',
-    path: '/posts',
-    responses: {
-      201: PostSchema,
+export const courseContract=c.router({
+  getCourse:{
+    method:'GET',
+    path:'/courses',
+    responses:{
+      200:SuccessSchema.extend({
+        data:z.array(courseSchema),
+      }),
+      400:errorSchema,
+      500:errorSchema,
     },
-    body: z.object({
-      title: z.string(),
-      body: z.string(),
+    summary:'Get all the courses',
+  },
+  getCourseById:{
+    method:'GET',
+    path:'/courses/:id',
+    responses:{
+      200:SuccessSchema.extend({
+        data:courseSchema,
+      }),
+      400:errorSchema,
+      500:errorSchema,
+      },
+      summary:'Get the course by id'
+    },
+createCourse:{
+  method:'POST',
+  path:'/courses',
+  body:courseSchema.omit({id:true}),
+  responses:{
+    201:SuccessSchema.extend({
+      data:courseSchema,
     }),
-    summary: 'Create a post',
+    400:errorSchema,
+    500:errorSchema,
   },
-  getPost: {
-    method: 'GET',
-    path: `/posts/:id`,
-    responses: {
-      200: PostSchema.nullable(),
-    },
-    summary: 'Get a post by id',
+  summary:'Create Course'
+  
+},
+updateCourse:{
+  method:'PUT',
+  path:'courses/:id',
+  body:courseSchema.omit({id:true}),
+  responses:{
+    200:SuccessSchema.extend({
+      data:courseSchema,
+    }),
+    400:errorSchema,
+    404:errorSchema,
+    500:errorSchema,
   },
-});
+  summary:'Update Courses by id'
+},
+deleteCourse:{
+  method:'DELETE',
+  path:'/courses/:id',
+  body:z.object({}),
+  responses:{
+    200:SuccessSchema.extend({
+      data:courseSchema,
+    }),
+    400:errorSchema,
+    404:errorSchema,
+    500:errorSchema,
+  },
+  summary:'Delete course by ID'
+}
+  })
