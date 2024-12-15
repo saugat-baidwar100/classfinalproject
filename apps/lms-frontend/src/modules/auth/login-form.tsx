@@ -1,4 +1,4 @@
-import { FaGoogle } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 
 export const LoginForm = () => {
   return (
@@ -50,10 +50,9 @@ export const LoginForm = () => {
               Forgot Password?
             </a>
           </div>
-
           <button
             type="submit"
-            className="w-full mt-4 h-[40px] px-4 py-2 text-white bg-[#31B991] rounded-md shadow hover:bg-[#3E3E3E] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full mt-4 h-[40px] px-4 py-2 text-white bg-[#31B991] rounded-md shadow hover:bg-[#27a37f] focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 ease-in-out"
           >
             Login
           </button>
@@ -67,14 +66,12 @@ export const LoginForm = () => {
 
         <button
           type="button"
-          className="w-full px-4 py-2 text-gray-700 bg-gray-100 rounded-md shadow hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
+          className="w-full mt-4 h-[40px] px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 flex items-center justify-center gap-3 hover:bg-gray-200 transition-all duration-200 ease-in-out"
         >
-          <div className="flex items-center justify-center gap-3">
-            <p>
-              <FaGoogle className="text-[#31B991]" />
-            </p>
-            <p>Continue with Google</p>
-          </div>
+          <FcGoogle className="text-2xl" />
+          <span className="text-gray-700 font-medium">
+            Continue with Google
+          </span>
         </button>
       </div>
     </div>
