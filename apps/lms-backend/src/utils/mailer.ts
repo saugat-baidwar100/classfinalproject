@@ -1,6 +1,5 @@
 import { logger } from "@skillprompt-lms/libs/api-contract/utils/logger";
 import nodemailer from "nodemailer";
-
 const transporter = nodemailer.createTransport({
     service: "Gmail",
     host: "smtp.gmail.com",
@@ -11,8 +10,6 @@ const transporter = nodemailer.createTransport({
       pass: process.env["PASS"],
     },
   });
-
-  
 export function sendingEmail({
     to,
     subject,
@@ -36,4 +33,3 @@ export function sendingEmail({
       }
     });
   }
-  
