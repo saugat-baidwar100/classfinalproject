@@ -23,7 +23,7 @@ export const courseRouter = s.router(courseContract, {
           };
         }),
         isSuccess: true,
-        message: 'success',
+        message: 'All courses are retreived',
       },
     };
   },
@@ -52,7 +52,7 @@ export const courseRouter = s.router(courseContract, {
           completed: course.is_completed,
         },
         isSuccess: true,
-        message: 'success',
+        message: 'Course retrieved by id',
       },
     };
   },
@@ -78,7 +78,7 @@ export const courseRouter = s.router(courseContract, {
           completed: course.is_completed,
         },
         isSuccess: true,
-        message: 'success',
+        message: 'The course has been successfully created',
       },
     };
   },
@@ -118,7 +118,7 @@ export const courseRouter = s.router(courseContract, {
           completed: course.is_completed,
         },
         isSuccess: true,
-        message: 'success',
+        message: 'the course has been updated successfully',
       },
     };
   },
@@ -130,28 +130,18 @@ export const courseRouter = s.router(courseContract, {
       return {
         status: 404,
         body: {
-          message: 'todo not found',
+          message: 'Course not found',
           isSuccess: false,
         },
       };
     }
 
     await courseRepo.deleteById(params.id);
-
     return {
       status: 200,
       body: {
-        data: {
-          id: course.id,
-          title: course.title,
-          description:course.description,
-          category:course.category,
-          level:course.level,
-          price:course.price,
-          completed: course.is_completed,
-        },
         isSuccess: true,
-        message: 'success',
+        message: 'The course is successfully deleted',
       },
     };
   },
