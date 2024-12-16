@@ -104,7 +104,7 @@ export const courseRouter = s.router(courseContract, {
       price:body.price,
       is_completed: body.completed,
     });
-
+    
     return {
       status: 200,
       body: {
