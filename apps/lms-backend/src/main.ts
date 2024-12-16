@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { courseContract } from '@skillprompt-lms/libs/api-contract/index';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';

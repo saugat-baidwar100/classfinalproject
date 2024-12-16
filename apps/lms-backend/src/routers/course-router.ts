@@ -1,6 +1,6 @@
 import { initServer } from '@ts-rest/express';
-import { courseContract} from '../../../../libs/api-contract/src/index';
 import { courseRepo } from '../../../../libs/lms-prisma/src/course-repo';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 
 const s = initServer();
 
