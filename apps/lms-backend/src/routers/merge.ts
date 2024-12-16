@@ -1,8 +1,9 @@
 import { createExpressEndpoints } from '@ts-rest/express';
-import { courseContract } from '../../../../libs/api-contract/src/index';
+
 import { logger } from '../../../../libs/api-contract/src/utils/logger';
 
 import { courseRouter } from './course-router';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 
 const routers = [
   {

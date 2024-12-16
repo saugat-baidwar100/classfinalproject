@@ -7,7 +7,6 @@ export const courseRepo = {
   deleteById,
   findById,
   findAll,
-  updateCourse,
 };
 
 async function create(input: Prisma.CourseCreateInput) {
@@ -43,13 +42,5 @@ async function findById(id: string) {
 async function findAll(input: Prisma.CourseWhereInput) {
   return db.course.findMany({
     where: input,
-  });
-}
-async function updateCourse(id: string, input: Prisma.CourseUpdateInput) {
-  await db.course.update({
-    where: {
-      id,
-    },
-    data: input,
   });
 }
