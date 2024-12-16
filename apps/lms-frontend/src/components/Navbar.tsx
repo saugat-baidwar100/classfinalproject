@@ -1,3 +1,4 @@
+// Navbar.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,13 +26,13 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
       {/* Desktop Navigation Links */}
       <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
         <button
-          className="text-medium-size text-[#31B991] border-b-2 border-[#31B991] pb-1 font-semibold"
+          className="text-sm sm:text-base lg:text-lg text-[#31B991] border-b-2 border-[#31B991] pb-1 font-semibold"
           onClick={() => navigate('/')}
         >
           Home
         </button>
         <button
-          className="text-medium-size hover:text-[#31b991] transition-colors duration-300 font-medium"
+          className="text-sm sm:text-base lg:text-lg hover:text-[#31b991] transition-colors duration-300 font-medium"
           onClick={() => navigate('/courses')}
         >
           Courses
@@ -41,13 +42,13 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
       {/* Buttons */}
       <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
         <button
-          className="border-2 border-[#31b991] text-small-size text-[#31b991] px-3 lg:px-4 py-1 lg:py-2 rounded-lg font-semibold hover:text-[#ffffff] hover:bg-[#31b991] transition duration-300"
+          className="border-2 border-[#31b991] text-sm sm:text-base lg:text-lg text-[#31b991] px-3 lg:px-4 py-1 lg:py-2 rounded-lg font-semibold hover:text-[#ffffff] hover:bg-[#31b991] transition duration-300"
           onClick={() => navigate('/login')}
         >
           Login
         </button>
         <button
-          className="bg-[#31b991] px-3 lg:px-4 py-1 lg:py-2 rounded-lg font-semibold text-small-size text-[#ffffff] hover:bg-[#289675] transition duration-300"
+          className="bg-[#31b991] px-3 lg:px-4 py-1 lg:py-2 rounded-lg font-semibold text-sm sm:text-base lg:text-lg text-[#ffffff] hover:bg-[#289675] transition duration-300"
           onClick={() => navigate('/signup')}
         >
           Signup
