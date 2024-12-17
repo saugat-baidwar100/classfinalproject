@@ -5,6 +5,8 @@ import { FaGoogle, FaApple } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../api/auth/query';
 import { toastError, toastSuccess } from '../../toaster';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { input } from '@nextui-org/theme';
 // Define Zod schema for form validation
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -58,7 +60,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen ">
       <div className="flex flex-col lg:flex-row w-full max-w-4xl bg-gray-800 text-white rounded-lg shadow-lg overflow-hidden">
         {/* Left Section */}
         <div className="w-full lg:w-1/2 p-8">
@@ -93,10 +95,12 @@ export const LoginForm = () => {
                 className={`w-full px-4 py-2 rounded-md bg-gray-700 border ${
                   errors.email ? 'border-red-500' : 'border-gray-600'
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                {...register("email")}
+                {...register('email')}
               />
               {errors.email && (
-                <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -108,10 +112,12 @@ export const LoginForm = () => {
                 className={`w-full px-4 py-2 rounded-md bg-gray-700 border ${
                   errors.password ? 'border-red-500' : 'border-gray-600'
                 } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-                {...register("password")}
+                {...register('password')}
               />
               {errors.password && (
-                <p className="text-red-400 text-sm mt-1">{errors.password.message}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -179,4 +185,3 @@ export const LoginForm = () => {
     </div>
   );
 };
-

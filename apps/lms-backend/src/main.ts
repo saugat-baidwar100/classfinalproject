@@ -38,11 +38,24 @@ const openApiDocument = generateOpenApi(courseContract, {
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 // ------------------------- CORS Setup -------------------------
+// app.use(
+//   cors({
+//     origin: ['${env.FRONTEND_URI}'], // replace with your actual frontend URL
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true, // Support cookies
+//   })
+// );
 app.use(
   cors({
-    origin: ['${env.FRONTEND_URI}'], // replace with your actual frontend URL
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Support cookies
+    origin: function (origin, callback) {
+      logger.debug(`Origin: ${origin}`);
+      if (!origin || env.WHITELISTED_ORIGINS.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
   })
 );
 
@@ -61,7 +74,7 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-createAuth(app)
+createAuth(app);
 
 // ------------------------- Routes -------------------------
 // Add your application routes here

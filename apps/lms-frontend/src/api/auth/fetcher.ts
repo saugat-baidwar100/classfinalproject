@@ -11,12 +11,15 @@ export type TLoginOutput = {
 };
 
 export async function login(input: TLoginInput): Promise<TLoginOutput> {
-  const res = await fetch(`${env.VITE_BACKEND_URL}auth/login/`, {
+  console.log("uri:",env.BACKEND_URL);
+
+  const res = await fetch(`${env.BACKEND_URL}/auth/login`, {
     method: 'POST',
     credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
+    
     body: JSON.stringify({
       email: input.email,
       password: input.password,
@@ -24,9 +27,9 @@ export async function login(input: TLoginInput): Promise<TLoginOutput> {
   });
 
   const data = await res.json();
-  if (!res.ok) {
-    throw new Error(data.message);
-  }
+  console.log("data", data);
+  
+ 
 
   return data;
 }
