@@ -61,14 +61,13 @@ export const courseContract = c.router({
   },
   updateCourse: {
     method: 'PUT',
-    path: 'courses/:id',
+    path: '/courses/:id',
     body: courseSchema.omit({ id: true }),
     responses: {
       200: SuccessSchema.extend({
         data: courseSchema,
       }),
       400: errorSchema,
-      404: errorSchema,
       500: errorSchema,
     },
     summary: 'Update Courses by id',

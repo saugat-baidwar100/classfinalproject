@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { courseContract } from '@skillprompt-lms/libs/api-contract/index';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -13,6 +13,8 @@ import { createAuth } from './auth';
 import { courseRouter } from './routers/course-router';
 import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { generateEndPoints } from './routers/merge';
+import { openApiDocument } from './utils/swagger';
+import { errorHandler, notFoundHandler } from './utils/error-handler';
 
 // logger.debug(env,'Environment variables');
 
@@ -28,12 +30,6 @@ app.use(compression());
 
 //-------ts-rest with swagger----------
 
-const openApiDocument = generateOpenApi(courseContract, {
-  info: {
-    title: 'Posts API',
-    version: '1.0.0',
-  },
-});
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
@@ -63,7 +59,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-// generateEndPoints(app)
+
 
 // ------------------------- Testing Routes -------------------------
 app.get('/', (req: Request, res: Response) => {
@@ -74,10 +70,16 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-createAuth(app);
-
 // ------------------------- Routes -------------------------
 // Add your application routes here
+createAuth(app)
+
+// generateEndPoints(app)
+generateEndPoints(app);
+
+app.use(notFoundHandler);
+
+app.use(errorHandler);
 
 // ------------------------- General Error Handler -------------------------
 app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {

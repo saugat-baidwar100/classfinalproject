@@ -1,6 +1,6 @@
 import { initServer } from '@ts-rest/express';
-import { courseContract } from '@skillprompt-lms/libs/api-contract/index';
-import { courseRepo } from '@skillprompt-lms/libs/lms-prisma/course-repo';
+import { courseRepo } from '../../../../libs/lms-prisma/src/course-repo';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 
 const s = initServer();
 
@@ -23,7 +23,7 @@ export const courseRouter = s.router(courseContract, {
           };
         }),
         isSuccess: true,
-        message: 'success',
+        message: 'All courses are retreived',
       },
     };
   },
@@ -52,7 +52,7 @@ export const courseRouter = s.router(courseContract, {
           completed: course.is_completed,
         },
         isSuccess: true,
-        message: 'success',
+        message: 'Course retrieved by id',
       },
     };
   },
@@ -78,7 +78,7 @@ export const courseRouter = s.router(courseContract, {
           completed: course.is_completed,
         },
         isSuccess: true,
-        message: 'success',
+        message: 'The course has been successfully created',
       },
     };
   },
@@ -104,7 +104,7 @@ export const courseRouter = s.router(courseContract, {
       price: body.price,
       is_completed: body.completed,
     });
-
+    
     return {
       status: 200,
       body: {
@@ -118,7 +118,7 @@ export const courseRouter = s.router(courseContract, {
           completed: course.is_completed,
         },
         isSuccess: true,
-        message: 'success',
+        message: 'the course has been updated successfully',
       },
     };
   },
@@ -130,28 +130,18 @@ export const courseRouter = s.router(courseContract, {
       return {
         status: 404,
         body: {
-          message: 'todo not found',
+          message: 'Course not found',
           isSuccess: false,
         },
       };
     }
 
     await courseRepo.deleteById(params.id);
-
     return {
       status: 200,
       body: {
-        data: {
-          id: course.id,
-          title: course.title,
-          description: course.description,
-          category: course.category,
-          level: course.level,
-          price: course.price,
-          completed: course.is_completed,
-        },
         isSuccess: true,
-        message: 'success',
+        message: 'The course is successfully deleted',
       },
     };
   },
