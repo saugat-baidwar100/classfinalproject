@@ -24,7 +24,7 @@ export type TcourseSchema = z.infer<typeof courseSchema>;
 export const courseContract = c.router({
   getCourse: {
     method: 'GET',
-    path: '/courses',
+    path: '/api/courses',
     responses: {
       200: SuccessSchema.extend({
         data: z.array(courseSchema),
@@ -36,7 +36,7 @@ export const courseContract = c.router({
   },
   getCourseById: {
     method: 'GET',
-    path: '/courses/:id',
+    path: '/api/courses/:id',
     responses: {
       200: SuccessSchema.extend({
         data: courseSchema,
@@ -48,7 +48,7 @@ export const courseContract = c.router({
   },
   createCourse: {
     method: 'POST',
-    path: '/courses',
+    path: '/api/courses/add',
     body: courseSchema.omit({ id: true }),
     responses: {
       201: SuccessSchema.extend({
@@ -61,7 +61,7 @@ export const courseContract = c.router({
   },
   updateCourse: {
     method: 'PUT',
-    path: '/courses/:id',
+    path: '/api/courses/update-course/:id',
     body: courseSchema.omit({ id: true }),
     responses: {
       200: SuccessSchema.extend({
@@ -74,7 +74,7 @@ export const courseContract = c.router({
   },
   deleteCourse: {
     method: 'DELETE',
-    path: '/courses/:id',
+    path: '/api/courses/delete-course/:id',
     body: z.object({}),
     responses: {
       200: SuccessSchema.extend({
@@ -86,4 +86,4 @@ export const courseContract = c.router({
     },
     summary: 'Delete course by ID',
   },
-});
+},);
