@@ -24,35 +24,35 @@
 
 #### **Course Management**
 
-| **Feature**            | **HTTP Method** | **Endpoint**              | **Description**                                       | **Authorization**        |
-| ---------------------- | --------------- | ------------------------- | ----------------------------------------------------- | ------------------------ |
-| **List All Courses**   | `GET`           | `/api/courses`            | Retrieve all available courses.                       | Public                   |
-| **Get Course Details** | `GET`           | `/api/courses/:id`        | Get detailed information about a specific course.     | Public                   |
-| **Add New Course**     | `POST`          | `/api/add-courses`        | Create a new course (only for Instructors or Admins). | Instructor/Admin         |
-| **Update Course**      | `PUT`           | `/api/update-courses/:id` | Update details of an existing course.                 | Instructor/Admin (Owner) |
-| **Delete Course**      | `DELETE`        | `/api/delete-courses/:id` | Remove a course from the system.                      | Instructor/Admin (Owner) |
+| **Feature**            | **HTTP Method** | **Endpoint**                     | **Description**                                       | **Authorization**        |
+| ---------------------- | --------------- | -------------------------------- | ----------------------------------------------------- | ------------------------ |
+| **List All Courses**   | `GET`           | `/api/courses`                   | Retrieve all available courses.                       | Public                   |
+| **Get Course Details** | `GET`           | `/api/courses/:id`               | Get detailed information about a specific course.     | Public                   |
+| **Add New Course**     | `POST`          | `/api/courses/add`               | Create a new course (only for Instructors or Admins). | Instructor/Admin         |
+| **Update Course**      | `PUT`           | `/api/courses/update-course/:id` | Update details of an existing course.                 | Instructor/Admin (Owner) |
+| **Delete Course**      | `DELETE`        | `/api/courses/delete-course/:id` | Remove a course from the system.                      | Instructor/Admin (Owner) |
 
 ---
 
 #### **Chapter Management**
 
-| **Feature**           | **HTTP Method** | **Endpoint**                       | **Description**                               | **Authorization**        |
-| --------------------- | --------------- | ---------------------------------- | --------------------------------------------- | ------------------------ |
-| **List All Chapters** | `GET`           | `/api/courses/:id/chapters`        | Get a list of chapters for a specific course. | Public                   |
-| **Add New Chapter**   | `POST`          | `/api/courses/:id/add-chapters`    | Add a new chapter to a specific course.       | Instructor/Admin (Owner) |
-| **Update Chapter**    | `PUT`           | `/api/update-chapters/:chapter_id` | Update details of a specific chapter.         | Instructor/Admin (Owner) |
-| **Delete Chapter**    | `DELETE`        | `/api/delete-chapters/:chapter_id` | Remove a chapter from a course.               | Instructor/Admin (Owner) |
+| **Feature**           | **HTTP Method** | **Endpoint**                                                | **Description**                               | **Authorization**        |
+| --------------------- | --------------- | ----------------------------------------------------------- | --------------------------------------------- | ------------------------ |
+| **List All Chapters** | `GET`           | `/api/courses/:id/chapters`                                 | Get a list of chapters for a specific course. | Public                   |
+| **Add New Chapter**   | `POST`          | `/api/courses/:id/chapters/add-chapter`                     | Add a new chapter to a specific course.       | Instructor/Admin (Owner) |
+| **Update Chapter**    | `PUT`           | `/api/courses/:courseId/chapters/update-chapter/:chapterId` | Update details of a specific chapter.         | Instructor/Admin (Owner) |
+| **Delete Chapter**    | `DELETE`        | `/api/courses/:courseId/chapters/delete-chapter/:chapterId` | Remove a chapter from a course.               | Instructor/Admin (Owner) |
 
 ---
 
-#### **Lesson Management**
+#### **Content Management**
 
-| **Feature**          | **HTTP Method** | **Endpoint**                     | **Description**                               | **Authorization**        |
-| -------------------- | --------------- | -------------------------------- | --------------------------------------------- | ------------------------ |
-| **List All Lessons** | `GET`           | `/api/chapters/:id/lessons`      | Get a list of lessons for a specific chapter. | Public                   |
-| **Add New Lesson**   | `POST`          | `/api/chapters/:id/add-lessons`  | Add a new lesson to a chapter.                | Instructor/Admin (Owner) |
-| **Update Lesson**    | `PUT`           | `/api/update-lessons/:lesson_id` | Update details of a specific lesson.          | Instructor/Admin (Owner) |
-| **Delete Lesson**    | `DELETE`        | `/api/delete-lessons/:lesson_id` | Remove a lesson from a chapter.               | Instructor/Admin (Owner) |
+| **Feature**          | **HTTP Method** | **Endpoint**                                                  | **Description**                                | **Authorization**        |
+| -------------------- | --------------- | ------------------------------------------------------------- | ---------------------------------------------- | ------------------------ |
+| **List One content** | `GET`           | `/api/chapters/:chapterId/contents`                           | Get a list of contents for a specific chapter. | Public                   |
+| **Add New content**  | `POST`          | `/api/chapters/:chapterId/contents/add-content`               | Add a new content to a chapter.                | Instructor/Admin (Owner) |
+| **Update content**   | `PUT`           | `/api/chapters/:chapterId/contents/update-content/:contentId` | Update details of a specific content.          | Instructor/Admin (Owner) |
+| **Delete content**   | `DELETE`        | `/api/chapters/:chapterId/contents/delete-content/:contentId` | Remove a content from a chapter.               | Instructor/Admin (Owner) |
 
 ---
 
@@ -152,7 +152,7 @@ The top-level representation of a course.
 | `description` | Text                             | Full description of the course.                           |
 | `type`        | Enum (Paid, Free)                | Course type.                                              |
 | `price`       | Float                            | Cost of the course (if Paid).                             |
-| `thumbnail`   | File                             | Image file for the course thumbnail.                      |
+| `thumbnail`   | String                           | Image file url for the course thumbnail.                  |
 | `status`      | Enum (Pending,Published,Deleted) | Course publishing status.                                 |
 | `chapters`    | Array                            | List of associated chapter IDs.                           |
 | `reviews`     | Array                            | List of user reviews for the course.                      |
@@ -165,34 +165,30 @@ The top-level representation of a course.
 
 A course consists of multiple chapters, each containing specific lessons or modules.
 
-| **Field**     | **Type** | **Description**                                        |
-| ------------- | -------- | ------------------------------------------------------ |
-| `id`          | String   | Unique Chapter identifier.                             |
-| `course_id`   | String   | Reference to the associated Course.                    |
-| `title`       | String   | Chapter title.                                         |
-| `description` | Text     | Optional description of the chapter.                   |
-| `order`       | Integer  | Position of the chapter in the course (e.g., 1, 2, 3). |
-| `lessons`     | Array    | List of associated lesson IDs.                         |
-| `created_at`  | DateTime | Timestamp for chapter creation.                        |
-| `updated_at`  | DateTime | Timestamp for last chapter update.                     |
+| **Field**     | **Type**  | **Description**                                        |
+| ------------- | --------- | ------------------------------------------------------ |
+| `id`          | String    | Unique Chapter identifier.                             |
+| `course_id`   | String    | Reference to the associated Course.                    |
+| `title`       | String    | Chapter title.                                         |
+| `description` | Text      | Optional description of the chapter.                   |
+| `order`       | Integer   | Position of the chapter in the course (e.g., 1, 2, 3). |
+| `content_id`  | String FK | List of associated content ID.                         |
+| `created_at`  | DateTime  | Timestamp for chapter creation.                        |
+| `updated_at`  | DateTime  | Timestamp for last chapter update.                     |
 
 ---
 
-#### 3. **Lesson Schema**
+#### 3. **Content Schema**
 
-A lesson is a specific piece of content within a chapter.
+A content is a specific piece of content within a chapter.
 
-| **Field**      | **Type**                | **Description**                                          |
-| -------------- | ----------------------- | -------------------------------------------------------- |
-| `id`           | String                  | Unique Lesson identifier.                                |
-| `chapter_id`   | String                  | Reference to the associated Chapter.                     |
-| `title`        | String                  | Lesson title.                                            |
-| `content_type` | Enum (Video, PDF, Quiz) | Type of content.                                         |
-| `content_url`  | File/URL                | File or link to the content (e.g., video, PDF, or quiz). |
-| `duration`     | Integer (seconds)       | Duration of the video/audio content (if applicable).     |
-| `order`        | Integer                 | Position of the lesson within the chapter.               |
-| `created_at`   | DateTime                | Timestamp for lesson creation.                           |
-| `updated_at`   | DateTime                | Timestamp for last lesson update.                        |
+| **Field**    | **Type** | **Description**                      |
+| ------------ | -------- | ------------------------------------ |
+| `id`         | String   | Unique content identifier.           |
+| `chapter_id` | String   | Reference to the associated Chapter. |
+| `content`    | Text     | content title.                       |
+| `created_at` | DateTime | Timestamp for content creation.      |
+| `updated_at` | DateTime | Timestamp for last content update.   |
 
 ---
 
