@@ -1,11 +1,13 @@
-import { DatePicker as NUIDatePicker ,DatePickerProps as NUIDatePickerProps} from '@nextui-org/react';
+import {
+  DatePickerProps as NUIDatePickerProps,
+  DatePicker as NUIDatePicker,
+} from '@nextui-org/react';
 import { ReactNode } from 'react';
-interface DatePickerProps extends NUIDatePickerProps{
-    label?:string
-    description?:ReactNode
-    errorMassage?:string
+
+interface DatePickerProps extends Omit<NUIDatePickerProps, 'labelPlacement'> {
+  label: ReactNode;
 }
 
-export function DatePicker({label,description,errorMessage, ...props}:DatePickerProps) {
-  return <NUIDatePicker {...props}/>;
+export function DatePicker(props: DatePickerProps) {
+  return <NUIDatePicker  labelPlacement="outside-left" {...props} />;
 }
