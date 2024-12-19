@@ -30,9 +30,9 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = async (data) => {
     try {
-      loginUserMutation.mutateAsync(
+      await loginUserMutation.mutateAsync(
         {
           email: data.email,
           password: data.password,
@@ -147,7 +147,7 @@ export const LoginForm = () => {
 
           <p className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <a href="/signup" className="text-blue-400 hover:underline">
+            <a href="/auth/register" className="text-blue-400 hover:underline">
               Sign up
             </a>
           </p>
