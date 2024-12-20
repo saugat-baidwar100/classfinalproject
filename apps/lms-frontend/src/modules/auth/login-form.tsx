@@ -1,5 +1,4 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FaGoogle, FaApple } from 'react-icons/fa';
@@ -8,7 +7,6 @@ import { useLoginMutation } from '../../api/auth/query';
 import { toastError, toastSuccess } from '../../toaster';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { input } from '@nextui-org/theme';
-import { Input } from '@skillprompt-lms/libs/ui-components/components/input';
 // Define Zod schema for form validation
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -91,7 +89,7 @@ export const LoginForm = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
               <label className="block text-sm mb-1">Email</label>
-              <Input
+              <input
                 type="email"
                 placeholder="Enter your email"
                 className={`w-full px-4 py-2 rounded-md bg-gray-700 border ${
