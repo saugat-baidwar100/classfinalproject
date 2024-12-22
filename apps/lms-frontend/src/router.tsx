@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/login',
+    path: '/auth/login',
     element: <LoginPage />,
   },
   {
@@ -35,7 +35,6 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
 ]);
-function Approuter() {
+export function Approuter() {
   return <RouterProvider router={router} />;
 }
-export default Approuter;

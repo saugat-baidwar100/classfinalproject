@@ -1,4 +1,5 @@
 export const ForgotPassword = () => {
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
@@ -27,7 +28,7 @@ export const ForgotPassword = () => {
 
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-[#31B991] rounded-md shadow hover:bg-[#3E3E3E] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="w-full px-4 py-2 text-white bg-[#31B991] rounded-md shadow  hover:bg-[#27a37f]  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             <a href="/resetpassword"> Send Email</a>
           </button>
@@ -42,3 +43,4 @@ export const ForgotPassword = () => {
     </div>
   );
 };
+

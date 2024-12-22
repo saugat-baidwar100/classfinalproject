@@ -1,5 +1,5 @@
 import { QueryClientProvider } from '../query';
-import Approuter from '../router';
+import { Approuter } from '../router';
 
 function App() {
   return (
@@ -8,4 +8,6 @@ function App() {
     </QueryClientProvider>
   );
 }
+
 export default App;
+

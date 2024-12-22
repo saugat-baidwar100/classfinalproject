@@ -1,4 +1,5 @@
 export const ResetPassword = () => {
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
@@ -80,5 +81,6 @@ export const ResetPassword = () => {
     </div>
   );
 };
+
 
 
