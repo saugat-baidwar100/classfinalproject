@@ -1,18 +1,23 @@
 import { createExpressEndpoints } from '@ts-rest/express';
 
-import { logger } from '../../../../libs/api-contract/src/utils/logger';
+
 
 import { courseRouter } from './course-router';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
+import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
+import { chapterRouter } from './chapter-router';
+import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 
 const routers = [
   {
-    contract: courseContract,
+    contract: courseContract ,
     router: courseRouter,
   },
-  // add more
+{
+  contract:chapterContract,
+  router:chapterRouter
+}
 ];
-
 export function generateEndPoints(app: any) {
   return routers.map(({ contract, router }) => {
     createExpressEndpoints(contract, router, app, {

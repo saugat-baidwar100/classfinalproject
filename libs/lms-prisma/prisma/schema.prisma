@@ -14,15 +14,29 @@ datasource db {
 }
 
 model Course {
-  id           String  @id @default(cuid())
+  id           String    @id @default(cuid())
   title        String
   description  String
   category     String
   level        String
+  thumbnail    String
   price        String
-  is_completed Boolean @default(false)
+  is_completed Boolean   @default(false)
+  chapters     Chapter[]
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
 
   @@map("courses")
+}
+
+model Chapter {
+  id          String   @id @default(cuid())
+  course_id   String
+  course      Course   @relation(fields: [course_id], references: [id])
+  title       String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
 
 model User {
