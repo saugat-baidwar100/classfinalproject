@@ -7,7 +7,8 @@ const s = initServer();
 
 export const courseRouter = s.router(courseContract, {
   getCourse: async () => {
-    const course = await courseRepo.findAll({});
+    const course= await courseRepo.findAll({});
+
     return {
       status: 200,
       body: {
@@ -15,11 +16,10 @@ export const courseRouter = s.router(courseContract, {
           return {
             id: t.id,
             title: t.title,
-            description: t.description,
-            category: t.category,
-            thumbnail: t.thumbnail,
-            level: t.level,
-            price: t.price,
+            description:t.description,
+            category:t.category,
+            level:t.level,
+            price:t.price,
             completed: t.is_completed,
             chapters: chapterSchema,
           };
@@ -47,11 +47,10 @@ export const courseRouter = s.router(courseContract, {
         data: {
           id: course.id,
           title: course.title,
-          description: course.description,
-          category: course.category,
-          thumbnail: course.thumbnail,
-          level: course.level,
-          price: course.price,
+          description:course.description,
+          category:course.category,
+          level:course.level,
+          price:course.price,
           completed: course.is_completed,
           chapters: chapterSchema,
         },
@@ -63,11 +62,10 @@ export const courseRouter = s.router(courseContract, {
   createCourse: async ({ body }) => {
     const course = await courseRepo.create({
       title: body.title,
-      description: body.description,
-      category: body.category,
-      level: body.level,
-      thumbnail: body.thumbnail,
-      price: body.price,
+      description:body.description,
+      category:body.category,
+      level:body.level,
+      price:body.price,
       is_completed: body.completed,
     });
     return {
@@ -76,11 +74,10 @@ export const courseRouter = s.router(courseContract, {
         data: {
           id: course.id,
           title: course.title,
-          description: course.description,
-          category: course.category,
-          thumbnail: course.thumbnail,
-          level: course.level,
-          price: course.price,
+          description:course.description,
+          category:course.category,
+          level:course.level,
+          price:course.price,
           completed: course.is_completed,
           chapters: chapterSchema,
         },
