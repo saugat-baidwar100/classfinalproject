@@ -4,13 +4,18 @@ import { logger } from '../../../../libs/api-contract/src/utils/logger';
 
 import { courseRouter } from './course-router';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
+import { contentContract } from '@skillprompt-lms/libs/api-contract/modules/content';
+import { contentRouter } from './content-router';
 
 const routers = [
   {
     contract: courseContract,
     router: courseRouter,
   },
-  // add more
+{
+  contract:contentContract,
+  router:contentRouter
+}
 ];
 
 export function generateEndPoints(app: any) {

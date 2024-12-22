@@ -25,6 +25,20 @@ model Course {
   @@map("courses")
 }
 
+
+model Content {
+  id           String   @id @default(cuid()) // Unique content identifier
+  content      String   // Content title
+  created_at   DateTime @default(now()) // Timestamp for content creation
+  updated_at   DateTime @updatedAt     // Timestamp for last content update
+  completed    Boolean  @default(false) // Completion status for the content
+  
+
+  @@map("contents") // Maps the table to "contents" in the database
+}
+
+
+
 model User {
   id                String  @id @default(cuid())
   email             String  @unique
