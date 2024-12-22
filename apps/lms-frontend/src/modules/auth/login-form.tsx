@@ -1,4 +1,4 @@
-import { FaGoogle } from 'react-icons/fa';
+// import { FaGoogle } from 'react-icons/fa';
 
 export const LoginForm = () => {
   return (
@@ -71,7 +71,7 @@ export const LoginForm = () => {
         >
           <div className="flex items-center justify-center gap-3">
             <p>
-              <FaGoogle className="text-[#31B991]" />
+              {/* <FaGoogle className="text-[#31B991]" /> */}
             </p>
             <p>Continue with Google</p>
           </div>
