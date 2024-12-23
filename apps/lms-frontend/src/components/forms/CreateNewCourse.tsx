@@ -1,6 +1,9 @@
+import { Input } from '@skillprompt-lms/libs/ui-components/components/input';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import clsx from 'clsx';
+
 export function CreateNewCourse() {
   const courseSchema = z.object({
     title: z.string().min(1, 'Title is required'),
@@ -40,17 +43,15 @@ export function CreateNewCourse() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Title */}
           <div>
-            <label className="block text-customGreen  text-sm mb-2">
-              Title
-            </label>
-            <input
+            <Input
+              label="Title"
               type="text"
+              variant="flat"
               placeholder="Enter Title"
-              {...register('title')}
-              className={`w-full px-4 py-2 border ${
-                errors.title ? 'border-red-500' : 'border-customGray'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              {...register('title')} // Register the input with React Hook Form
             />
+
+            {/* Display the error message if validation fails */}
             {errors.title && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.title.message}
@@ -66,9 +67,10 @@ export function CreateNewCourse() {
             <textarea
               placeholder="Enter Description"
               {...register('description')}
-              className={`w-full px-4 py-2 border ${
+              className={clsx(
+                'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
                 errors.description ? 'border-red-500' : 'border-customGray'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              )}
               rows={4}
             />
             {errors.description && (
@@ -85,16 +87,22 @@ export function CreateNewCourse() {
             </label>
             <select
               {...register('category')}
-              className={`w-full px-4 py-2 border  text-customGray ${
+              className={`w-full px-4 py-2 border  text-black ${
                 errors.category ? 'border-red-500' : 'border-customGray'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
               <option value="" className=" text-customGray">
                 Select Category
               </option>
-              <option value="development">Front-end Development</option>
-              <option value="design">Back-end Development</option>
-              <option value="marketing">Fullstack Development</option>
+              <option className=" text-black" value="development">
+                Front-end Development
+              </option>
+              <option className=" text-black" value="design">
+                Back-end Development
+              </option>
+              <option className=" text-black" value="marketing">
+                Fullstack Development
+              </option>
             </select>
             {errors.category && (
               <p className="text-red-500 text-sm mt-1">
@@ -108,13 +116,19 @@ export function CreateNewCourse() {
             <label className="block text-customGreen  text-sm mb-2">Type</label>
             <select
               {...register('type')}
-              className={`w-full px-4 py-2 border text-customGray ${
+              className={`w-full px-4 py-2 border text-black ${
                 errors.type ? 'border-red-500' : 'border-customGray'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              <option value="">Select Type</option>
-              <option value="online">Paid</option>
-              <option value="offline">free</option>
+              <option className=" text-customGray" value="">
+                Select Type
+              </option>
+              <option className=" text-black" value="online">
+                Paid
+              </option>
+              <option className=" text-black" value="offline">
+                free
+              </option>
             </select>
             {errors.type && (
               <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
@@ -123,14 +137,12 @@ export function CreateNewCourse() {
 
           {/* Price */}
           <div>
-            <label className="block text-customGreen text-sm mb-2">Price</label>
-            <input
+            <Input
+              label="Price"
               type="number"
               placeholder="Enter Price"
-              {...register('price', { valueAsNumber: true })}
-              className={`w-full px-4 py-2 border ${
-                errors.price ? 'border-red-500' : 'border-customGray'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              variant="flat"
+              {...register('price', { valueAsNumber: true })} // Register with React Hook Form
             />
             {errors.price && (
               <p className="text-red-500 text-sm mt-1">
@@ -142,7 +154,7 @@ export function CreateNewCourse() {
           {/* Buttons */}
           <div className="flex justify-end gap-4">
             <button
-              type="button"
+              type="submit"
               className=" bg-customGreen  py-2 px-4 text-white rounded-md hover:bg-green-800"
             >
               Save

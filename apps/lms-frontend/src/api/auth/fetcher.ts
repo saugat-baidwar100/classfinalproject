@@ -1,4 +1,4 @@
-import { TLoginResponseCodes } from '../../../../../libs/api-contract/src/auth';
+import { TLoginResponseCodes } from '../../../../../libs/api-contract/src/modules/auth';
 import { env } from '../../app/env';
 
 export type TLoginInput = {
@@ -11,7 +11,7 @@ export type TLoginOutput = {
 };
 
 export async function login(input: TLoginInput): Promise<TLoginOutput> {
-  console.log("uri:",env.BACKEND_URL);
+  console.log('uri:', env.BACKEND_URL);
 
   const res = await fetch(`${env.BACKEND_URL}/auth/login`, {
     method: 'POST',
@@ -19,7 +19,7 @@ export async function login(input: TLoginInput): Promise<TLoginOutput> {
     headers: {
       'Content-Type': 'application/json',
     },
-    
+
     body: JSON.stringify({
       email: input.email,
       password: input.password,
@@ -27,9 +27,7 @@ export async function login(input: TLoginInput): Promise<TLoginOutput> {
   });
 
   const data = await res.json();
-  console.log("data", data);
-  
- 
+  console.log('data', data);
 
   return data;
 }
