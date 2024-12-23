@@ -1,4 +1,5 @@
 import {
+  TForgotPasswordResponseCodes,
   TLoginResponseCodes,
   TSendOtpResponseCodes,
   TVerifyEmailResponseCodes,
@@ -115,6 +116,37 @@ export async function verifyEmail(
     body: JSON.stringify({
       email: input.email,
       otp: input.otp,
+    }),
+  });
+
+  const data = await res.json();
+
+  return data;
+}
+
+export type TForgotPasswordInput = {
+  email: string;
+  otp: string;
+  newPassword: string;
+};
+export type TForgotPasswordOutput = {
+  message: string;
+  code: TForgotPasswordResponseCodes;
+};
+
+export async function forgotPassword(
+  input: TForgotPasswordInput
+): Promise<TForgotPasswordOutput> {
+  const res = await fetch(`${env.BACKEND_URL}/auth/forgot-password`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: input.email,
+      otp: input.otp,
+      newPassword: input.newPassword,
     }),
   });
 

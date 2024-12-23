@@ -33,8 +33,8 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path:'/verifyotp',
-    element:<VerifyOtp/>
+    path: '/verifyotp',
+    element: <VerifyOtp />,
   },
   {
     path: '/forgetpassword',
