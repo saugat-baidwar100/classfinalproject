@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CourseCard } from './course-card';
 import { Button } from './button';
 import { Course } from './types/course';
-import popularCoursesImage from "../assets/images/popular-courses.png"
+import popularCoursesImage from "../assets/images/popular-courses.png";
 
 const courses: Course[] = [
   {
@@ -51,8 +51,8 @@ export const PopularCourses: React.FC = () => {
   return (
     <section className="py-12 px-4 max-w-7xl mx-auto">
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <h2 className="text-[32px] font-bold font-poppins">Our Popular Courses</h2>
-        <div className="flex gap-3">
+        <h2 className="text-[32px] font-bold font-poppins text-center">Our Popular Courses</h2>
+        <div className="flex flex-col md:flex-row gap-3 items-center">
           <Button
             variant={filter === "all" ? "default" : "outline"}
             onClick={() => setFilter("all")}
@@ -73,12 +73,12 @@ export const PopularCourses: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-center">
         {filteredCourses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}
       </div>
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-2 mt-8 items-center">
         <div className="w-2 h-2 rounded-full bg-custom-teal" />
         <div className="w-2 h-2 rounded-full bg-gray-300" />
         <div className="w-2 h-2 rounded-full bg-gray-300" />
