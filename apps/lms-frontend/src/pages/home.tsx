@@ -7,6 +7,8 @@ import HeroSectionLogo from "../assets/images/hero-image.png"; // Import your lo
 import TopCategories from "../components/top-categories";
 import PopularCourses from "../components/popular-courses";
 import ConnectBanner from "../components/connect-banner";
+import { MeetTheHeroes } from "../components/meet-the-heroes";
+import AdvertiseBanner from "../components/advertise-banner";
 
 const Home: React.FC = () => {
   return (
@@ -19,9 +21,8 @@ const Home: React.FC = () => {
         onStudentClick={() => console.log('Student clicked')} 
         onInstructorClick={() => console.log('Instructor clicked')} 
       />
-      <main className="p-4">
-        <h1 className="text-2xl font-bold">Welcome to SkillPrompt!</h1>
-      </main>
+      < MeetTheHeroes />
+      < AdvertiseBanner />
       <Footer logoSrc={logo} />
     </div>
   );

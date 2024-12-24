@@ -12,3 +12,5 @@ export function StatsCard({ stat }: StatsCardProps) {
     </div>
   );
 }
+
+export default StatsCard;

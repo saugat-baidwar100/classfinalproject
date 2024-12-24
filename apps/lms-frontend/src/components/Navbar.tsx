@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
       <div className="hidden md:flex items-center space-x-4 lg:space-x-5">
         <button
           className="border-2 border-custom-teal text-sm sm:text-base lg:text-small-size text-custom-teal px-4 lg:px-5 py-1.5 lg:py-2 rounded-lg font-semibold hover:text-custom-white hover:bg-custom-teal transition duration-300"
-          onClick={() => navigate('/login')}
+          onClick={() => navigate('/auth/login')}
         >
           Login
         </button>
