@@ -3,14 +3,15 @@ import { createExpressEndpoints } from '@ts-rest/express';
 
 
 import { courseRouter } from './course-router';
-import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
-import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
+
 import { chapterRouter } from './chapter-router';
 import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
+import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
+import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
 
 const routers = [
   {
-    contract: courseContract ,
+    contract: courseContract,
     router: courseRouter,
   },
 {

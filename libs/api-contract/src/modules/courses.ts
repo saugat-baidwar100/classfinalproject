@@ -1,6 +1,7 @@
-import { initContract } from '@ts-rest/core';
+
 import { z } from 'zod';
 import { chapterSchema } from './chapter';
+import { initContract } from '@ts-rest/core';
 const c = initContract();
 
 const errorSchema = z.object({
@@ -25,6 +26,7 @@ export const courseSchema = z.object({
   chapters:chapterSchema,
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;
+
 export const courseContract = c.router({
   getCourse: {
     method: 'GET',

@@ -30,14 +30,15 @@ model Course {
 }
 
 model Chapter {
-  id          String   @id @default(cuid())
-  course_id   String
-  course      Course   @relation(fields: [course_id], references: [id])
-  title       String
+  id        String   @id @default(uuid())
+  title     String
   description String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  course_id String
+  course    Course   @relation(fields: [course_id], references: [id])
+
+  @@unique([id, course_id]) // Add this compound unique constraint
 }
+
 
 model User {
   id                String  @id @default(cuid())

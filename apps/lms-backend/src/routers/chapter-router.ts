@@ -1,24 +1,21 @@
 import { initServer } from '@ts-rest/express';
-import { chapterRepo } from '@skillprompt-lms/libs/lms-prisma/chapter-repo';
+import {chapterRepo} from '@skillprompt-lms/libs/lms-prisma/chapter-repo'
 import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
-
 const s = initServer();
 
 export const chapterRouter = s.router(chapterContract, {
   getChapter: async () => {
-    const chapter = await chapterRepo.findAll({});
+    const chapters = await chapterRepo.findAll({});
     return {
       status: 200,
       body: {
-        data: chapter.map((t) => {
-          return {
-            id: t.id,
-            title: t.title,
-            description: t.description,
-          };
-        }),
+        data: chapters.map((t) => ({
+          id: t.id,
+          title: t.title,
+          description: t.description,
+        })),
         isSuccess: true,
-        message: 'All courses are retreived',
+        message: 'All chapters retrieved successfully',
       },
     };
   },
@@ -32,11 +29,12 @@ export const chapterRouter = s.router(chapterContract, {
       return {
         status: 404,
         body: {
-          message: 'chapter not found',
+          message: 'Chapter not found',
           isSuccess: false,
         },
       };
     }
+
     return {
       status: 200,
       body: {
@@ -46,16 +44,17 @@ export const chapterRouter = s.router(chapterContract, {
           description: chapter.description,
         },
         isSuccess: true,
-        message: 'Chapter retrieved by id',
+        message: 'Chapter retrieved successfully',
       },
     };
   },
-  createChapter: async ({ body }) => {
+  createChapter: async ({ body, params }) => {
     const chapter = await chapterRepo.create({
       title: body.title,
       description: body.description,
-      course: { connect: { id: body.courseId } },
+      course: { connect: { id: params.id } },
     });
+
     return {
       status: 201,
       body: {
@@ -65,11 +64,10 @@ export const chapterRouter = s.router(chapterContract, {
           description: chapter.description,
         },
         isSuccess: true,
-        message: 'The chapter has been successfully created',
+        message: 'Chapter created successfully',
       },
     };
   },
-
   updateChapter: async ({ params, body }) => {
     const chapter = await chapterRepo.findById({
       chapterId: params.chapterId,
@@ -80,31 +78,34 @@ export const chapterRouter = s.router(chapterContract, {
       return {
         status: 404,
         body: {
-          message: 'chapter not found',
+          message: 'Chapter not found',
           isSuccess: false,
         },
       };
     }
 
-    await chapterRepo.updateById(params.chapterId, {
-      title: body.title,
-      description: body.description,
+    const updatedChapter = await chapterRepo.updateById({
+      chapterId: params.chapterId,
+      courseId: params.courseId,
+      input: {
+        title: body.title,
+        description: body.description,
+      },
     });
 
     return {
       status: 200,
       body: {
         data: {
-          id: chapter.id,
-          title: chapter.title,
-          description: chapter.description,
+          id: updatedChapter.id,
+          title: updatedChapter.title,
+          description: updatedChapter.description,
         },
         isSuccess: true,
-        message: 'the chapter has been updated successfully',
+        message: 'Chapter updated successfully',
       },
     };
   },
-
   deleteChapter: async ({ params }) => {
     const chapter = await chapterRepo.findById({
       chapterId: params.chapterId,
@@ -120,12 +121,17 @@ export const chapterRouter = s.router(chapterContract, {
         },
       };
     }
-    await chapterRepo.deleteById(params.chapterId);
+
+    await chapterRepo.deleteById({
+      chapterId: params.chapterId,
+      courseId: params.courseId,
+    });
+
     return {
       status: 200,
       body: {
         isSuccess: true,
-        message: 'The chapter is successfully deleted',
+        message: 'Chapter deleted successfully',
       },
     };
   },

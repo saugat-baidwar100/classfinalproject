@@ -3,14 +3,17 @@ import { z } from 'zod';
 import { courseSchema } from './courses';
 
 const c = initContract();
+
 const errorSchema = z.object({
   message: z.string(),
   isSuccess: z.boolean(),
 });
+
 const SuccessSchema = z.object({
   message: z.string(),
   isSuccess: z.boolean(),
 });
+
 export const chapterSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -18,11 +21,13 @@ export const chapterSchema = z.object({
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
 });
+
 export const createChapterSchema = z.object({
-  id:z.string(),
+  id: z.string(),
   title: z.string(),
   description: z.string(),
 });
+
 export type TchapterSchema = z.infer<typeof chapterSchema>;
 
 export const chapterContract = c.router({

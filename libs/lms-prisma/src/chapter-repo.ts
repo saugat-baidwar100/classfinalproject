@@ -12,7 +12,6 @@ export const chapterRepo = {
 async function create(input: Prisma.ChapterCreateInput) {
   return db.chapter.create({
     data: input,
-    
   });
 }
 async function updateById({
@@ -26,28 +25,34 @@ async function updateById({
 }) {
   return db.chapter.update({
     where: {
-      id: chapterId,
-      course_id: courseId,
+      id_course_id: {
+        // Use the generated name for the compound unique constraint
+        id: chapterId,
+        course_id: courseId,
+      },
     },
     data: input,
   });
 }
+
 async function deleteById({
   chapterId,
   courseId,
-  input,
 }: {
   chapterId: string;
   courseId: string;
-  input: Prisma.ChapterUpdateInput;
 }) {
   return db.chapter.delete({
     where: {
-      id: chapterId,
-      course_id: courseId,
+      id_course_id: {
+        // Correct compound unique constraint field name
+        id: chapterId,
+        course_id: courseId,
+      },
     },
   });
 }
+
 async function findById({
   chapterId,
   courseId,
@@ -57,8 +62,10 @@ async function findById({
 }) {
   return db.chapter.findUnique({
     where: {
-      id: chapterId,
-      course_id: courseId,
+      id_course_id: {
+        id: chapterId,
+        course_id: courseId,
+      },
     },
   });
 }
