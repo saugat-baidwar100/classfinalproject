@@ -14,10 +14,12 @@ const SuccessSchema = z.object({
   isSuccess: z.boolean(),
 });
 
-export const chapterSchema = z.object({
+export const chapterSchema: z.ZodSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
+  courseId: z.string(),
+  course: courseSchema,
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
 });
