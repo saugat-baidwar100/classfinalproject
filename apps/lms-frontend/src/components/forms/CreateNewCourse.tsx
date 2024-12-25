@@ -1,10 +1,28 @@
-import { MyInput } from '@skillprompt-lms/libs/ui-components/components/input';
-import { MyButton } from '@skillprompt-lms/libs/ui-components/components/mybutton';
-import { useForm } from 'react-hook-form';
+import {
+  Input,
+  MyInput,
+} from '@skillprompt-lms/libs/ui-components/components/input';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { MyTextArea } from '@skillprompt-lms/libs/ui-components/components/textarea';
+import { MySelect } from '@skillprompt-lms/libs/ui-components/components/my-select';
 
-import { TextArea } from '@skillprompt-lms/libs/ui-components/components/textarea';
+export const animals = [
+  { key: 'cat', label: 'Cat' },
+  { key: 'dog', label: 'Dog' },
+  { key: 'elephant', label: 'Elephant' },
+  { key: 'lion', label: 'Lion' },
+  { key: 'tiger', label: 'Tiger' },
+  { key: 'giraffe', label: 'Giraffe' },
+  { key: 'dolphin', label: 'Dolphin' },
+  { key: 'penguin', label: 'Penguin' },
+  { key: 'zebra', label: 'Zebra' },
+  { key: 'shark', label: 'Shark' },
+  { key: 'whale', label: 'Whale' },
+  { key: 'otter', label: 'Otter' },
+  { key: 'crocodile', label: 'Crocodile' },
+];
 
 export function CreateNewCourse() {
   const courseSchema = z.object({
@@ -17,6 +35,32 @@ export function CreateNewCourse() {
     price: z
       .number({ invalid_type_error: 'Price must be a number' })
       .positive('Price must be greater than 0'),
+    thumbnail: z
+      .any()
+      .refine((file) => file?.[0] instanceof File, {
+        message: 'Please select a valid file',
+      })
+      .refine(
+        (file) => {
+          const selectedFile = file?.[0];
+          return selectedFile ? selectedFile.size <= 5 * 1024 * 1024 : true; // Max 5MB
+        },
+        {
+          message: 'File size must be less than 5MB',
+        }
+      )
+      .refine(
+        (file) => {
+          const selectedFile = file?.[0];
+          return selectedFile
+            ? ['image/jpeg', 'image/png'].includes(selectedFile.type)
+            : true;
+        },
+        {
+          message: 'Only JPG and PNG images are allowed',
+        }
+      )
+      .optional(), // File is optional
   });
 
   type CourseFormData = z.infer<typeof courseSchema>;
@@ -29,35 +73,60 @@ export function CreateNewCourse() {
     resolver: zodResolver(courseSchema),
   });
 
-  const onSubmit = (data: CourseFormData) => {
+  const onSubmit: SubmitHandler<CourseFormData> = (data) => {
     console.log('Form Data:', data);
     // Handle form submission logic here
   };
 
-  // Define Zod schema for validation
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-800">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md pt-4">
+        <h2 className="text-2xl font-bold text-gray-900 mb-3 text-center ">
           Create a new course
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div>
+            <MySelect
+              placeholder="select animal"
+              label={<p className="text-red-400">Animal</p>}
+              options={animals}
+            />
+          </div>
+          <div>
+            <MySelect
+              placeholder="select courses"
+              label={<p className="text-red-400">Courses</p>}
+              options={[
+                { key: '1', label: 'Node' },
+                { key: '2', label: 'React' },
+              ]}
+            />
+          </div>
+          <div>
+            <Input
+              label={<p className="text-red-500">Name</p>}
+              placeholder="enter your name"
+              {...register('title')}
+              errorMessage={errors.title?.message}
+            />
+          </div>
           {/* Title */}
           <div>
             <label className="block text-customGreen text-sm mb-2">Title</label>
             <MyInput
+              label="Title"
+              labelPlacement="outside-left"
               placeholder="Enter Title"
               radius="md"
               type="text"
               {...register('title')}
+              errorMessage={errors.title?.message}
             />
-
-            {errors.title && (
+            {/* {errors.title && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.title.message}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Description */}
@@ -65,17 +134,12 @@ export function CreateNewCourse() {
             <label className="block text-customGreen text-sm mb-2">
               Description
             </label>
-            <TextArea
+            <MyTextArea
               type="text"
               placeholder="Enter Description"
               {...register('description')}
-              variant="faded"
-              // className={clsx(
-              //   ' rounded px-2 py-1',
-              //   errors.description ? 'border-red-500' : 'border-customGray'
-              // )}
               rows={4}
-              color="primary"
+              error={!!errors.description}
             />
             {errors.description && (
               <p className="text-red-500 text-sm mt-1">
@@ -86,25 +150,25 @@ export function CreateNewCourse() {
 
           {/* Category */}
           <div>
-            <label className="block text-customGreen text-sm mb-2">
+            <label className="block text-green-500 text-sm mb-2">
               Category
             </label>
             <select
               {...register('category')}
-              className={`w-full px-4 py-2 border  text-black ${
-                errors.category ? 'border-red-500' : 'border-customGray'
+              className={`w-full px-4 py-2 border text-black ${
+                errors.type ? 'border-red-500' : 'border-gray-500'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              <option value="" className=" text-customGray" disabled>
+              <option value="" className="text-gray-500">
                 Select Category
               </option>
-              <option className=" text-black" value="development">
+              <option className="text-black" value="frontend">
                 Front-end Development
               </option>
-              <option className=" text-black" value="design">
+              <option className="text-black" value="backend">
                 Back-end Development
               </option>
-              <option className=" text-black" value="marketing">
+              <option className="text-black" value="fullstack">
                 Fullstack Development
               </option>
             </select>
@@ -131,7 +195,7 @@ export function CreateNewCourse() {
                 Paid
               </option>
               <option className=" text-black" value="offline">
-                free
+                Free
               </option>
             </select>
             {errors.type && (
@@ -150,10 +214,26 @@ export function CreateNewCourse() {
               placeholder="Enter Price"
               {...register('price', { valueAsNumber: true })}
             />
-
             {errors.price && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.price.message}
+              </p>
+            )}
+          </div>
+
+          {/* Thumbnail */}
+          <div>
+            <label className="block text-customGreen text-sm mb-2">
+              Thumbnail
+            </label>
+            <input
+              type="file"
+              {...register('thumbnail')}
+              className="w-full px-4 py-2 border text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            {errors.thumbnail && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.thumbnail?.message?.toString()}
               </p>
             )}
           </div>
@@ -167,15 +247,11 @@ export function CreateNewCourse() {
               Save
             </button>
             <button
-              type="submit"
+              type="button"
               className=" bg-customRed py-2 px-4 text-white rounded-md hover:bg-red-800"
             >
               Cancel
             </button>
-            <MyButton color="olive" size="md">
-              Press Me
-            </MyButton>
-            <MyInput placeholder="Enter Title" radius="md" size="xl" />
           </div>
         </form>
       </div>
