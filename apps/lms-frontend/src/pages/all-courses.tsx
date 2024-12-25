@@ -6,7 +6,7 @@ export const AllCoursePage = () => {
     <>
       <h1>this is course page</h1>
       <Sidebar />
-      <Dropdown/>
+      {/* <Dropdown/> */}
     </>
   );
 };
