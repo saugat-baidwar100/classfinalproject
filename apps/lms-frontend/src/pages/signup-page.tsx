@@ -1,4 +1,4 @@
 const StudentDashoard = () => {
-  return <h1>this is Student Dashoard</h1>;
+  return <h1>This is SignUp Page.</h1>;
 };
 export default StudentDashoard;
