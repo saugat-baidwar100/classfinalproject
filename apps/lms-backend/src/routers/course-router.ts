@@ -1,13 +1,13 @@
 import { initServer } from '@ts-rest/express';
 import { courseRepo } from '../../../../libs/lms-prisma/src/course-repo';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
+import { chapterSchema } from '@skillprompt-lms/libs/api-contract/modules/chapter';
 
 const s = initServer();
 
 export const courseRouter = s.router(courseContract, {
   getCourse: async () => {
     const course = await courseRepo.findAll({});
-
     return {
       status: 200,
       body: {
@@ -17,9 +17,11 @@ export const courseRouter = s.router(courseContract, {
             title: t.title,
             description: t.description,
             category: t.category,
+            thumbnail: t.thumbnail,
             level: t.level,
             price: t.price,
             completed: t.is_completed,
+            chapters: chapterSchema,
           };
         }),
         isSuccess: true,
@@ -47,9 +49,11 @@ export const courseRouter = s.router(courseContract, {
           title: course.title,
           description: course.description,
           category: course.category,
+          thumbnail: course.thumbnail,
           level: course.level,
           price: course.price,
           completed: course.is_completed,
+          chapters: chapterSchema,
         },
         isSuccess: true,
         message: 'Course retrieved by id',
@@ -62,6 +66,7 @@ export const courseRouter = s.router(courseContract, {
       description: body.description,
       category: body.category,
       level: body.level,
+      thumbnail: body.thumbnail,
       price: body.price,
       is_completed: body.completed,
     });
@@ -73,9 +78,11 @@ export const courseRouter = s.router(courseContract, {
           title: course.title,
           description: course.description,
           category: course.category,
+          thumbnail: course.thumbnail,
           level: course.level,
           price: course.price,
           completed: course.is_completed,
+          chapters: chapterSchema,
         },
         isSuccess: true,
         message: 'The course has been successfully created',
@@ -85,7 +92,6 @@ export const courseRouter = s.router(courseContract, {
 
   updateCourse: async ({ params, body }) => {
     const course = await courseRepo.findById(params.id);
-
     if (!course) {
       return {
         status: 404,
@@ -104,7 +110,7 @@ export const courseRouter = s.router(courseContract, {
       price: body.price,
       is_completed: body.completed,
     });
-    
+
     return {
       status: 200,
       body: {
@@ -116,6 +122,7 @@ export const courseRouter = s.router(courseContract, {
           level: course.level,
           price: course.price,
           completed: course.is_completed,
+          chapters: chapterSchema,
         },
         isSuccess: true,
         message: 'the course has been updated successfully',

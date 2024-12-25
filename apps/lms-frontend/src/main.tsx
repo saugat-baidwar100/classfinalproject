@@ -1,7 +1,8 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { NextUIProvider } from '@nextui-org/react';
-import { AllCoursePage } from './pages/all-courses';
+import App from './app/app';
+// import { AllCoursePage } from './pages/all-courses';
 // import App from './app/app';
 
 const root = ReactDOM.createRoot(
@@ -11,8 +12,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <NextUIProvider>
-      {/* <App /> */}
-      <AllCoursePage/>
+      <App />
+      {/* <AllCoursePage/> */}
     </NextUIProvider>
   </StrictMode>
 );
