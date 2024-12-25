@@ -9,6 +9,7 @@ import PopularCourses from "../components/popular-courses";
 import ConnectBanner from "../components/connect-banner";
 import { MeetTheHeroes } from "../components/meet-the-heroes";
 import AdvertiseBanner from "../components/advertise-banner"
+import TestimonialSection from "../components/testimonial-section"
 
 
 const Home: React.FC = () => {
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
       />
       <MeetTheHeroes />
       <AdvertiseBanner />
+      <TestimonialSection />
       <Footer logoSrc={logo} />
     </div>
   );
