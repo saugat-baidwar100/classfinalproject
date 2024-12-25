@@ -6,7 +6,11 @@ const s = initServer();
 
 export const contentRouter = s.router(contentContract, {
   getContent: async ({ params }) => {
-    const content = await contentRepo.findById(params.chapterId); 
+    const content = await contentRepo.findById({
+      
+        contentId: params.contentId,
+        chapter_id: params.chapterId,
+    }); 
     if (!content) {
       return {
         status: 404,
@@ -22,11 +26,14 @@ export const contentRouter = s.router(contentContract, {
       body: {
         data: [ 
           {
-            id: content.id,
-            chapter_id: content.chapter_id,
-            content: content.content,
-            created_at: content.created_at.toISOString(), // Ensure date serialization
-            updated_at: content.updated_at.toISOString(), // Ensure date serialization
+            id: content.id,    
+            
+            created_at: content.created_at, 
+            updated_at: content.updated_at, 
+            content_type: content.content_type,
+            content_url: content.content_url,
+            duration: content.duration,
+            order: content.order,
             completed: content.completed,
           },
         ],
@@ -36,14 +43,15 @@ export const contentRouter = s.router(contentContract, {
     };
   },
 
-  createContent: async ({ body }) => {
+  createContent: async ({ body, params }) => {
     const content = await contentRepo.create({
-      id: body.chapter_id,
-      chapter_id: body.chapter_id,
-      content: body.content,
-      created_at: body.created_at,
-      updated_at: body.updated_at,
-      completed: body.completed,
+content_type: body.content_type,
+content_url: body.content_url,
+duration: body.duration,
+order: body.order,
+      updated_at: new Date(),
+      created_at: new Date(),
+      chapter: { connect: { id: params.chapterId } }, //connect to chapter
     });
 
     return {
@@ -51,11 +59,13 @@ export const contentRouter = s.router(contentContract, {
       body: {
         data: {
           id: content.id,
-          chapter_id: content.chapter_id,
-          content: content.content,
-          created_at: content.created_at.toISOString(),
-          updated_at: content.updated_at.toISOString(),
-          completed: content.completed,
+      
+          content_type: content.content_type,
+          content_url: content.content_url,
+          duration: content.duration,
+          order: content.order,
+          created_at: content.created_at, 
+          updated_at: content.updated_at, 
         },
         isSuccess: true,
         message: 'The content has been successfully created',
@@ -64,8 +74,10 @@ export const contentRouter = s.router(contentContract, {
   },
 
   updateContent: async ({ params, body }) => {
-    const content = await contentRepo.findById(params.contentId); 
-
+    const content = await contentRepo.findById({
+      contentId: params.contentId,
+      chapter_id: params.chapterId,
+    })
     if (!content) {
       return {
         status: 404,
@@ -76,12 +88,20 @@ export const contentRouter = s.router(contentContract, {
       };
     }
 
-    const updatedContent = await contentRepo.updateById(params.contentId, {
-      chapter_id: body.chapter_id,
-      content: body.content,
-      created_at: body.created_at,
-      updated_at: body.updated_at,
+    const updatedContent = await contentRepo.updateById({
+      contentId: params.contentId,
+      chapter_id: params.chapterId,
+      input: { 
+
+      content_type: body.content_type,
+      content_url: body.content_url,
+      duration: body.duration,
+      order: body.order,
+      created_at: new Date(),
+      updated_at: new Date(),
       completed: body.completed,
+      
+      },
     });
 
     return {
@@ -89,11 +109,14 @@ export const contentRouter = s.router(contentContract, {
       body: {
         data: {
           id: updatedContent.id,
-          chapter_id: updatedContent.chapter_id,
-          content: updatedContent.content,
-          created_at: updatedContent.created_at.toISOString(),
-          updated_at: updatedContent.updated_at.toISOString(),
-          completed: updatedContent.completed,
+          
+         
+          content_type: updatedContent.content_type,
+          content_url: updatedContent.content_url,
+          duration: updatedContent.duration,
+          order: updatedContent.order,
+          created_at: updatedContent.created_at,
+          updated_at: updatedContent.updated_at,
         },
         isSuccess: true,
         message: 'The content has been successfully updated',
@@ -102,7 +125,10 @@ export const contentRouter = s.router(contentContract, {
   },
 
   deleteContent: async ({ params }) => {
-    const content = await contentRepo.findById(params.contentId); // Match contract parameter names
+    const content = await contentRepo.findById({
+      contentId: params.contentId,
+      chapter_id: params.chapterId,
+    }); 
 
     if (!content) {
       return {
@@ -114,7 +140,10 @@ export const contentRouter = s.router(contentContract, {
       };
     }
 
-    await contentRepo.deleteById(params.contentId);
+    await contentRepo.deleteById({
+      contentId: params.contentId,
+      chapter_id: params.chapterId,
+    });
     return {
       status: 200,
       body: {

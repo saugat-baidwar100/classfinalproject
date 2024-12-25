@@ -13,10 +13,12 @@ const SuccessSchema = z.object({
 export const courseSchema = z.object({
   id: z.string(),
   title: z.string(),
+  type: z.string(),
+  instructor: z.string(),
   description: z.string(),
   category: z.string(),
-  level: z.string(),
   price: z.string(),
+  thumbnail: z.string(),
   completed: z.boolean(),
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;

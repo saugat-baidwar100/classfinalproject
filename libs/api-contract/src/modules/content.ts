@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-
+import { chapterSchema } from './chapter';
 const c = initContract();
 
 // Reusable schemas
@@ -16,19 +16,25 @@ const successSchema = z.object({
 
 export const contentSchema = z.object({
   id: z.string(),
-  chapter_id: z.string(),
-  content: z.string(),
-  created_at: z.string().datetime(), 
-  updated_at: z.string().datetime(), 
+  content_type: z.string(),
+  content_url: z.string(),
+  duration: z.number(),
+  order:z.number(),
+  created_at: z.date().default(() => new Date()), 
+  updated_at: z.date().default(() => new Date()), 
   completed: z.boolean(),
 });
+// export const createContentSchema = z.object({
+//   id: z.string(),
+//   content: z.string(),
+// });
 
 export type TcontentSchema = z.infer<typeof contentSchema>;
 
 export const contentContract = c.router({
   getContent: {
     method: 'GET',
-    path: '/api/chapters/:chapterId/contents',
+    path: '/api/chapters/:chapterId/contents/:contentId',
     responses: {
       200: successSchema.extend({
         data: z.array(contentSchema),
@@ -70,7 +76,7 @@ export const contentContract = c.router({
     body: z.object({}),
     responses: {
       200: successSchema.extend({
-        data: contentSchema,
+        data: chapterSchema,
       }),
       400: errorSchema,
       404: errorSchema,

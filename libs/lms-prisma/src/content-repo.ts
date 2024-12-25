@@ -15,30 +15,64 @@ async function create(input: Prisma.ContentCreateInput) {
   });
 }
 
-async function updateById(id: string, input: Prisma.ContentUpdateInput) {
+async function updateById({
+  contentId,
+  chapter_id,
+  input,
+}:
+{
+  contentId: string;
+  chapter_id: string;
+  input: Prisma.ContentUpdateInput;
+}) {
   return db.content.update({
     where: {
-      id,
+    id_chapter_id: {
+      // Use the generated name for the compound unique constraint
+      id: contentId,
+      chapter_id: chapter_id,
     },
+  },
     data: input,
   });
 }
 
-async function deleteById(id: string) {
+async function deleteById({
+  chapter_id,
+  contentId,
+}: {
+  chapter_id: string;
+  contentId: string;
+}) {
   return db.content.delete({
     where: {
-      id,
+      id_chapter_id: {
+        // Correct compound unique constraint field name
+        id: contentId,
+        chapter_id: chapter_id,
+      },
     },
   });
 }
 
-async function findById(id: string) {
-  return db.content.findUnique({
-    where: {
-      id,
+async function findById({
+contentId,
+chapter_id,
+}: {
+contentId: string;
+chapter_id: string;
+}) {
+return db.content.findUnique({
+  where: {
+    id_chapter_id: {
+      // Correct compound unique constraint field name
+      id: contentId,
+      chapter_id: chapter_id,
     },
-  });
+  },
+});
 }
+
 async function findAll(input: Prisma.ContentWhereInput) {
   return db.content.findMany({
     where: input,

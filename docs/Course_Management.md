@@ -49,7 +49,7 @@
 
 | **Feature**          | **HTTP Method** | **Endpoint**                                                  | **Description**                                | **Authorization**        |
 | -------------------- | --------------- | ------------------------------------------------------------- | ---------------------------------------------- | ------------------------ |
-| **List One content** | `GET`           | `/api/chapters/:chapterId/contents`                           | Get a list of contents for a specific chapter. | Public                   |
+| **List One content** | `GET`           | `/api/chapters/:chapterId/contents/:contentId`                           | Get a list of contents for a specific chapter. | Public                   |
 | **Add New content**  | `POST`          | `/api/chapters/:chapterId/contents/add-content`               | Add a new content to a chapter.                | Instructor/Admin (Owner) |
 | **Update content**   | `PUT`           | `/api/chapters/:chapterId/contents/update-content/:contentId` | Update details of a specific content.          | Instructor/Admin (Owner) |
 | **Delete content**   | `DELETE`        | `/api/chapters/:chapterId/contents/delete-content/:contentId` | Remove a content from a chapter.               | Instructor/Admin (Owner) |
@@ -60,9 +60,9 @@
 
 | **Feature**     | **HTTP Method** | **Endpoint**                 | **Description**                    | **Authorization**        |
 | --------------- | --------------- | ---------------------------- | ---------------------------------- | ------------------------ |
-| **Add Quiz**    | `POST`          | `/api/lessons/:id/add-quiz`  | Add a quiz to a specific lesson.   | Instructor/Admin (Owner) |
-| **Update Quiz** | `PUT`           | `/api/update-quize/:quiz_id` | Update details of a specific quiz. | Instructor/Admin (Owner) |
-| **Delete Quiz** | `DELETE`        | `/api/delete-quize/:quiz_id` | Remove a quiz from a lesson.       | Instructor/Admin (Owner) |
+| **Add Quiz**    | `POST`          | `/api/chapter/:id/add-quiz`  | Add a quiz to a specific lesson.   | Instructor/Admin (Owner) |
+| **Update Quiz** | `PUT`           | `/api/update-quiz/:quiz_id` | Update details of a specific quiz. | Instructor/Admin (Owner) |
+| **Delete Quiz** | `DELETE`        | `/api/delete-quiz/:quiz_id` | Remove a quiz from a lesson.       | Instructor/Admin (Owner) |
 
 ---
 
@@ -101,7 +101,7 @@
 }
 ```
 
-#### **Add New Lesson** (`POST /api/chapters/:id/add-lessons`)
+#### **Add New Content** (`POST /api/chapters/:id/add-content`)
 
 ```json
 {
@@ -113,7 +113,7 @@
 }
 ```
 
-#### **Add Quiz** (`POST /api/lessons/:id/add-quiz`)
+#### **Add Quiz** (`POST /api/chapter/:id/add-quiz`)
 
 ```json
 {
@@ -199,9 +199,8 @@ If the lesson is a quiz, it can include additional fields.
 | **Field**       | **Type**         | **Description**                     |
 | --------------- | ---------------- | ----------------------------------- |
 | `id`            | String           | Unique Quiz identifier.             |
-| `lesson_id`     | String           | Reference to the associated Lesson. |
-| `title`         | String           | Quiz title.                         |
-| `questions`     | Array (Question) | Array of questions.                 |
+| `chapter_id`     | String           | Reference to the associated Chapter. |
+| `title`         | String           | Quiz title.                         |              |
 | `max_score`     | Integer          | Maximum score for the quiz.         |
 | `passing_score` | Integer          | Minimum score required to pass.     |
 
@@ -225,8 +224,8 @@ Details of each question in a quiz.
 ### **Relationships**
 
 - **Course → Chapters**: A course can have multiple chapters .
-- **Chapter → Lessons**: A chapter can have multiple lessons .
-- **Lesson → Quiz**: A lesson can optionally include a quiz(optional) .
+- **Chapter → content**: A chapter can have multiple lessons .
+- **Chapter → Quiz**: A chapter can optionally include a quiz(optional) .
 - **Quiz → Questions**: A quiz contains multiple questions & asked only after finishing the course.
 
 ---

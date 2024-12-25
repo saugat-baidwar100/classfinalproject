@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,27 +8,72 @@ datasource db {
 }
 
 model Course {
-  id           String  @id @default(cuid())
+  id           String    @id @default(cuid())
   title        String
+  type         String    @default("general") // Default value
+  instructor   String    @default("TBD")     // Default value
   description  String
   category     String
-  level        String
-  price        String
-  is_completed Boolean @default(false)
+  thumbnail    String
+  price        Float
+  is_completed Boolean   @default(false)
+  chapters     Chapter[] // A course can have multiple chapters
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
 
   @@map("courses")
 }
 
+model Quiz {
+  id            String     @id @default(cuid())
+  title         String
+  max_score     Int
+  passing_score Int
+  chapter_id    String?
+  chapter       Chapter?   @relation(fields: [chapter_id], references: [id])
+  questions     Question[] // Relation to Question model
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  @@unique([chapter_id]) // Ensure chapter_id is unique, allowing a chapter to optionally include a quiz
+}
+model Question {
+  id             String   @id @default(cuid())
+  quiz_id        String
+  question_text  String
+  options        String   // JSON string for options
+  correct_option Int
+  explanation    String?
+  quiz           Quiz     @relation(fields: [quiz_id], references: [id])
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+
+model Chapter {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  course_id   String
+  course      Course    @relation(fields: [course_id], references: [id]) // Relation to Course
+  content     Content[] // A chapter can have multiple lessons (content)
+  quiz        Quiz?     // A chapter can optionally include a quiz (optional relation)
+order       Int      @default(0) // Default value
+  @@unique([id, course_id]) // Add this compound unique constraint
+}
 
 model Content {
-  id           String   @id @default(cuid()) // Unique content identifier
-  content      String   // Content title
-  created_at   DateTime @default(now()) // Timestamp for content creation
-  updated_at   DateTime @updatedAt     // Timestamp for last content update
-  completed    Boolean  @default(false) // Completion status for the content
-  
+  id           String   @id @default(cuid())
+  chapter_id   String
+  content_type String   @default("text") // Default value
+  content_url  String   @default("")     // Default empty string
+  duration     Int      @default(0)      // Default value
+  order        Int      @default(0)      // Default value
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  completed    Boolean  @default(false)
+  chapter      Chapter  @relation(fields: [chapter_id], references: [id])
 
-  @@map("contents") // Maps the table to "contents" in the database
+  @@unique([id, chapter_id]) 
 }
 
 

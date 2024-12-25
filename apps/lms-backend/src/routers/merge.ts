@@ -6,7 +6,10 @@ import { courseRouter } from './course-router';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 import { contentContract } from '@skillprompt-lms/libs/api-contract/modules/content';
 import { contentRouter } from './content-router';
-
+import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
+import { chapterRouter } from './chapter-router';
+import { quizContract } from '@skillprompt-lms/libs/api-contract/modules/quiz';
+import { quizRouter } from './quiz-router';
 const routers = [
   {
     contract: courseContract,
@@ -15,7 +18,16 @@ const routers = [
 {
   contract:contentContract,
   router:contentRouter
+},
+{
+  contract:chapterContract,
+  router:chapterRouter
+},
+{
+  contract:quizContract,
+  router:quizRouter
 }
+
 ];
 
 export function generateEndPoints(app: any) {
