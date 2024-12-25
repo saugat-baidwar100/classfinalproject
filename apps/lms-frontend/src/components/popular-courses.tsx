@@ -49,10 +49,13 @@ export const PopularCourses: React.FC = () => {
   });
 
   return (
-    <section className="py-12 px-4 max-w-7xl mx-auto">
+    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* Header with Filter Buttons */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <h2 className="text-[32px] font-bold font-poppins text-center">Our Popular Courses</h2>
-        <div className="flex flex-col md:flex-row gap-3 items-center">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-poppins text-center md:text-left">
+          Our Popular Courses
+        </h2>
+        <div className="flex flex-wrap md:flex-nowrap gap-3 items-center justify-center md:justify-start">
           <Button
             variant={filter === "all" ? "default" : "outline"}
             onClick={() => setFilter("all")}
@@ -73,15 +76,19 @@ export const PopularCourses: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-center">
+
+      {/* Courses Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredCourses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}
       </div>
+
+      {/* Pagination Dots */}
       <div className="flex justify-center gap-2 mt-8 items-center">
-        <div className="w-2 h-2 rounded-full bg-custom-teal" />
-        <div className="w-2 h-2 rounded-full bg-gray-300" />
-        <div className="w-2 h-2 rounded-full bg-gray-300" />
+        <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-custom-teal" />
+        <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gray-300" />
+        <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gray-300" />
       </div>
     </section>
   );

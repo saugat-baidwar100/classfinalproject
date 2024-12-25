@@ -6,7 +6,7 @@ export function TopCategories() {
   const stats: CategoryStats[] = [
     { value: '2K+', label: 'Active Students' },
     { value: '10+', label: 'Total Courses' },
-    { value: '5+', label: 'Instructor' },
+    { value: '5+', label: 'Instructors' },
     { value: '100%', label: 'Satisfaction Rate' },
   ];
 
@@ -19,9 +19,9 @@ export function TopCategories() {
   ];
 
   return (
-    <div className="py-12 px-4 max-w-7xl mx-auto">
+    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Stats Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-32 mb-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-16">
         {stats.map((stat, index) => (
           <StatsCard key={index} stat={stat} />
         ))}
@@ -29,15 +29,15 @@ export function TopCategories() {
 
       {/* Categories Section */}
       <div className="text-center mb-12">
-        <h2 className="text-[32px] font-bold font-poppins text-black mb-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-poppins text-black mb-4">
           Top Categories
         </h2>
-        <p className="text-[#777575] font-poppins font-[18px]">
+        <p className="text-sm sm:text-base lg:text-lg text-[#777575] font-poppins">
           Explore our Popular Categories
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
         {categories.map((category, index) => (
           <CategoryCard key={index} category={category} />
         ))}

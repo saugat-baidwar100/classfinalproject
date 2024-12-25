@@ -1,4 +1,3 @@
-// Navbar.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -83,12 +82,22 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 
       {/* Mobile Menu */}
       <div
-        className={`absolute top-16 left-0 w-full bg-custom-teal text-custom-white flex flex-col items-center space-y-4 py-4 md:hidden font-poppins transition-all duration-300 z-50 ${
-          isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
+        className={`absolute top-16 left-0 w-full bg-custom-teal text-custom-white flex flex-col items-center py-6 md:hidden font-poppins transition-all duration-500 ease-in-out transform ${
+          isMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-10 opacity-0 invisible'
+        } z-50`}
       >
+        {/* Centered Image */}
+        <div className="flex justify-center items-center mb-4">
+          <img
+            src={logoSrc}
+            alt="Menu Logo"
+            className="w-20 h-20 rounded-full object-cover shadow-lg"
+          />
+        </div>
+
+        {/* Menu Items */}
         <button
-          className="text-custom-teal font-medium"
+          className="text-lg font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-6 py-2 rounded-lg w-11/12 text-center"
           onClick={() => {
             navigate('/');
             setIsMenuOpen(false);
@@ -97,7 +106,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           Home
         </button>
         <button
-          className="hover:text-custom-teal transition duration-300 font-medium"
+          className="text-lg font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-6 py-2 rounded-lg w-11/12 text-center"
           onClick={() => {
             navigate('/courses');
             setIsMenuOpen(false);
@@ -106,16 +115,16 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           Courses
         </button>
         <button
-          className="border-1 border-custom-teal text-custom-teal px-5 py-1.5 rounded-lg font-semibold hover:text-custom-white hover:bg-custom-teal transition duration-300"
+          className="border-2 border-white text-lg font-medium hover:bg-white hover:text-custom-teal transition-all px-6 py-2 rounded-lg w-11/12 text-center"
           onClick={() => {
-            navigate('/login');
+            navigate('/auth/login');
             setIsMenuOpen(false);
           }}
         >
           Login
         </button>
         <button
-          className="bg-custom-teal px-5 py-1.5 rounded-lg font-semibold text-white hover:bg-custom-teal transition duration-300"
+          className="bg-white text-custom-teal text-lg font-medium hover:bg-[#2ca386] hover:text-white transition-all px-6 py-2 rounded-lg w-11/12 text-center"
           onClick={() => {
             navigate('/signup');
             setIsMenuOpen(false);

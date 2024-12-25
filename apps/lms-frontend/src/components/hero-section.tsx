@@ -12,7 +12,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
     <div className="bg-custom-black text-custom-white py-10 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 font-poppins">
       <div className="w-full">
         {/* Flex container with centered alignment */}
-        <div className="flex flex-col md:flex-row items-center md:items-center">
+        <div className="flex flex-col md:flex-row items-center md:items-center space-y-6 md:space-y-0">
           {/* Text Section */}
           <div className="md:w-3/5 space-y-4 lg:space-y-6">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-big-size font-bold text-custom-white">
@@ -25,7 +25,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
               passions and build your expertise. Unlock a brighter future,{' '}
               <br /> one course at a time.
             </p>
-            <div className="flex space-x-4 lg:space-x-6">
+            <div className="flex flex-wrap gap-4 lg:gap-6">
               <div className="flex items-center space-x-2">
                 <span className="text-yellow-400 text-lg md:text-xl lg:text-2xl">
                   📖
@@ -60,11 +60,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
           </div>
 
           {/* Image Section */}
-          <div className="md:w-2/5 flex justify-end ml-auto">
+          <div className="md:w-2/5 flex justify-center md:justify-end ml-auto">
             <img
               src={HeroSectionLogoSrc}
               alt="Hero Section"
-              className="w-64 sm:w-72 md:w-96 lg:w-[500px] h-auto rounded-2xl shadow-2xl object-cover transform transition-transform duration-300"
+              className="w-48 sm:w-64 md:w-80 lg:w-[500px] h-auto rounded-2xl shadow-2xl object-cover transform transition-transform duration-300"
             />
           </div>
         </div>
