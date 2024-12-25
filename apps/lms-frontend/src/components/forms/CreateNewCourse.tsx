@@ -1,8 +1,10 @@
-import { Input } from '@skillprompt-lms/libs/ui-components/components/input';
+import { MyInput } from '@skillprompt-lms/libs/ui-components/components/input';
+import { MyButton } from '@skillprompt-lms/libs/ui-components/components/mybutton';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
+
+import { TextArea } from '@skillprompt-lms/libs/ui-components/components/textarea';
 
 export function CreateNewCourse() {
   const courseSchema = z.object({
@@ -43,15 +45,14 @@ export function CreateNewCourse() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Title */}
           <div>
-            <Input
-              label="Title"
-              type="text"
-              variant="flat"
+            <label className="block text-customGreen text-sm mb-2">Title</label>
+            <MyInput
               placeholder="Enter Title"
-              {...register('title')} // Register the input with React Hook Form
+              radius="md"
+              type="text"
+              {...register('title')}
             />
 
-            {/* Display the error message if validation fails */}
             {errors.title && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.title.message}
@@ -64,14 +65,17 @@ export function CreateNewCourse() {
             <label className="block text-customGreen text-sm mb-2">
               Description
             </label>
-            <textarea
+            <TextArea
+              type="text"
               placeholder="Enter Description"
               {...register('description')}
-              className={clsx(
-                'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
-                errors.description ? 'border-red-500' : 'border-customGray'
-              )}
+              variant="faded"
+              // className={clsx(
+              //   ' rounded px-2 py-1',
+              //   errors.description ? 'border-red-500' : 'border-customGray'
+              // )}
               rows={4}
+              color="primary"
             />
             {errors.description && (
               <p className="text-red-500 text-sm mt-1">
@@ -91,7 +95,7 @@ export function CreateNewCourse() {
                 errors.category ? 'border-red-500' : 'border-customGray'
               } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
-              <option value="" className=" text-customGray">
+              <option value="" className=" text-customGray" disabled>
                 Select Category
               </option>
               <option className=" text-black" value="development">
@@ -137,13 +141,16 @@ export function CreateNewCourse() {
 
           {/* Price */}
           <div>
-            <Input
-              label="Price"
+            <label className="block text-customGreen  text-sm mb-2">
+              Price
+            </label>
+            <MyInput
+              radius="md"
               type="number"
               placeholder="Enter Price"
-              variant="flat"
-              {...register('price', { valueAsNumber: true })} // Register with React Hook Form
+              {...register('price', { valueAsNumber: true })}
             />
+
             {errors.price && (
               <p className="text-red-500 text-sm mt-1">
                 {errors.price.message}
@@ -165,6 +172,10 @@ export function CreateNewCourse() {
             >
               Cancel
             </button>
+            <MyButton color="olive" size="md">
+              Press Me
+            </MyButton>
+            <MyInput placeholder="Enter Title" radius="md" size="xl" />
           </div>
         </form>
       </div>
