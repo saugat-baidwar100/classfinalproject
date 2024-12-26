@@ -14,12 +14,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-<<<<<<< HEAD
-      colors: {
-        customGreen: '#3EBD98',
-        customRed: '#F51A1A',
-        customGray: '#9D9D9D',
-=======
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
       },
@@ -33,7 +27,9 @@ module.exports = {
         'custom-dark-teal': '#289675',
         'custom-black': '#000000',
         'custom-white': '#ffffff',
->>>>>>> 4fdfde2272577f77a4b98b60df4192f8a44317bf
+        'customGreen': '#3EBD98',
+        'customRed': '#F51A1A',
+        'customGray': '#9D9D9D',
       },
     },
   },

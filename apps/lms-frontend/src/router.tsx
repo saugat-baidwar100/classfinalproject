@@ -6,6 +6,7 @@ import { LoginPage } from './pages/login-page';
 
 import { ResetPassword } from './modules/auth/reset-password';
 import { ForgotPassword } from './modules/auth/forget-password';
+import { CreateNewCourse } from './components/forms/CreateNewCourse';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     path: '/resetpassword',
     element: <ResetPassword />,
   },
+  {
+    path:'/create-course',
+    element:<CreateNewCourse/>
+  }
 ]);
 export function Approuter() {
   return <RouterProvider router={router} />;

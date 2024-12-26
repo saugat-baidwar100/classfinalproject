@@ -1,13 +1,5 @@
-// <<<<<<< HEAD
-// import { CreateNewCourse } from '../components/forms/CreateNewCourse';
-
-// export const Home = () => {
-//   return (
-//     <div>
-//       <CreateNewCourse />
-// =======
 import React from 'react';
-import Navbar from '../components/navbar';
+import Navbar from '../components/Navbar';
 import HeroSection from '../components/hero-section';
 import Footer from '../components/footer';
 import logo from '../assets/images/logo.png';
@@ -22,6 +14,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <Navbar logoSrc={logo} />
+      {/* <CreateNewCourse /> */}
       <HeroSection HeroSectionLogoSrc={HeroSectionLogo} />
       <TopCategories />
       <PopularCourses />
@@ -32,7 +25,6 @@ const Home: React.FC = () => {
       <MeetTheHeroes />
       <AdvertiseBanner />
       <Footer logoSrc={logo} />
-      {/* >>>>>>> 4fdfde2272577f77a4b98b60df4192f8a44317bf */}
     </div>
   );
 };
