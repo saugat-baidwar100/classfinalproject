@@ -18,9 +18,10 @@ export const courseRouter = s.router(courseContract, {
             description: t.description,
             category: t.category,
             thumbnail: t.thumbnail,
-          type: t.type,
-          instructor: t.instructor,
+            type: t.type,
+            instructor: t.instructor,
             price: t.price.toString(),
+            level: t.level,
             completed: t.is_completed,
             chapters: chapterSchema,
           };
@@ -51,9 +52,10 @@ export const courseRouter = s.router(courseContract, {
           description: course.description,
           category: course.category,
           thumbnail: course.thumbnail,
-        type: course.type,
-        instructor: course.instructor,
+          type: course.type,
+          instructor: course.instructor,
           price: course.price.toString(),
+          level: course.level,
           completed: course.is_completed,
           chapters: chapterSchema,
         },
@@ -71,6 +73,7 @@ export const courseRouter = s.router(courseContract, {
       instructor: body.instructor,
       thumbnail: body.thumbnail,
       price: parseFloat(body.price),
+      level: body.level,
       is_completed: body.completed,
     });
     return {
@@ -85,6 +88,7 @@ export const courseRouter = s.router(courseContract, {
           type: course.type,
           instructor: course.instructor,
           price: course.price.toString(),
+          level: course.level,
           completed: course.is_completed,
           chapters: chapterSchema,
         },
@@ -110,7 +114,7 @@ export const courseRouter = s.router(courseContract, {
       title: body.title,
       description: body.description,
       category: body.category,
-  
+
       price: parseFloat(body.price),
       is_completed: body.completed,
     });
@@ -123,7 +127,7 @@ export const courseRouter = s.router(courseContract, {
           title: course.title,
           description: course.description,
           category: course.category,
-          
+
           price: course.price.toString(),
           completed: course.is_completed,
           chapters: chapterSchema,

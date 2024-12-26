@@ -1,5 +1,5 @@
 import { initServer } from '@ts-rest/express';
-import {chapterRepo} from '@skillprompt-lms/libs/lms-prisma/chapter-repo'
+import { chapterRepo } from '@skillprompt-lms/libs/lms-prisma/chapter-repo';
 import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
 import { contentSchema } from '@skillprompt-lms/libs/api-contract/modules/content';
 import { quizSchema } from '@skillprompt-lms/libs/api-contract/modules/quiz';
@@ -99,7 +99,7 @@ export const chapterRouter = s.router(chapterContract, {
       input: {
         title: body.title,
         description: body.description,
-        order: body.order
+        order: body.order,
       },
     });
 

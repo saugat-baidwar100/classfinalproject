@@ -18,7 +18,7 @@ export const chapterSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
-  "order": z.number(),
+  order: z.number(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
 });

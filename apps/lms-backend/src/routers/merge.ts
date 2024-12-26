@@ -1,35 +1,34 @@
 import { createExpressEndpoints } from '@ts-rest/express';
 
-import { logger } from '../../../../libs/api-contract/src/utils/logger';
-
 import { courseRouter } from './course-router';
+
+import { chapterRouter } from './chapter-router';
+import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 import { contentContract } from '@skillprompt-lms/libs/api-contract/modules/content';
 import { contentRouter } from './content-router';
-import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
-import { chapterRouter } from './chapter-router';
 import { quizContract } from '@skillprompt-lms/libs/api-contract/modules/quiz';
 import { quizRouter } from './quiz-router';
+import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
+
 const routers = [
   {
     contract: courseContract,
     router: courseRouter,
   },
-{
-  contract:contentContract,
-  router:contentRouter
-},
-{
-  contract:chapterContract,
-  router:chapterRouter
-},
-{
-  contract:quizContract,
-  router:quizRouter
-}
-
+  {
+    contract: contentContract,
+    router: contentRouter,
+  },
+  {
+    contract: chapterContract,
+    router: chapterRouter,
+  },
+  {
+    contract: quizContract,
+    router: quizRouter,
+  },
 ];
-
 export function generateEndPoints(app: any) {
   return routers.map(({ contract, router }) => {
     createExpressEndpoints(contract, router, app, {

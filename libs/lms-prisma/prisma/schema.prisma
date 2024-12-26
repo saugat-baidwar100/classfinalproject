@@ -14,10 +14,11 @@ model Course {
   instructor   String    @default("TBD")     // Default value
   description  String
   category     String
+  level        String
   thumbnail    String
   price        Float
   is_completed Boolean   @default(false)
-  chapters     Chapter[] // A course can have multiple chapters
+  chapters     Chapter[]
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
 
