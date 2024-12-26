@@ -38,10 +38,11 @@
 
 | **Feature**           | **HTTP Method** | **Endpoint**                                                | **Description**                               | **Authorization**        |
 | --------------------- | --------------- | ----------------------------------------------------------- | --------------------------------------------- | ------------------------ |
-| **List All Chapters** | `GET`           | `/api/courses/:id/chapters`                                 | Get a list of chapters for a specific course. | Public                   |
+| **List All Chapters** | `GET`           | `/api/courses/:id/chapters`                                 | Get a list of chapters for a specific course. | Public       
+| **Get Chapter Detail** | `GET`           | `/api/courses/:id/chapters/:chapterId`                                 | Get a list of chapters for a specific course. | Public                        |
 | **Add New Chapter**   | `POST`          | `/api/courses/:id/chapters/add-chapter`                     | Add a new chapter to a specific course.       | Instructor/Admin (Owner) |
-| **Update Chapter**    | `PUT`           | `/api/courses/:courseId/chapters/update-chapter/:chapterId` | Update details of a specific chapter.         | Instructor/Admin (Owner) |
-| **Delete Chapter**    | `DELETE`        | `/api/courses/:courseId/chapters/delete-chapter/:chapterId` | Remove a chapter from a course.               | Instructor/Admin (Owner) |
+| **Update Chapter**    | `PUT`           | `/api/courses/:id/chapters/update-chapter/:chapterId` | Update details of a specific chapter.         | Instructor/Admin (Owner) |
+| **Delete Chapter**    | `DELETE`        | `/api/courses/:id/chapters/delete-chapter/:chapterId` | Remove a chapter from a course.               | Instructor/Admin (Owner) |
 
 ---
 
@@ -171,7 +172,6 @@ A course consists of multiple chapters, each containing specific lessons or modu
 | `course_id`   | String    | Reference to the associated Course.                    |
 | `title`       | String    | Chapter title.                                         |
 | `description` | Text      | Optional description of the chapter.                   |
-| `order`       | Integer   | Position of the chapter in the course (e.g., 1, 2, 3). |
 | `content_id`  | String FK | List of associated content ID.                         |
 | `created_at`  | DateTime  | Timestamp for chapter creation.                        |
 | `updated_at`  | DateTime  | Timestamp for last chapter update.                     |

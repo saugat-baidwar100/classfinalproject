@@ -32,7 +32,7 @@ async function deleteById(id: string) {
   });
 }
 
-async function findById(id: string) {
+export async function findById(id: string) {
   return db.course.findUnique({
     where: {
       id,
