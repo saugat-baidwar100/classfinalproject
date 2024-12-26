@@ -17,21 +17,21 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           <img
             src={logoSrc}
             alt="Logo"
-            className="h-6 sm:h-8 md:h-10 lg:h-12 w-auto mr-2 sm:mr-3"
+            className="h-6 sm:h-8 md:h-10 w-auto mr-2 sm:mr-3"
           />
         </button>
       </div>
 
       {/* Desktop Navigation Links */}
-      <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+      <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
         <button
-          className="text-base lg:text-medium-size text-custom-teal border-b-2 border-custom-teal pb-1 font-semibold"
+          className="text-sm lg:text-medium-size text-custom-teal border-b-2 border-custom-teal pb-1 font-semibold"
           onClick={() => navigate('/')}
         >
           Home
         </button>
         <button
-          className="text-base lg:text-medium-size hover:text-custom-teal transition-colors duration-300 font-medium"
+          className="text-sm lg:text-medium-size hover:text-custom-teal transition-colors duration-300 font-medium"
           onClick={() => navigate('/courses')}
         >
           Courses
@@ -39,15 +39,15 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
       </div>
 
       {/* Buttons */}
-      <div className="hidden md:flex items-center space-x-4 lg:space-x-5">
+      <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
         <button
-          className="border-2 border-custom-teal text-sm sm:text-base lg:text-small-size text-custom-teal px-4 lg:px-5 py-1.5 lg:py-2 rounded-lg font-semibold hover:text-custom-white hover:bg-custom-teal transition duration-300"
+          className="border-2 border-custom-teal text-xs sm:text-sm lg:text-base text-custom-teal px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg font-semibold hover:text-custom-white hover:bg-custom-teal transition duration-300"
           onClick={() => navigate('/auth/login')}
         >
           Login
         </button>
         <button
-          className="bg-custom-teal px-4 lg:px-5 py-1.5 lg:py-2 rounded-lg font-semibold text-sm sm:text-base lg:text-small-size text-custom-white hover:bg-custom-teal transition duration-300"
+          className="bg-custom-teal px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg font-semibold text-xs sm:text-sm lg:text-base text-custom-white hover:bg-custom-teal transition duration-300"
           onClick={() => navigate('/signup')}
         >
           Signup
@@ -82,7 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 
       {/* Mobile Menu */}
       <div
-        className={`absolute top-16 left-0 w-full bg-custom-teal text-custom-white flex flex-col items-center py-6 md:hidden font-poppins transition-all duration-500 ease-in-out transform ${
+        className={`absolute top-full left-0 w-full bg-custom-teal text-custom-white flex flex-col items-center py-6 md:hidden font-poppins transition-all duration-500 ease-in-out transform ${
           isMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-10 opacity-0 invisible'
         } z-50`}
       >
@@ -91,13 +91,13 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           <img
             src={logoSrc}
             alt="Menu Logo"
-            className="w-20 h-20 rounded-full object-cover shadow-lg"
+            className="w-16 h-16 rounded-full object-cover shadow-lg"
           />
         </div>
 
         {/* Menu Items */}
         <button
-          className="text-lg font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-6 py-2 rounded-lg w-11/12 text-center"
+          className="text-base font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-4 py-2 rounded-lg w-11/12 text-center mb-2"
           onClick={() => {
             navigate('/');
             setIsMenuOpen(false);
@@ -106,7 +106,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           Home
         </button>
         <button
-          className="text-lg font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-6 py-2 rounded-lg w-11/12 text-center"
+          className="text-base font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-4 py-2 rounded-lg w-11/12 text-center mb-2"
           onClick={() => {
             navigate('/courses');
             setIsMenuOpen(false);
@@ -115,7 +115,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           Courses
         </button>
         <button
-          className="border-2 border-white text-lg font-medium hover:bg-white hover:text-custom-teal transition-all px-6 py-2 rounded-lg w-11/12 text-center"
+          className="text-base font-medium border-2 border-white hover:bg-white hover:text-custom-teal transition-all px-4 py-2 rounded-lg w-11/12 text-center mb-2"
           onClick={() => {
             navigate('/auth/login');
             setIsMenuOpen(false);
@@ -124,7 +124,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           Login
         </button>
         <button
-          className="bg-white text-custom-teal text-lg font-medium hover:bg-[#2ca386] hover:text-white transition-all px-6 py-2 rounded-lg w-11/12 text-center"
+          className="text-base font-medium bg-white text-custom-teal hover:bg-[#2ca386] hover:text-white transition-all px-4 py-2 rounded-lg w-11/12 text-center"
           onClick={() => {
             navigate('/signup');
             setIsMenuOpen(false);
@@ -138,3 +138,4 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 };
 
 export default Navbar;
+

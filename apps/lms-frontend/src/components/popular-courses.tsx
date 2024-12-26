@@ -49,28 +49,31 @@ export const PopularCourses: React.FC = () => {
   });
 
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Header with Filter Buttons */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-poppins text-center md:text-left">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 gap-4">
+        <h2 className="text-xl sm:text-2xl lg:text-[32px] font-bold font-poppins text-center md:text-left">
           Our Popular Courses
         </h2>
-        <div className="flex flex-wrap md:flex-nowrap gap-3 items-center justify-center md:justify-start">
+        <div className="flex flex-wrap md:flex-nowrap gap-2 sm:gap-3 items-center justify-center md:justify-start">
           <Button
             variant={filter === "all" ? "default" : "outline"}
             onClick={() => setFilter("all")}
+            className="text-xs sm:text-[16px]"
           >
             All courses
           </Button>
           <Button
             variant={filter === "paid" ? "default" : "outline"}
             onClick={() => setFilter("paid")}
+            className="text-xs sm:text-[16px"
           >
             Paid courses
           </Button>
           <Button
             variant={filter === "free" ? "default" : "outline"}
             onClick={() => setFilter("free")}
+            className="text-xs sm:text-[16px]"
           >
             Free courses
           </Button>
@@ -78,20 +81,21 @@ export const PopularCourses: React.FC = () => {
       </div>
 
       {/* Courses Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {filteredCourses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}
       </div>
 
       {/* Pagination Dots */}
-      <div className="flex justify-center gap-2 mt-8 items-center">
-        <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-custom-teal" />
-        <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gray-300" />
-        <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gray-300" />
+      <div className="flex justify-center gap-2 mt-6 sm:mt-8 items-center">
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-custom-teal" />
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
+        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
       </div>
     </section>
   );
 };
 
 export default PopularCourses;
+
