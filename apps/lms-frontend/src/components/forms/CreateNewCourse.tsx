@@ -1,28 +1,10 @@
-import {
-  Input,
-  MyInput,
-} from '@skillprompt-lms/libs/ui-components/components/input';
+import { Input } from '@skillprompt-lms/libs/ui-components/components/input';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MyTextArea } from '@skillprompt-lms/libs/ui-components/components/textarea';
+import { TextArea } from '@skillprompt-lms/libs/ui-components/components/textarea';
 import { MySelect } from '@skillprompt-lms/libs/ui-components/components/my-select';
-
-export const animals = [
-  { key: 'cat', label: 'Cat' },
-  { key: 'dog', label: 'Dog' },
-  { key: 'elephant', label: 'Elephant' },
-  { key: 'lion', label: 'Lion' },
-  { key: 'tiger', label: 'Tiger' },
-  { key: 'giraffe', label: 'Giraffe' },
-  { key: 'dolphin', label: 'Dolphin' },
-  { key: 'penguin', label: 'Penguin' },
-  { key: 'zebra', label: 'Zebra' },
-  { key: 'shark', label: 'Shark' },
-  { key: 'whale', label: 'Whale' },
-  { key: 'otter', label: 'Otter' },
-  { key: 'crocodile', label: 'Crocodile' },
-];
+import { error } from 'console';
 
 export function CreateNewCourse() {
   const courseSchema = z.object({
@@ -77,6 +59,7 @@ export function CreateNewCourse() {
     console.log('Form Data:', data);
     // Handle form submission logic here
   };
+  console.log('error', error);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-800">
@@ -86,156 +69,76 @@ export function CreateNewCourse() {
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <MySelect
-              placeholder="select animal"
-              label={<p className="text-red-400">Animal</p>}
-              options={animals}
-            />
-          </div>
-          <div>
-            <MySelect
-              placeholder="select courses"
-              label={<p className="text-red-400">Courses</p>}
-              options={[
-                { key: '1', label: 'Node' },
-                { key: '2', label: 'React' },
-              ]}
-            />
-          </div>
-          <div>
+            {/* Title */}
             <Input
-              label={<p className="text-red-500">Name</p>}
+              label={<p className="text-green-500">Name</p>}
               placeholder="enter your name"
               {...register('title')}
               errorMessage={errors.title?.message}
             />
           </div>
-          {/* Title */}
-          <div>
-            <label className="block text-customGreen text-sm mb-2">Title</label>
-            <MyInput
-              label="Title"
-              labelPlacement="outside-left"
-              placeholder="Enter Title"
-              radius="md"
-              type="text"
-              {...register('title')}
-              errorMessage={errors.title?.message}
-            />
-            {/* {errors.title && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.title.message}
-              </p>
-            )} */}
-          </div>
 
           {/* Description */}
           <div>
-            <label className="block text-customGreen text-sm mb-2">
-              Description
-            </label>
-            <MyTextArea
+            <TextArea
+              label={<p className="text-green-500">Category</p>}
               type="text"
               placeholder="Enter Description"
               {...register('description')}
               rows={4}
-              error={!!errors.description}
             />
-            {errors.description && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.description.message}
-              </p>
-            )}
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-green-500 text-sm mb-2">
-              Category
-            </label>
-            <select
+            <MySelect
+              disableSelectorIconRotation
+              label={<p className="text-green-500">Category</p>}
+              placeholder="select category"
               {...register('category')}
-              className={`w-full px-4 py-2 border text-black ${
-                errors.type ? 'border-red-500' : 'border-gray-500'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            >
-              <option value="" className="text-gray-500">
-                Select Category
-              </option>
-              <option className="text-black" value="frontend">
-                Front-end Development
-              </option>
-              <option className="text-black" value="backend">
-                Back-end Development
-              </option>
-              <option className="text-black" value="fullstack">
-                Fullstack Development
-              </option>
-            </select>
-            {errors.category && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.category.message}
-              </p>
-            )}
+              errorMessage={errors.category?.message}
+              options={[
+                { key: '1', label: 'Select Category' },
+                { key: '2', label: 'Front-end Developtment' },
+                { key: '3', label: 'Back-end Development' },
+                { key: '4', label: 'Fullstack Development' },
+              ]}
+            />
           </div>
 
           {/* Type */}
           <div>
-            <label className="block text-customGreen  text-sm mb-2">Type</label>
-            <select
-              {...register('type')}
-              className={`w-full px-4 py-2 border text-black ${
-                errors.type ? 'border-red-500' : 'border-customGray'
-              } rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            >
-              <option className=" text-customGray" value="">
-                Select Type
-              </option>
-              <option className=" text-black" value="online">
-                Paid
-              </option>
-              <option className=" text-black" value="offline">
-                Free
-              </option>
-            </select>
-            {errors.type && (
-              <p className="text-red-500 text-sm mt-1">{errors.type.message}</p>
-            )}
+            <MySelect
+              label={<p className="text-green-500">Type</p>}
+              placeholder="Select type"
+              options={[
+                { key: '1', label: 'Select type' },
+                { key: '2', label: 'Free' },
+                { key: '3', label: 'Paid' },
+              ]}
+              {...register('title')}
+              errorMessage={errors.title?.message}
+            />
           </div>
 
-          {/* Price */}
+          {/*  */}
           <div>
-            <label className="block text-customGreen  text-sm mb-2">
-              Price
-            </label>
-            <MyInput
-              radius="md"
+            <Input
               type="number"
-              placeholder="Enter Price"
+              label={<p className="text-green-500">Price</p>}
+              placeholder="Enter price"
               {...register('price', { valueAsNumber: true })}
             />
-            {errors.price && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.price.message}
-              </p>
-            )}
           </div>
 
-          {/* Thumbnail */}
           <div>
-            <label className="block text-customGreen text-sm mb-2">
-              Thumbnail
-            </label>
-            <input
+            <Input
               type="file"
+              label="Thumbnail"
+              placeholder="Upload Thu"
               {...register('thumbnail')}
-              className="w-full px-4 py-2 border text-black rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              errorMessage={errors.thumbnail?.message?.toString()}
             />
-            {errors.thumbnail && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.thumbnail?.message?.toString()}
-              </p>
-            )}
           </div>
 
           {/* Buttons */}

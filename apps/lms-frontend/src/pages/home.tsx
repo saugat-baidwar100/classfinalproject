@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
 import HeroSection from '../components/hero-section';
 import Footer from '../components/footer';
 import logo from '../assets/images/logo.png';
@@ -9,6 +8,7 @@ import PopularCourses from '../components/popular-courses';
 import ConnectBanner from '../components/connect-banner';
 import { MeetTheHeroes } from '../components/meet-the-heroes';
 import AdvertiseBanner from '../components/advertise-banner';
+import Navbar from '../components/Navbar';
 
 const Home: React.FC = () => {
   return (

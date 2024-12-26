@@ -1,26 +1,13 @@
-// import {
-//   Button as NUIButton,
-//   ButtonProps as NUIButtonProps,
-// } from '@nextui-org/react';
+import {
+  Button as NUIButton,
+  ButtonProps as NUIButtonProps,
+} from '@nextui-org/react';
 
-// interface ButtonProps extends NUIButtonProps {
-//   key: string;
-//   name: string;
-// }
-
-// export function Button(props: ButtonProps) {
-//   return <NUIButton {...props}>{props.name}</NUIButton>;
-// }
-import { Button as NUIButton, ButtonProps as NUIButtonProps } from '@nextui-org/react';
-interface ButtonProps extends NUIButtonProps{
-  key: string
-  name:string
-
+interface ButtonProps extends NUIButtonProps {
+  key: string;
+  name: string;
 }
-export  function Button(props:ButtonProps) {
-  return (
-    <NUIButton {...props}>
-      {props.name}
-    </NUIButton>
-  );
+
+export function Button(props: ButtonProps) {
+  return <NUIButton {...props}>{props.name}</NUIButton>;
 }
