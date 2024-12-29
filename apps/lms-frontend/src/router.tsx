@@ -6,6 +6,7 @@ import { LoginPage } from './pages/login-page';
 
 import { ResetPassword } from './modules/auth/reset-password';
 import { ForgotPassword } from './modules/auth/forget-password';
+import { AllCoursePage } from './pages/all-courses';
 
 const router = createBrowserRouter([
   {
@@ -18,8 +19,8 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/instructor',
-    // element: <Navbar />,
+    path: '/courses',
+    element: <AllCoursePage />,
   },
 
   {

@@ -4,5 +4,11 @@ type T = {
 };
 
 export const CheckBoxInput = ({ title }: T) => {
-  return <Checkbox>{title}</Checkbox>;
+  return (
+    <div >
+      <Checkbox>
+        <span className="text-lg font-poppins">{title}</span>
+      </Checkbox>
+    </div>
+  );
 };
