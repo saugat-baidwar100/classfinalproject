@@ -11,7 +11,7 @@ export function StatsCard({ stat }: StatsCardProps) {
       <div className="text-[#3ebd98] text-2xl sm:text-3xl md:text-[32px] font-semibold font-poppins mb-2 sm:mb-3">
         {stat.value}
       </div>
-      <div className="text-black text-sm sm:text-base md:text-[16px] font-medium font-poppins text-center">
+      <div className="text-black text-sm sm:text-base md:text-[16px] font-semibold font-poppins text-center">
         {stat.label}
       </div>
     </div>
