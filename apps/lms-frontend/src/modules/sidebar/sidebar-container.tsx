@@ -7,9 +7,9 @@ export const Sidebar = () => {
   return (
     <div>
       <CourseCategory />
-      <Divider className="my-7 w-[270px]" />
+      <Divider className="my-4 w-[270px]" />
       <Instructor />
-      <Divider className="my-7 w-[270px]" />
+      <Divider className="my-4 w-[270px]" />
       <Price />
     </div>
   );
