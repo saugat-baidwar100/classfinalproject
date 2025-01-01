@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
         </button>
         <button
           className="bg-custom-teal px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg font-semibold text-xs sm:text-sm lg:text-base text-custom-white hover:bg-custom-teal transition duration-300"
-          onClick={() => navigate('/signup')}
+          onClick={() => navigate('/auth/register')}
         >
           Signup
         </button>
