@@ -11,6 +11,7 @@ export const contentRouter = s.router(contentContract, {
         contentId: params.contentId,
         chapter_id: params.chapterId,
     }); 
+    
     if (!content) {
       return {
         status: 404,

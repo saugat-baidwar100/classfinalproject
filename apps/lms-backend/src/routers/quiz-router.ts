@@ -6,7 +6,7 @@ const s = initServer();
 
 export const quizRouter = s.router(quizContract, {
 
-  createQuiz: async ({ body }) => {
+  createQuiz: async ({ body, params }) => {
     
     const quiz = await quizRepo.create({
       title: body.title,
@@ -33,7 +33,10 @@ export const quizRouter = s.router(quizContract, {
 
   updateQuiz: async ({ params, body }) => {
     // Find the quiz by its quiz_id
-    const quiz = await quizRepo.findById(params.quiz_id);
+    const quiz = await quizRepo.findById({
+      quizId: params.quiz_id,
+      chapter_id: params.chapter_id,
+    });
 
     if (!quiz) {
       return {
@@ -47,8 +50,10 @@ export const quizRouter = s.router(quizContract, {
 
     // Update the quiz with the provided details
     const updatedQuiz = await quizRepo.updateById({
-      id: params.quiz_id,
+      quizId: params.quiz_id,
+      chapter_id: params.chapter_id,
       input: {
+        id: params.quiz_id,
         title: body.title,
         max_score: body.max_score,
         passing_score: body.passing_score,
@@ -74,7 +79,10 @@ export const quizRouter = s.router(quizContract, {
 
   deleteQuiz: async ({ params }) => {
     // Find the quiz to be deleted
-    const quiz = await quizRepo.findById(params.quiz_id);
+    const quiz = await quizRepo.findById({
+      quizId: params.quiz_id,
+      chapter_id: params.chapter_id,
+    });
 
     if (!quiz) {
       return {
@@ -87,7 +95,11 @@ export const quizRouter = s.router(quizContract, {
     }
 
     // Delete the quiz
-    await quizRepo.deleteById(params.quiz_id);
+    await quizRepo.deleteById({
+      quizId: params.quiz_id,
+      chapter_id: params.chapter_id,
+      input: {}, // Add an empty input object as required
+    });
     return {
       status: 200,
       body: {

@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-
+import { chapterSchema } from './chapter';
 import { z } from 'zod';
 
 const c = initContract();
@@ -37,7 +37,6 @@ passing_score: z.number(),
 export type TquizSchema = z.infer<typeof quizSchema>;
 
 export const quizContract = c.router({
-
   createQuiz: {
     method: 'POST',
     path: '/api/chapter/:id/add-quiz',
@@ -53,7 +52,7 @@ export const quizContract = c.router({
   },
   updateQuiz: {
     method: 'PUT',
-    path: '/api/update-quiz/:quiz_id',
+    path: '/api/chapter/:chapter_id/update-quiz/:quiz_id',
     body: quizSchema.omit({ id: true }),
     responses: {
       200: successSchema.extend({
@@ -62,20 +61,22 @@ export const quizContract = c.router({
       400: errorSchema,
       500: errorSchema,
     },
-    summary: 'Update Quiz by ID',
+    summary: 'Update Quiz by ID and Chapter ID',
   },
   deleteQuiz: {
     method: 'DELETE',
-    path: '/api/delete-quiz/:quiz_id',
-    body: z.object({}),
+    path: '/api/chapter/:chapter_id/delete-quiz/:quiz_id', // Include chapter_id in the path
+    body: z.object({}), // No body required
     responses: {
       200: successSchema.extend({
-        data: quizSchema,
+        data: chapterSchema,
       }),
       400: errorSchema,
       404: errorSchema,
       500: errorSchema,
     },
-    summary: 'Delete Quiz by ID',
+    summary: 'Delete Quiz by ID and Chapter ID',
   },
 });
+
+

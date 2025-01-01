@@ -18,10 +18,11 @@ model Course {
   thumbnail    String
   price        Float
   is_completed Boolean   @default(false)
-  chapters     Chapter[]
+  chapters     Chapter[] // one-to-many relation with Chapter
+  tasks        Task[]    // one-to-many relation with Task
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
-
+  progress     TaskProgress[] // one-to-many relation with TaskProgress
   @@map("courses")
 }
 
@@ -30,12 +31,14 @@ model Quiz {
   title         String
   max_score     Int
   passing_score Int
-  chapter_id    String?
+  chapter_id    String?    @unique
   chapter       Chapter?   @relation(fields: [chapter_id], references: [id])
   questions     Question[] // Relation to Question model
+  taskProgress  TaskProgress[] // Relation to TaskProgress
   created_at    DateTime   @default(now())
   updated_at    DateTime   @updatedAt
-  @@unique([chapter_id]) // Ensure chapter_id is unique, allowing a chapter to optionally include a quiz
+
+  @@unique([id, chapter_id])
 }
 model Question {
   id             String   @id @default(cuid())
@@ -47,7 +50,10 @@ model Question {
   quiz           Quiz     @relation(fields: [quiz_id], references: [id])
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
+
+  @@unique([id, quiz_id]) 
 }
+
 
 
 model Chapter {
@@ -55,29 +61,50 @@ model Chapter {
   title       String
   description String
   course_id   String
-  course      Course    @relation(fields: [course_id], references: [id]) // Relation to Course
-  content     Content[] // A chapter can have multiple lessons (content)
-  quiz        Quiz?     // A chapter can optionally include a quiz (optional relation)
-order       Int      @default(0) // Default value
-  @@unique([id, course_id]) // Add this compound unique constraint
+  course      Course    @relation(fields: [course_id], references: [id])
+  content     Content[] // one-to-many relation with Content
+  quiz        Quiz?     // optional one-to-one relation with Quiz
+  order       Int      @default(0)
+  taskProgress TaskProgress[] // one-to-many relation with TaskProgress
+  @@unique([id, course_id])
 }
 
 model Content {
   id           String   @id @default(cuid())
   chapter_id   String
-  content_type String   @default("text") // Default value
-  content_url  String   @default("")     // Default empty string
-  duration     Int      @default(0)      // Default value
-  order        Int      @default(0)      // Default value
+  content_type String   @default("text")
+  content_url  String   @default("")
+  duration     Int      @default(0)
+  order        Int      @default(0)
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
   completed    Boolean  @default(false)
   chapter      Chapter  @relation(fields: [chapter_id], references: [id])
-
-  @@unique([id, chapter_id]) 
+  @@unique([id, chapter_id])
 }
 
+model TaskProgress {
+  id           String   @id @default(cuid())
+  user_id      String
+  course_id    String
+  progress     Int      // progress percentage (0-100)
+  chapter_id   String?  // optional relation with Chapter
+  quiz_id      String?  // optional relation with Quiz
+  last_updated DateTime @updatedAt // auto-updated timestamp
+  user         User     @relation(fields: [user_id], references: [id])
+  course       Course   @relation(fields: [course_id], references: [id])
+  chapter      Chapter? @relation(fields: [chapter_id], references: [id])
+  quiz         Quiz?    @relation(fields: [quiz_id], references: [id])
+  @@unique([user_id, chapter_id])
+}
 
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  course_id   String
+  course      Course     @relation(fields: [course_id], references: [id])
+}
 
 model User {
   id                String  @id @default(cuid())
@@ -86,6 +113,6 @@ model User {
   username          String  @unique
   password          String
   is_email_verified Boolean @default(false)
-
+  progress          TaskProgress[] // one-to-many relation with TaskProgress
   @@map("users")
 }

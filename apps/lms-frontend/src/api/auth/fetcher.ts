@@ -1,4 +1,4 @@
-import { TLoginResponseCodes } from '../../../../../libs/api-contract/src/auth';
+import { TLoginResponseCodes } from '../../../../../libs/api-contract/src/modules/auth';
 import { env } from '../../app/env';
 
 export type TLoginInput = {

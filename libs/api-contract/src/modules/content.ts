@@ -24,10 +24,10 @@ export const contentSchema = z.object({
   updated_at: z.date().default(() => new Date()), 
   completed: z.boolean(),
 });
-// export const createContentSchema = z.object({
-//   id: z.string(),
-//   content: z.string(),
-// });
+export const createContentSchema = z.object({
+  id: z.string(),
+  content: z.string(),
+});
 
 export type TcontentSchema = z.infer<typeof contentSchema>;
 

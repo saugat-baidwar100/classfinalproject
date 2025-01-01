@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { chapterSchema } from './chapter';
+// import { chapterSchema } from './chapter';
 import { initContract } from '@ts-rest/core';
 const c = initContract();
 
@@ -24,7 +24,7 @@ export const courseSchema = z.object({
   completed: z.boolean(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
-  chapters: chapterSchema,
+  
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;
 

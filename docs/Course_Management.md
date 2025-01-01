@@ -69,6 +69,14 @@
 
 #### **User Progress & Review**
 
+| **Feature**        | **HTTP Method** | **Endpoint**                               | **Description**                             | **Authorization**   |
+| ------------------ | --------------- | ------------------------------------------ | ------------------------------------------- | ------------------- |
+| **Track Progress** | `POST`          | `/api/courses/:id/progress`                | Update user progress for a specific course. | Authenticated Users |
+| **Update Track**   | `PUT`           | `api/courses/:course_id/progress/:task_id` | Update a track to a specific course.        | Authenticated Users |
+| **Delete Track**   | `Delete`        | /api/courses/:course_id/progress/:task_id  | Delete a track to a specific course         | Authenticated user  |
+
+#### **Review**
+
 | **Feature**        | **HTTP Method** | **Endpoint**                  | **Description**                             | **Authorization**   |
 | ------------------ | --------------- | ----------------------------- | ------------------------------------------- | ------------------- |
 | **Track Progress** | `POST`          | `/api/courses/:id/progress`   | Update user progress for a specific course. | Authenticated Users |
@@ -118,23 +126,33 @@
 
 ```json
 {
-  "title": "Python Basics Quiz",
-  "questions": [
-    {
-      "question_text": "What is the output of 2 + 2?",
-      "options": ["3", "4", "5", "6"],
-      "correct_option": 1
-    },
-    {
-      "question_text": "Which of these is a valid Python variable name?",
-      "options": ["1variable", "_variable", "variable!", "variable-1"],
-      "correct_option": 1
-    }
-  ],
-  "max_score": 10,
-  "passing_score": 7
+"title":"quiz",
+"chapter_id":"0eb5cecf-fc59-4425-b0ae-35c9e5ddb5e8",
+"content": "quiz",
+"quiz":"",
+"max_score": 10,
+"passing_score":5
 }
 ```
+
+#### **Add Question** (`POST /api/quizzes/:quiz_id/add-question`)
+
+```json
+{
+  "id": "123456",
+  "quiz_id": "cm586s7yl0000wx9srashukt8",
+  "question_text": "Which of these is a valid Python variable name?",
+  "options": [
+    { "text": "1variable", "is_correct": false },
+    { "text": "_variable", "is_correct": true },
+    { "text": "variable!", "is_correct": false },
+    { "text": "variable-1", "is_correct": false }
+  ],
+  "correct_option": 1,
+  "explanation": "A valid Python variable name must start with a letter or underscore."
+}
+
+
 
 ---
 
