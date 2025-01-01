@@ -19,7 +19,7 @@ model Course {
   description  String
   category     String
   level        String
-  thumbnail    String
+  thumbnail String
   price        String
   is_completed Boolean   @default(false)
   chapters     Chapter[]

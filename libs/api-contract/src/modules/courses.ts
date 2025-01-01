@@ -1,4 +1,3 @@
-
 import { z } from 'zod';
 import { chapterSchema } from './chapter';
 import { initContract } from '@ts-rest/core';
@@ -18,12 +17,12 @@ export const courseSchema = z.object({
   description: z.string(),
   category: z.string(),
   level: z.string(),
-  thumbnail:z.string().optional(),
+  thumbnail: z.string().optional(),
   price: z.string(),
   completed: z.boolean(),
-  created_at:z.string().optional(),
-  updated_at:z.string().optional(),
-  chapters:chapterSchema,
+  created_at: z.string().optional(),
+  updated_at: z.string().optional(),
+  chapters: chapterSchema,
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;
 
@@ -92,4 +91,4 @@ export const courseContract = c.router({
     },
     summary: 'Delete course by ID',
   },
-},);
+});
