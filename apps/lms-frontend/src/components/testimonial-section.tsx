@@ -65,11 +65,11 @@ export default function TestimonialSection() {
         <h2 className="text-2xl sm:text-3xl md:text-[32px] font-semibold font-poppins text-black mb-2">
           Students Testimonial
         </h2>
-        <p className="text-sm sm:text-base md:text-[20px] text-[#777575] font-poppins mb-8 sm:mb-12 md:mb-16">
+        <p className="text-sm sm:text-base md:text-[20px] text-[#777575] font-poppins mb-4">
           See what others are achieving from our courses
         </p>
 
-        <div className="mb-16">
+        <div className="mb-8">
           <Slider {...settings}>
             {testimonials.map((testimonial, index) => (
               <div key={index} className="relative pt-20 sm:pt-24">
@@ -86,10 +86,10 @@ export default function TestimonialSection() {
                   <p className="text-base sm:text-lg md:text-xl font-poppins mb-4">
                     "{testimonial.testimonial}"
                   </p>
-                  <h1 className="text-base sm:text-lg md:text[24px] font-poppins mb-3">
+                  <h1 className="text-base sm:text-lg md:text-[24px] font-poppins mb-3">
                     {testimonial.name}
                   </h1>
-                  <p className="text-base sm:text-lg md:text[16px] font-poppins mb-3">
+                  <p className="text-base sm:text-lg md:text-[16px] font-poppins mb-3">
                     {testimonial.role}
                   </p>
                   <div className="flex justify-center">
@@ -106,4 +106,3 @@ export default function TestimonialSection() {
     </div>
   );
 }
-
