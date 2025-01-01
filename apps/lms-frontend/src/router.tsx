@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import Home  from './pages/home';
+import Home from './pages/home';
 
 import { LoginPage } from './pages/login-page';
 
@@ -36,9 +36,9 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
-    path:'/create-course',
-    element:<CreateNewCourse/>
-  }
+    path: '/create-course',
+    element: <CreateNewCourse />,
+  },
 ]);
 export function Approuter() {
   return <RouterProvider router={router} />;

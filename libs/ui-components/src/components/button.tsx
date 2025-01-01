@@ -4,7 +4,6 @@ import {
 } from '@nextui-org/react';
 
 interface ButtonProps extends NUIButtonProps {
-  key: string;
   name: string;
 }
 

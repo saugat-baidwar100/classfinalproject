@@ -2,12 +2,17 @@ import {
   Input as NUIInput,
   InputProps as NUIInputProps,
 } from '@nextui-org/react';
-import { ReactNode } from 'react';
+import { error } from 'console';
+
+import { forwardRef, ReactNode } from 'react';
 
 interface InputProps extends Omit<NUIInputProps, 'labelPlacement'> {
-  label: ReactNode;
+  label: React.ReactNode;
+  errorMessage: React.ReactNode;
 }
 
-export function Input(props: InputProps) {
-  return <NUIInput labelPlacement="outside" {...props} />;
+function InputWithRef(props: InputProps, ref: any) {
+  return <NUIInput labelPlacement="outside" ref={ref} {...props} />;
 }
+
+export const Input = forwardRef(InputWithRef);
