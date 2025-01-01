@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
-import { courseSchema } from './courses';
+
 
 const c = initContract();
 
@@ -18,6 +18,7 @@ export const chapterSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
+  thumbnail: z.string(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
 });
@@ -87,7 +88,6 @@ export const chapterContract = c.router({
     body: z.object({}),
     responses: {
       200: SuccessSchema.extend({
-        data: courseSchema,
       }),
       400: errorSchema,
       404: errorSchema,

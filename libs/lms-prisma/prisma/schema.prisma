@@ -23,6 +23,7 @@ model Course {
   price        String
   is_completed Boolean   @default(false)
   chapters     Chapter[]
+  reviews      Review[]
   created_at   DateTime  @default(now())
   updated_at   DateTime  @updatedAt
 
@@ -30,7 +31,7 @@ model Course {
 }
 
 model Chapter {
-  id        String   @id @default(uuid())
+  id        String   @id @default(cuid())
   title     String
   description String
   course_id String
@@ -40,13 +41,37 @@ model Chapter {
 }
 
 
+
 model User {
   id                String  @id @default(cuid())
   email             String  @unique
   fullname          String
   username          String  @unique
   password          String
+  reviews           Review[]
   is_email_verified Boolean @default(false)
 
   @@map("users")
+}
+
+
+// model Review { 
+// Id      String @id @default(uuid()) @db.Uuid 
+// rating     Int @min(1) @max(5) // Rating          
+//               between 1 and 5 
+// comment String?     @db.Text // Optional review comment
+
+//  userId String       / / Reference to the user who wrote the review user
+
+
+model Review{
+  id         String @id @default( cuid())
+  rating      Int
+  comment     String? @db.Text
+  user_id     String
+  user        User   @relation(fields: [user_id], references: [id])
+  course_id   String
+  course       Course  @relation(fields: [course_id], references: [id])
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
 }
