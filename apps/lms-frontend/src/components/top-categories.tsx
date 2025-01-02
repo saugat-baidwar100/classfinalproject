@@ -47,4 +47,3 @@ export function TopCategories() {
 }
 
 export default TopCategories;
-
