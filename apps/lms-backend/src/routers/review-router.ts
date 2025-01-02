@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { initServer } from '@ts-rest/express';
 import { reviewRepo } from '../../../../libs/lms-prisma/src/review-repo';
 import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
