@@ -19,7 +19,7 @@ model Course {
   description  String
   category     String
   level        String
-  thumbnail    String
+  thumbnail String
   price        String
   is_completed Boolean   @default(false)
   chapters     Chapter[]
@@ -30,15 +30,14 @@ model Course {
 }
 
 model Chapter {
-  id        String   @id @default(uuid())
-  title     String
+  id          String @id @default(uuid())
+  title       String
   description String
-  course_id String
-  course    Course   @relation(fields: [course_id], references: [id])
+  course_id   String
+  course      Course @relation(fields: [course_id], references: [id])
 
   @@unique([id, course_id]) // Add this compound unique constraint
 }
-
 
 model User {
   id                String  @id @default(cuid())
