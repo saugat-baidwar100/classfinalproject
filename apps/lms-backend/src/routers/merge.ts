@@ -15,6 +15,8 @@ import { questionContract } from '@skillprompt-lms/libs/api-contract/modules/que
 import { questionRouter } from './question-router';
 import { taskProgressContract } from '@skillprompt-lms/libs/api-contract/modules/track-progress';
 import { taskProgressRouter } from './track-progress';
+import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
+import { reviewRouter } from './review-router';
 const routers = [
   {
     contract: courseContract,
@@ -40,6 +42,11 @@ const routers = [
     contract: taskProgressContract,
     router: taskProgressRouter,
   },
+
+{
+  contract:reviewContract,
+  router:reviewRouter
+}
 ];
 export function generateEndPoints(app: any) {
   return routers.map(({ contract, router }) => {
