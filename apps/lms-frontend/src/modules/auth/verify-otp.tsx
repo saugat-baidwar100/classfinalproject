@@ -1,33 +1,30 @@
-import React from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  useForgotPasswordMutation,
-  useSendOtpMutation,
-} from '../../api/auth/query';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  useSendOtpMutation,
+  useVerifyEmailMutation,
+} from '../../api/auth/query';
 import { toastError, toastSuccess } from '../../toaster';
 
-// Define the schema using Zod
-const resetPasswordSchema = z.object({
+// Define the Zod schema for validation
+const otpSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   otp: z
     .string()
-    .length(6, { message: 'OTP must be exactly 6 characters' })
-    .regex(/^[0-9]+$/, { message: 'OTP must contain only numbers' }),
-  newPassword: z
-    .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
+    .min(6, { message: 'OTP must be 6 digits' })
+    .max(6, { message: 'OTP must be 6 digits' }),
 });
 
-// Infer the TypeScript type from the schema
-type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
+type OtpFormValues = z.infer<typeof otpSchema>;
 
-export const ResetPassword = () => {
-  const sendOTPMutation = useSendOtpMutation();
-  const forgetPasswordMutation = useForgotPasswordMutation();
+export const VerifyOtp = () => {
   const navigate = useNavigate();
+  const sendOtpMutation = useSendOtpMutation();
+  const verifyEmailMutation = useVerifyEmailMutation();
+
   const [params] = useSearchParams();
   const email = params.get('email') ?? '';
 
@@ -36,66 +33,62 @@ export const ResetPassword = () => {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResetPasswordFormValues>({
+  } = useForm<OtpFormValues>({
     mode: 'all',
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(otpSchema),
     defaultValues: {
       email,
       otp: '',
-      newPassword: '',
     },
   });
 
-  const onSubmit: SubmitHandler<ResetPasswordFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<OtpFormValues> = async (data) => {
     try {
-      await forgetPasswordMutation.mutateAsync(
+      await verifyEmailMutation.mutateAsync(
         {
           email: data.email,
           otp: data.otp,
-          newPassword: data.newPassword,
         },
         {
           onSuccess: (res) => {
-            if (res.code !== 'FORGOT_PASSWORD_SUCCESS') {
-              toastError(res.message ?? 'Password change failed');
+            if (res.code !== 'VERIFY_EMAIL_SUCCESS') {
+              toastError(res.message ?? 'Verification failed');
               return;
             }
-            toastSuccess('Password changed sucessfully !');
+            toastSuccess('Email verified successfully!');
             navigate('/auth/login');
           },
           onError: (error) => {
             console.error(error);
-            toastError(error.message ?? 'Password changed  failed');
+            toastError(error.message ?? 'Verification failed');
           },
         }
       );
     } catch (error) {
       console.error(error);
-      toastError((error as Error)?.message ?? 'Password changed failed');
+      toastError((error as Error)?.message ?? 'Verification failed');
     }
-    // console.log('Form Data:', data);
-    // Add logic to handle password reset (e.g., API call)
   };
 
   const inputEmail = watch('email');
 
-  const resendOTP = async () => {
+  const resendOtp = async () => {
     try {
-      await sendOTPMutation.mutateAsync(
+      await sendOtpMutation.mutateAsync(
         {
           email: inputEmail,
         },
         {
           onSuccess: (res) => {
             if (res.code !== 'SEND_OTP_SUCCESS') {
-              toastError(res.message ?? 'sending OTP failed');
+              toastError(res.message ?? 'Sending OTP failed');
               return;
             }
-            toastSuccess('OTP send sucessfully !');
+            toastSuccess('OTP sent successfully!');
           },
           onError: (error) => {
             console.error(error);
-            toastError(error.message ?? 'sending OTP failed');
+            toastError(error.message ?? 'Sending OTP failed');
           },
         }
       );
@@ -112,7 +105,7 @@ export const ResetPassword = () => {
           Reset Password
         </h2>
         <p className="mt-2 italic text-sm text-center text-gray-600">
-          Enter the OTP, your email, and set your new password.
+          Enter your email and the OTP sent to reset your password.
         </p>
 
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -161,36 +154,13 @@ export const ResetPassword = () => {
             {errors.otp && (
               <p className="mt-1 text-sm text-red-500">{errors.otp.message}</p>
             )}
-          </div>
 
-          {/* New Password Field */}
-          <div>
-            <label
-              htmlFor="newPassword"
-              className="block text-sm font-medium text-gray-700"
-            >
-              New Password
-            </label>
-            <input
-              type="password"
-              id="newPassword"
-              placeholder="Enter your new password"
-              {...register('newPassword')}
-              className={`w-full px-4 py-2 mt-1 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
-                errors.newPassword ? 'border-red-500' : 'border-gray-300'
-              }`}
-            />
-            {errors.newPassword && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.newPassword.message}
-              </p>
-            )}
-
-<div className="mt-2 text-right">
+            {/* Resend OTP Button */}
+            <div className="mt-2 text-right">
               <button
                 type="button"
                 className="text-sm text-[#31B991] hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
-                onClick={resendOTP}
+                onClick={resendOtp}
               >
                 Resend OTP
               </button>
@@ -202,9 +172,8 @@ export const ResetPassword = () => {
             type="submit"
             className="w-full px-4 py-2 text-white bg-[#31B991] rounded-md shadow hover:bg-[#3E3E3E] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            Reset Password
+            Submit
           </button>
-          
         </form>
 
         <div className="mt-4 text-center">

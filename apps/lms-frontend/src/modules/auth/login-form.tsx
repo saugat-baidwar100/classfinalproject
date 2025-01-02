@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FaGoogle, FaApple } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../api/auth/query';
+import { useLoginMutation, useSendOtpMutation } from '../../api/auth/query';
 import { toastError, toastSuccess } from '../../toaster';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { input } from '@nextui-org/theme';
@@ -16,9 +16,11 @@ const loginSchema = z.object({
 export const LoginForm = () => {
   const navigate = useNavigate();
   const loginUserMutation = useLoginMutation();
+  const sendOtpMutation = useSendOtpMutation();
   // Use react-hook-form with Zod resolver
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -30,9 +32,9 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof loginSchema>> = async (data) => {
     try {
-      loginUserMutation.mutateAsync(
+      await loginUserMutation.mutateAsync(
         {
           email: data.email,
           password: data.password,
@@ -57,6 +59,38 @@ export const LoginForm = () => {
       toastError((error as Error)?.message ?? 'login failed !');
     }
     // console.log('Form Data:', data);
+  };
+
+  const inputEmail = watch('email');
+  const sendOtp = async (inputEmail: string) => {
+    try {
+      if (!inputEmail) {
+        toastError('Email is required');
+        return;
+      }
+      await sendOtpMutation.mutateAsync(
+        {
+          email: inputEmail,
+        },
+        {
+          onSuccess: (res) => {
+            if (res.code !== 'SEND_OTP_SUCCESS') {
+              toastError(res.message ?? 'Sending OTP failed');
+              return;
+            }
+            toastSuccess('OTP send sucessfully !');
+            navigate('/');
+          },
+          onError: (error) => {
+            console.error(error);
+            toastError(error.message ?? 'Sending otp failed');
+          },
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      toastError((error as Error)?.message ?? 'sending otp failed');
+    }
   };
 
   return (
@@ -130,9 +164,11 @@ export const LoginForm = () => {
                 <span className="ml-2 text-sm">Remember me</span>
               </label>
               <a
-                href="/forgetpassword"
+                href="/resetpassword"
                 className="text-sm text-blue-400 hover:underline"
+                onClick={() => sendOtp(inputEmail)}
               >
+                
                 Forgot password?
               </a>
             </div>
@@ -143,11 +179,13 @@ export const LoginForm = () => {
             >
               Sign in to your account
             </button>
+
+            
           </form>
 
           <p className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <a href="/signup" className="text-blue-400 hover:underline">
+            <a href="/auth/register" className="text-blue-400 hover:underline">
               Sign up
             </a>
           </p>
