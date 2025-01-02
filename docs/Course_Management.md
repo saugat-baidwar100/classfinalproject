@@ -50,7 +50,7 @@
 
 | **Feature**          | **HTTP Method** | **Endpoint**                                                  | **Description**                                | **Authorization**        |
 | -------------------- | --------------- | ------------------------------------------------------------- | ---------------------------------------------- | ------------------------ |
-| **List One content** | `GET`           | `/api/chapters/:chapterId/contents`                           | Get a list of contents for a specific chapter. | Public                   |
+| **List One content** | `GET`           | `/api/chapters/:chapterId/contents/:contentId`                           | Get a list of contents for a specific chapter. | Public                   |
 | **Add New content**  | `POST`          | `/api/chapters/:chapterId/contents/add-content`               | Add a new content to a chapter.                | Instructor/Admin (Owner) |
 | **Update content**   | `PUT`           | `/api/chapters/:chapterId/contents/update-content/:contentId` | Update details of a specific content.          | Instructor/Admin (Owner) |
 | **Delete content**   | `DELETE`        | `/api/chapters/:chapterId/contents/delete-content/:contentId` | Remove a content from a chapter.               | Instructor/Admin (Owner) |
@@ -61,13 +61,21 @@
 
 | **Feature**     | **HTTP Method** | **Endpoint**                 | **Description**                    | **Authorization**        |
 | --------------- | --------------- | ---------------------------- | ---------------------------------- | ------------------------ |
-| **Add Quiz**    | `POST`          | `/api/lessons/:id/add-quiz`  | Add a quiz to a specific lesson.   | Instructor/Admin (Owner) |
-| **Update Quiz** | `PUT`           | `/api/update-quize/:quiz_id` | Update details of a specific quiz. | Instructor/Admin (Owner) |
-| **Delete Quiz** | `DELETE`        | `/api/delete-quize/:quiz_id` | Remove a quiz from a lesson.       | Instructor/Admin (Owner) |
+| **Add Quiz**    | `POST`          | `/api/chapter/:id/add-quiz`  | Add a quiz to a specific lesson.   | Instructor/Admin (Owner) |
+| **Update Quiz** | `PUT`           | `/api/update-quiz/:quiz_id` | Update details of a specific quiz. | Instructor/Admin (Owner) |
+| **Delete Quiz** | `DELETE`        | `/api/delete-quiz/:quiz_id` | Remove a quiz from a lesson.       | Instructor/Admin (Owner) |
 
 ---
 
 #### **User Progress & Review**
+
+| **Feature**        | **HTTP Method** | **Endpoint**                               | **Description**                             | **Authorization**   |
+| ------------------ | --------------- | ------------------------------------------ | ------------------------------------------- | ------------------- |
+| **Track Progress** | `POST`          | `/api/courses/:id/progress`                | Update user progress for a specific course. | Authenticated Users |
+| **Update Track**   | `PUT`           | `api/courses/:course_id/progress/:task_id` | Update a track to a specific course.        | Authenticated Users |
+| **Delete Track**   | `Delete`        | /api/courses/:course_id/progress/:task_id  | Delete a track to a specific course         | Authenticated user  |
+
+#### **Review**
 
 | **Feature**        | **HTTP Method** | **Endpoint**                  | **Description**                             | **Authorization**   |
 | ------------------ | --------------- | ----------------------------- | ------------------------------------------- | ------------------- |
@@ -102,7 +110,7 @@
 }
 ```
 
-#### **Add New Lesson** (`POST /api/chapters/:id/add-lessons`)
+#### **Add New Content** (`POST /api/chapters/:id/add-content`)
 
 ```json
 {
@@ -114,27 +122,37 @@
 }
 ```
 
-#### **Add Quiz** (`POST /api/lessons/:id/add-quiz`)
+#### **Add Quiz** (`POST /api/chapter/:id/add-quiz`)
 
 ```json
 {
-  "title": "Python Basics Quiz",
-  "questions": [
-    {
-      "question_text": "What is the output of 2 + 2?",
-      "options": ["3", "4", "5", "6"],
-      "correct_option": 1
-    },
-    {
-      "question_text": "Which of these is a valid Python variable name?",
-      "options": ["1variable", "_variable", "variable!", "variable-1"],
-      "correct_option": 1
-    }
-  ],
-  "max_score": 10,
-  "passing_score": 7
+"title":"quiz",
+"chapter_id":"0eb5cecf-fc59-4425-b0ae-35c9e5ddb5e8",
+"content": "quiz",
+"quiz":"",
+"max_score": 10,
+"passing_score":5
 }
 ```
+
+#### **Add Question** (`POST /api/quizzes/:quiz_id/add-question`)
+
+```json
+{
+  "id": "123456",
+  "quiz_id": "cm586s7yl0000wx9srashukt8",
+  "question_text": "Which of these is a valid Python variable name?",
+  "options": [
+    { "text": "1variable", "is_correct": false },
+    { "text": "_variable", "is_correct": true },
+    { "text": "variable!", "is_correct": false },
+    { "text": "variable-1", "is_correct": false }
+  ],
+  "correct_option": 1,
+  "explanation": "A valid Python variable name must start with a letter or underscore."
+}
+
+
 
 ---
 
@@ -199,9 +217,8 @@ If the lesson is a quiz, it can include additional fields.
 | **Field**       | **Type**         | **Description**                     |
 | --------------- | ---------------- | ----------------------------------- |
 | `id`            | String           | Unique Quiz identifier.             |
-| `lesson_id`     | String           | Reference to the associated Lesson. |
-| `title`         | String           | Quiz title.                         |
-| `questions`     | Array (Question) | Array of questions.                 |
+| `chapter_id`     | String           | Reference to the associated Chapter. |
+| `title`         | String           | Quiz title.                         |              |
 | `max_score`     | Integer          | Maximum score for the quiz.         |
 | `passing_score` | Integer          | Minimum score required to pass.     |
 
@@ -225,8 +242,8 @@ Details of each question in a quiz.
 ### **Relationships**
 
 - **Course → Chapters**: A course can have multiple chapters .
-- **Chapter → Lessons**: A chapter can have multiple lessons .
-- **Lesson → Quiz**: A lesson can optionally include a quiz(optional) .
+- **Chapter → content**: A chapter can have multiple lessons .
+- **Chapter → Quiz**: A chapter can optionally include a quiz(optional) .
 - **Quiz → Questions**: A quiz contains multiple questions & asked only after finishing the course.
 
 ---

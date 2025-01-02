@@ -18,6 +18,7 @@ export const chapterSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
+  order: z.number(),
   thumbnail: z.string(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
@@ -27,6 +28,8 @@ export const createChapterSchema = z.object({
   id: z.string(),
   title: z.string(),
   description: z.string(),
+
+  order: z.number(),
 });
 
 export type TchapterSchema = z.infer<typeof chapterSchema>;
