@@ -9,27 +9,34 @@ export const reviewRepo = {
   findAll,
 };
 
-export async function create( input: Prisma.ReviewCreateInput) {
+export async function create(input: Prisma.ReviewCreateInput) {
   return db.review.create({
-    data: input,
+    data: {
+      ...input,
+      user: {
+        connect: { username: input.username},  // Make sure user_id is part of the input
+      },
+    },
   });
 }
+
+
 
 export async function updateById({
   reviewId,
   course_id,
-  
   input,
 }: {
   reviewId: string;
   course_id: string;
-  // user_id: string;
   input: Prisma.ReviewUpdateInput;
 }) {
   return db.review.update({
     where: {
-      id: reviewId,
-      course_id: course_id,
+      id_course_id: {
+        id: reviewId,         // Corrected key
+        course_id: course_id, // Corrected key
+      },
     },
     data: input,
   });
@@ -44,26 +51,29 @@ export async function deleteById({
 }) {
   return db.review.delete({
     where: {
-      id: reviewId,
-      course_id: course_id,
+      id_course_id: {
+        id: reviewId,         // Corrected key
+        course_id: course_id, // Corrected key
+      },
     },
   });
 }
-
 export async function findById({
   reviewId,
   course_id,
-  user_id
+  username,
 }: {
   reviewId: string;
   course_id: string;
-  user_id: string;
+  username: string;
 }) {
   return db.review.findUnique({
     where: {
-      id: reviewId,
-      course_id: course_id,
-      user_id: user_id,
+      id_course_id: {
+        id: reviewId,         // Corrected key
+        course_id: course_id, // Corrected key
+      },
+      username: username,    // Keep the username as is for filtering
     },
   });
 }
