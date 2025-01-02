@@ -9,7 +9,8 @@ import { chapterRouter } from './chapter-router';
 import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
-
+import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
+import { reviewRouter } from './review-router';
 const routers = [
   {
     contract: courseContract,
@@ -18,6 +19,10 @@ const routers = [
 {
   contract:chapterContract,
   router:chapterRouter
+},
+{
+  contract:reviewContract,
+  router:reviewRouter
 }
 ];
 export function generateEndPoints(app: any) {
