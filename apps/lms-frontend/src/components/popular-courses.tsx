@@ -55,7 +55,7 @@ export const PopularCourses: React.FC = () => {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: filteredCourses.length > 1,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -81,14 +81,19 @@ export const PopularCourses: React.FC = () => {
   };
 
   useEffect(() => {
+    setCurrentSlide(0);
+    if (sliderRef.current) {
+      sliderRef.current.slickGoTo(0);
+    }
+
     const autoplayInterval = setInterval(() => {
-      if (sliderRef.current) {
+      if (sliderRef.current && filteredCourses.length > 1) {
         sliderRef.current.slickNext();
       }
     }, 3000);
 
     return () => clearInterval(autoplayInterval);
-  }, []);
+  }, [filter, filteredCourses.length]);
 
   const goToSlide = (index: number) => {
     if (sliderRef.current) {
@@ -128,31 +133,43 @@ export const PopularCourses: React.FC = () => {
         </div>
       </div>
 
-      {/* Courses Carousel */}
+      {/* Courses Display */}
       <div className="relative">
-        <Slider ref={sliderRef} {...settings}>
-          {filteredCourses.map((course) => (
-            <div key={course.id} className="px-2">
-              <CourseCard course={course} />
+        {filteredCourses.length === 1 ? (
+          // Single course display
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="px-2">
+              <CourseCard course={filteredCourses[0]} />
             </div>
-          ))}
-        </Slider>
+          </div>
+        ) : (
+          // Multiple courses carousel
+          <Slider ref={sliderRef} {...settings}>
+            {filteredCourses.map((course) => (
+              <div key={course.id} className="px-2">
+                <CourseCard course={course} />
+              </div>
+            ))}
+          </Slider>
+        )}
 
         {/* Pagination Dots */}
-        <div className="flex justify-center gap-2 mt-6 sm:mt-8 items-center">
-          {[0, 1, 2].map((dot) => (
-            <button
-              key={dot}
-              onClick={() => goToSlide(dot)}
-              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${
-                currentSlide === dot
-                  ? 'bg-custom-teal'
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-              aria-label={`Go to slide ${dot + 1}`}
-            />
-          ))}
-        </div>
+        {filteredCourses.length > 1 && (
+          <div className="flex justify-center gap-2 mt-6 sm:mt-8 items-center">
+            {[0, 1, 2].map((dot) => (
+              <button
+                key={dot}
+                onClick={() => goToSlide(dot)}
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${
+                  currentSlide === dot
+                    ? 'bg-custom-teal'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to slide ${dot + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
