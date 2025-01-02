@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createExpressEndpoints } from '@ts-rest/express';
 
-
-
 import { courseRouter } from './course-router';
 
 import { chapterRouter } from './chapter-router';
 import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
+import { contentContract } from '@skillprompt-lms/libs/api-contract/modules/content';
+import { contentRouter } from './content-router';
+import { quizContract } from '@skillprompt-lms/libs/api-contract/modules/quiz';
+import { quizRouter } from './quiz-router';
 import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
+import { questionContract } from '@skillprompt-lms/libs/api-contract/modules/question';
+import { questionRouter } from './question-router';
+import { taskProgressContract } from '@skillprompt-lms/libs/api-contract/modules/track-progress';
+import { taskProgressRouter } from './track-progress';
 import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
 import { reviewRouter } from './review-router';
 const routers = [
@@ -16,10 +22,27 @@ const routers = [
     contract: courseContract,
     router: courseRouter,
   },
-{
-  contract:chapterContract,
-  router:chapterRouter
-},
+  {
+    contract: contentContract,
+    router: contentRouter,
+  },
+  {
+    contract: chapterContract,
+    router: chapterRouter,
+  },
+  {
+    contract: quizContract,
+    router: quizRouter,
+  },
+  {
+    contract: questionContract,
+    router: questionRouter,
+  },
+  {
+    contract: taskProgressContract,
+    router: taskProgressRouter,
+  },
+
 {
   contract:reviewContract,
   router:reviewRouter
