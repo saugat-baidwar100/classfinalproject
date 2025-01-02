@@ -45,7 +45,7 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/lms-backend-e2e/**/*"]
+      "exclude": ["apps/lms-backend-e2e/**/*", "apps/roshan-e2e/**/*"]
     },
     {
       "plugin": "@nx/vite/plugin",
