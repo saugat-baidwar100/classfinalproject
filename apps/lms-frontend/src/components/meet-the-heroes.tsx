@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import heroImage from '../assets/images/heroes.png';
+import React, { useState, useRef, useEffect } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import HeroImage from '../assets/images/heroes.png';
 
 interface Hero {
   id: number;
@@ -16,43 +19,87 @@ const heroes: Hero[] = [
     role: 'Full-Stack Developer',
     description:
       'Strong emphasis on project-based learning, debugging, and industry best practices.',
-    image: heroImage,
+    image: HeroImage,
   },
   {
     id: 2,
     name: 'Marvin McKinney',
     role: 'Full-Stack Developer',
     description:
-      'Strong emphasis on project-based learning, debugging, and industry best practices.',
-    image: heroImage,
+      'Passionate about creating intuitive and visually appealing user interfaces.',
+    image: HeroImage,
   },
   {
     id: 3,
     name: 'Marvin McKinney',
-    role: 'Full-Stack Developer',
+    role: 'Full Stack Developer',
     description:
-      'Strong emphasis on project-based learning, debugging, and industry best practices.',
-    image: heroImage,
+      'Expertise in machine learning algorithms and data visualization techniques.',
+    image: HeroImage,
   },
   {
     id: 4,
-    name: 'Marvin McKinney',
-    role: 'Full-Stack Developer',
+    name: 'Marvin Mckinney',
+    role: 'Full Stack Developer',
     description:
-      'Strong emphasis on project-based learning, debugging, and industry best practices.',
-    image: heroImage,
+      'Skilled in automating and optimizing development and deployment processes.',
+    image: HeroImage,
   },
 ];
 
 export function MeetTheHeroes() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const sliderRef = useRef<Slider>(null);
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    rtl: false,
+    beforeChange: (oldIndex: number, newIndex: number) => {
+      setCurrentSlide(newIndex);
+    },
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+    autoplay: false,
+    autoplaySpeed: 3000,
+  };
+
+  useEffect(() => {
+    const autoplayInterval = setInterval(() => {
+      if (sliderRef.current) {
+        sliderRef.current.slickNext();
+      }
+    }, 3000);
+
+    return () => clearInterval(autoplayInterval);
+  }, []);
+
+  const goToSlide = (index: number) => {
+    if (sliderRef.current) {
+      sliderRef.current.slickGoTo(index);
+    }
+  };
 
   return (
     <section className="w-full py-12 sm:py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-[32px] font-poppins  font-bold text-gray-900 mb-4 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-[32px] font-poppins font-bold text-gray-900 mb-4 tracking-tight">
             Meet the Heroes
           </h2>
           <p className="text-sm sm:text-base md:text-[20px] font-semibold font-poppins text-[#777575]">
@@ -60,15 +107,10 @@ export function MeetTheHeroes() {
           </p>
         </div>
 
-        {/* Cards Container */}
         <div className="relative">
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-[1200px] mx-auto">
+          <Slider ref={sliderRef} {...settings}>
             {heroes.map((hero) => (
-              <div
-                key={hero.id}
-                className="transform transition-transform duration-300"
-              >
+              <div key={hero.id} className="px-2">
                 <div className="bg-[#3ebd98] rounded-2xl p-4 sm:p-6 text-center h-full shadow-lg">
                   <div className="flex justify-center mb-4 sm:mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden">
@@ -91,20 +133,19 @@ export function MeetTheHeroes() {
                 </div>
               </div>
             ))}
-          </div>
+          </Slider>
 
-          {/* Navigation Dots */}
           <div className="flex justify-center gap-3 mt-6 sm:mt-10">
-            {[0, 1, 2].map((dot) => (
+            {heroes.map((_, index) => (
               <button
-                key={dot}
-                onClick={() => setCurrentSlide(dot)}
+                key={index}
+                onClick={() => goToSlide(index)}
                 className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${
-                  currentSlide === dot
+                  currentSlide === index
                     ? 'bg-[#31b991]'
                     : 'bg-gray-300 hover:bg-[#d9d9d9]'
                 }`}
-                aria-label={`Go to slide ${dot + 1}`}
+                aria-label={`Go to slide ${index + 1}`}
               />
             ))}
           </div>
@@ -115,4 +156,3 @@ export function MeetTheHeroes() {
 }
 
 export default MeetTheHeroes;
-
