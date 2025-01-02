@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { CourseCard } from './course-card';
 import { Button } from './button';
 import { Course } from './types/course';
 import popularCoursesImage from "../assets/images/popular-courses.png";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const courses: Course[] = [
   {
@@ -41,12 +44,57 @@ type FilterType = "all" | "paid" | "free";
 
 export const PopularCourses: React.FC = () => {
   const [filter, setFilter] = useState<FilterType>("all");
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const sliderRef = useRef<Slider>(null);
 
   const filteredCourses = courses.filter((course) => {
     if (filter === "paid") return course.currentPrice !== "Free";
     if (filter === "free") return course.currentPrice === "Free";
     return true;
   });
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
+    beforeChange: (oldIndex: number, newIndex: number) => {
+      setCurrentSlide(newIndex);
+    },
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
+  useEffect(() => {
+    const autoplayInterval = setInterval(() => {
+      if (sliderRef.current) {
+        sliderRef.current.slickNext();
+      }
+    }, 3000);
+
+    return () => clearInterval(autoplayInterval);
+  }, []);
+
+  const goToSlide = (index: number) => {
+    if (sliderRef.current) {
+      sliderRef.current.slickGoTo(index);
+    }
+  };
 
   return (
     <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -80,22 +128,34 @@ export const PopularCourses: React.FC = () => {
         </div>
       </div>
 
-      {/* Courses Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {filteredCourses.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
-      </div>
+      {/* Courses Carousel */}
+      <div className="relative">
+        <Slider ref={sliderRef} {...settings}>
+          {filteredCourses.map((course) => (
+            <div key={course.id} className="px-2">
+              <CourseCard course={course} />
+            </div>
+          ))}
+        </Slider>
 
-      {/* Pagination Dots */}
-      <div className="flex justify-center gap-2 mt-6 sm:mt-8 items-center">
-        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-custom-teal" />
-        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
-        <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
+        {/* Pagination Dots */}
+        <div className="flex justify-center gap-2 mt-6 sm:mt-8 items-center">
+          {[0, 1, 2].map((dot) => (
+            <button
+              key={dot}
+              onClick={() => goToSlide(dot)}
+              className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${
+                currentSlide === dot
+                  ? 'bg-custom-teal'
+                  : 'bg-gray-300 hover:bg-gray-400'
+              }`}
+              aria-label={`Go to slide ${dot + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
 export default PopularCourses;
-
