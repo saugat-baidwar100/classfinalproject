@@ -15,13 +15,8 @@ model Course {
   description  String
   category     String
   level        String
-<<<<<<< HEAD
-  thumbnail String
-  price        String
-=======
   thumbnail    String
   price        Float
->>>>>>> 20d6ad5cc9a85dc4e41bb59c0eae9f4ff1580e46
   is_completed Boolean   @default(false)
   chapters     Chapter[] // one-to-many relation with Chapter
   tasks        Task[]    // one-to-many relation with Task

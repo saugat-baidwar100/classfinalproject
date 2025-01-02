@@ -117,38 +117,40 @@ export function CreateNewCourse() {
             />
           </div>
 
-          {/* Course Type (Free or Paid) */}
-          <Select
-            label={<p className="text-green-500">Type</p>}
-            placeholder="Select type"
-            {...register('type')}
-            isInvalid={!!errors.type?.message}
-            errorMessage={errors.type?.message}
-            options={[
-              { key: '', label: 'Select type' },
-              { key: 'free', label: 'Free' },
-              { key: 'paid', label: 'Paid' },
-            ]}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSelectedType(value); // Update local state
-              setValue('type', value); // Update form value directly
-            }}
-          />
+          <div className="flex flex-col gap-2">
+            {/* Course Type (Free or Paid) */}
+            <Select
+              label={<p className="text-green-500">Type</p>}
+              placeholder="Select type"
+              {...register('type')}
+              isInvalid={!!errors.type?.message}
+              errorMessage={errors.type?.message}
+              options={[
+                { key: '', label: 'Select type' },
+                { key: 'free', label: 'Free' },
+                { key: 'paid', label: 'Paid' },
+              ]}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSelectedType(value); // Update local state
+                setValue('type', value); // Update form value directly
+              }}
+            />
 
-          {/* Price Field (Visible only if the course type is "Paid") */}
-          {selectedType === 'paid' && (
-            <div className="flex flex-col gap-2">
-              <Input
-                errorMessage={errors.price?.message}
-                type="number"
-                label={<p className="text-green-500">Price</p>}
-                placeholder="Enter course price"
-                {...register('price', { valueAsNumber: true })}
-                isInvalid={!!errors.price?.message}
-              />
-            </div>
-          )}
+            {/* Price Field (Visible only if the course type is "Paid") */}
+            {selectedType === 'paid' && (
+              <div className="flex flex-col gap-2">
+                <Input
+                  errorMessage={errors.price?.message}
+                  type="number"
+                  label={<p className="text-green-500">Price</p>}
+                  placeholder="Enter course price"
+                  {...register('price', { valueAsNumber: true })}
+                  isInvalid={!!errors.price?.message}
+                />
+              </div>
+            )}
+          </div>
 
           {/* Thumbnail Upload */}
           <div className="flex flex-col gap-2">
