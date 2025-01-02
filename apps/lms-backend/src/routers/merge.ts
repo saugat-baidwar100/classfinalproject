@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createExpressEndpoints } from '@ts-rest/express';
 
 import { courseRouter } from './course-router';
@@ -44,6 +45,7 @@ export function generateEndPoints(app: any) {
   return routers.map(({ contract, router }) => {
     createExpressEndpoints(contract, router, app, {
       logInitialization: true,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       requestValidationErrorHandler(err, req, res, next) {
         logger.error(err, 'Request validation error');
         res.status(400).json({
