@@ -1,7 +1,5 @@
 import React from 'react';
 import { Course } from './types/course';
-
-// Import the image directly
 import courseImage from '../assets/images/popular-courses.png';
 
 interface CourseCardProps {
@@ -9,6 +7,7 @@ interface CourseCardProps {
 }
 
 export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
+  // Utility function to handle image loading fallback
   const getImageSrc = (imageUrl: string) => {
     try {
       return imageUrl;
@@ -18,9 +17,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   };
 
   return (
-    <div className="course-card bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg">
+    // Main container with consolidated hover effects
+    <div className="course-card bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-[#3bbd98] cursor-pointer group">
       {/* Image Section */}
-      <div className="aspect-w-4 aspect-h-3 relative">
+      <div className="aspect-w-16 aspect-h-9 relative">
         <img
           src={getImageSrc(course.imageUrl)}
           alt={course.title}
@@ -30,46 +30,49 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
       {/* Content Section */}
       <div className="p-4">
-        {/* Title */}
-        <h3 className="text-sm sm:text-base lg:text-lg font-poppins font-semibold mb-2">
+        {/* Title - Updates text color on hover */}
+        <h3 className="text-sm sm:text-[20px] font-poppins font-semibold mb-2 line-clamp-2 group-hover:text-white">
           {course.title}
         </h3>
 
-        {/* Author */}
-        <p className="text-xs sm:text-sm lg:text-base font-poppins text-black mb-2">
+        {/* Author - Updates text color on hover */}
+        <p className="text-xs sm:text-[16px] font-poppins text-black mb-2 group-hover:text-white">
           By {course.author}
         </p>
 
-        {/* Rating */}
+        {/* Rating Section - Updates text colors on hover */}
         <div className="flex items-center gap-1 mb-3">
-          <span className="text-sm sm:text-base font-poppins font-semibold">
+          <span className="text-[20px] font-poppins font-semibold group-hover:text-white">
             {course.rating}
           </span>
-          <svg className="w-5 h-5 sm:w-6 sm:h-6 fill-current text-yellow-400" viewBox="0 0 24 24">
+          <svg
+            className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-yellow-400"
+            viewBox="0 0 24 24"
+          >
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
           </svg>
-          <span className="text-xs sm:text-sm lg:text-base text-black font-poppins">
+          <span className="text-xs sm:text-[20px] text-black font-poppins group-hover:text-white">
             ({course.totalRatings.toLocaleString()} ratings)
           </span>
         </div>
 
-        {/* Price Section */}
+        {/* Price Section - Updates text colors on hover */}
         <div className="flex items-center gap-2">
-          {course.currentPrice === "Free" ? (
+          {course.currentPrice === 'Free' ? (
             <>
-              <span className="text-[#9d9d9d] font-poppins text-sm sm:text-base line-through">
+              <span className="text-[#9d9d9d] font-poppins text-xs sm:text-[18px] line-through group-hover:text-white/70">
                 Rs 299
               </span>
-              <span className="text-[#31b991] font-poppins text-sm sm:text-lg">
+              <span className="text-[#31b991] font-poppins text-sm sm:text-[20px] group-hover:text-white">
                 Free
               </span>
             </>
           ) : (
             <>
-              <span className="text-[#9d9d9d] font-poppins text-sm sm:text-base line-through">
+              <span className="text-[#9d9d9d] font-poppins text-xs sm:text-[18px] line-through group-hover:text-white/70">
                 Rs {course.originalPrice}
               </span>
-              <span className="text-red-500 font-poppins text-sm sm:text-lg">
+              <span className="text-red-500 font-poppins text-sm sm:text-[20px] group-hover:text-white">
                 Rs {course.currentPrice}
               </span>
             </>

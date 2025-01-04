@@ -1,6 +1,8 @@
 import { initServer } from '@ts-rest/express';
-import {chapterRepo} from '@skillprompt-lms/libs/lms-prisma/chapter-repo'
+import { chapterRepo } from '@skillprompt-lms/libs/lms-prisma/chapter-repo';
 import { chapterContract } from '@skillprompt-lms/libs/api-contract/modules/chapter';
+import { contentSchema } from '@skillprompt-lms/libs/api-contract/modules/content';
+import { quizSchema } from '@skillprompt-lms/libs/api-contract/modules/quiz';
 const s = initServer();
 
 export const chapterRouter = s.router(chapterContract, {
@@ -42,6 +44,9 @@ export const chapterRouter = s.router(chapterContract, {
           id: chapter.id,
           title: chapter.title,
           description: chapter.description,
+          order: chapter.order,
+          content: contentSchema,
+          quiz: quizSchema,
         },
         isSuccess: true,
         message: 'Chapter retrieved successfully',
@@ -52,6 +57,7 @@ export const chapterRouter = s.router(chapterContract, {
     const chapter = await chapterRepo.create({
       title: body.title,
       description: body.description,
+      order: body.order,
       course: { connect: { id: params.id } },
     });
 
@@ -61,7 +67,10 @@ export const chapterRouter = s.router(chapterContract, {
         data: {
           id: chapter.id,
           title: chapter.title,
+          order: chapter.order,
           description: chapter.description,
+          content: contentSchema,
+          quiz: quizSchema,
         },
         isSuccess: true,
         message: 'Chapter created successfully',
@@ -90,6 +99,7 @@ export const chapterRouter = s.router(chapterContract, {
       input: {
         title: body.title,
         description: body.description,
+        order: body.order,
       },
     });
 
@@ -100,6 +110,9 @@ export const chapterRouter = s.router(chapterContract, {
           id: updatedChapter.id,
           title: updatedChapter.title,
           description: updatedChapter.description,
+          order: updatedChapter.order,
+          content: contentSchema,
+          quiz: quizSchema,
         },
         isSuccess: true,
         message: 'Chapter updated successfully',

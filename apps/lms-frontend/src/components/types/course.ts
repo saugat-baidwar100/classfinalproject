@@ -12,6 +12,8 @@ export interface AllCourse {
     id: string
     title: string
     author: string
+    category:string
+    type:string
     lastUpdated:string
     totalLecture:number
     totalStudents:number

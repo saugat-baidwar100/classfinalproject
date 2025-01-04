@@ -17,9 +17,12 @@ export const courseRouter = s.router(courseContract, {
             title: t.title,
             description: t.description,
             category: t.category,
+            
             thumbnail: t.thumbnail,
-            level: t.level,
-            price: t.price,
+            type: t.type,
+            instructor: t.instructor,
+            price: t.price.toString(),
+        
             completed: t.is_completed,
             chapters: chapterSchema,
           };
@@ -41,17 +44,21 @@ export const courseRouter = s.router(courseContract, {
         },
       };
     }
+
     return {
       status: 200,
       body: {
         data: {
           id: course.id,
+     
           title: course.title,
           description: course.description,
           category: course.category,
           thumbnail: course.thumbnail,
-          level: course.level,
-          price: course.price,
+          type: course.type,
+          instructor: course.instructor,
+          price: course.price.toString(),
+        
           completed: course.is_completed,
           chapters: chapterSchema,
         },
@@ -63,24 +70,30 @@ export const courseRouter = s.router(courseContract, {
   createCourse: async ({ body }) => {
     const course = await courseRepo.create({
       title: body.title,
+      
       description: body.description,
       category: body.category,
-      level: body.level,
+      type: body.type,
+      instructor: body.instructor,
       thumbnail: body.thumbnail,
-      price: body.price,
+      price: parseFloat(body.price),
       is_completed: body.completed,
+      level: body.level,
     });
     return {
       status: 201,
       body: {
         data: {
           id: course.id,
+          
           title: course.title,
           description: course.description,
           category: course.category,
           thumbnail: course.thumbnail,
-          level: course.level,
-          price: course.price,
+          type: course.type,
+          instructor: course.instructor,
+          price: course.price.toString(),
+         
           completed: course.is_completed,
           chapters: chapterSchema,
         },
@@ -106,8 +119,8 @@ export const courseRouter = s.router(courseContract, {
       title: body.title,
       description: body.description,
       category: body.category,
-      level: body.level,
-      price: body.price,
+
+      price: parseFloat(body.price),
       is_completed: body.completed,
     });
 
@@ -116,11 +129,12 @@ export const courseRouter = s.router(courseContract, {
       body: {
         data: {
           id: course.id,
+ 
           title: course.title,
           description: course.description,
           category: course.category,
-          level: course.level,
-          price: course.price,
+
+          price: course.price.toString(),
           completed: course.is_completed,
           chapters: chapterSchema,
         },
