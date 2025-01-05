@@ -24,7 +24,6 @@ export const courseSchema = z.object({
   completed: z.boolean(),
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
-  
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;
 

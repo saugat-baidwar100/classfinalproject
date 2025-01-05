@@ -94,7 +94,6 @@ export async function sendOtp(input: TSendOtpInput): Promise<TSendOtpOutput> {
   return data;
 }
 
-
 export type TVerifyEmailInput = {
   email: string;
   otp: string;

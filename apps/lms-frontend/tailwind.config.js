@@ -13,7 +13,6 @@ module.exports = {
     '../../node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-   
     extend: {
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
@@ -28,14 +27,18 @@ module.exports = {
         'custom-dark-teal': '#289675',
         'custom-black': '#000000',
         'custom-white': '#ffffff',
-
+        customGreen: '#3EBD98',
+        customRed: '#F51A1A',
+        customGray: '#9D9D9D',
       },
       scale: {
         102: '1.02',
       },
     },
   },
-  plugins: [nextui({
-    addCommonColors: true,
-  }),],
+  plugins: [
+    nextui({
+      addCommonColors: true,
+    }),
+  ],
 };
