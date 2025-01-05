@@ -1,11 +1,15 @@
-import { CheckIcon } from '@heroicons/react/24/solid'
-import advertiseImage from '../assets/images/advertise.png'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CheckIcon } from '@heroicons/react/24/solid';
+import advertiseImage from '../assets/images/advertise.png';
 
 export interface AdvertiseBannerProps {
   image?: string;
 }
 
-export const AdvertiseBanner = ({ image = advertiseImage }: AdvertiseBannerProps) => {
+export const AdvertiseBanner: React.FC<AdvertiseBannerProps> = ({ image = advertiseImage }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative overflow-hidden bg-white">
       {/* Decorative Circles */}
@@ -25,7 +29,7 @@ export const AdvertiseBanner = ({ image = advertiseImage }: AdvertiseBannerProps
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-8 py-12 lg:grid-cols-2 lg:gap-12">
+        <div className="grid items-center gap-8 py-8 sm:py-12 lg:grid-cols-2 lg:gap-12">
           {/* Image Section */}
           <div className="relative aspect-video overflow-hidden rounded-lg sm:aspect-[4/3] lg:aspect-auto">
             <img
@@ -36,26 +40,26 @@ export const AdvertiseBanner = ({ image = advertiseImage }: AdvertiseBannerProps
           </div>
 
           {/* Text Section */}
-          <div className="space-y-6">
-            <h2 className="text-xl font-semibold font-poppins text-black sm:text-2xl lg:text-3xl xl:text-[30px]">
+          <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-lg sm:text-xl font-semibold font-poppins text-black md:text-2xl lg:text-3xl xl:text-[30px]">
               Boost Your Skills And Career With Our Courses
             </h2>
 
-            <p className="text-sm font-poppins text-black sm:text-base lg:text-[16px]">
+            <p className="text-xs sm:text-sm font-poppins text-black md:text-base lg:text-[16px]">
               Trust us, you can achieve several things that can enhance your personal and professional growth.
             </p>
 
             {/* Benefits List */}
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {[
                 'Skill development',
                 'Certifications',
                 'Hands-on projects',
                 'Access to Expert knowledge',
               ].map((benefit) => (
-                <li key={benefit} className="flex items-center gap-3">
-                  <CheckIcon className="h-5 w-5 text-emerald-500 flex-shrink-0" />
-                  <span className="text-sm font-poppins text-black sm:text-base lg:text-lg">
+                <li key={benefit} className="flex items-center gap-2 sm:gap-3">
+                  <CheckIcon className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-500 flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-poppins text-black md:text-base lg:text-lg">
                     {benefit}
                   </span>
                 </li>
@@ -64,7 +68,8 @@ export const AdvertiseBanner = ({ image = advertiseImage }: AdvertiseBannerProps
 
             {/* Call-to-Action Button */}
             <button
-              className="w-full sm:w-auto rounded-md bg-[#31b991] px-6 py-3 text-sm font-semibold text-white font-poppins shadow-sm transition-colors hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 sm:text-base lg:text-[16px]"
+              onClick={() => navigate('/courses')}
+              className="w-full sm:w-auto rounded-md bg-[#31b991] px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-white font-poppins shadow-sm transition-colors hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 md:text-base lg:text-[16px]"
             >
               Explore Courses
             </button>

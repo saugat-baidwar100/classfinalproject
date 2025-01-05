@@ -104,31 +104,31 @@ export const PopularCourses: React.FC = () => {
   };
 
   return (
-    <section className="py-8 sm:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Header with Filter Buttons */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 gap-4">
-        <h2 className="text-xl sm:text-2xl lg:text-[32px] font-bold font-poppins text-center md:text-left">
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[32px] font-bold font-poppins text-center md:text-left">
           Our Popular Courses
         </h2>
         <div className="flex flex-wrap md:flex-nowrap gap-2 sm:gap-3 items-center justify-center md:justify-start">
           <Button
             variant={filter === "all" ? "default" : "outline"}
             onClick={() => setFilter("all")}
-            className="text-xs sm:text-[16px]"
+            className="text-xs sm:text-sm md:text-base lg:text-[16px]"
           >
             All courses
           </Button>
           <Button
             variant={filter === "paid" ? "default" : "outline"}
             onClick={() => setFilter("paid")}
-            className="text-xs sm:text-[16px]"
+            className="text-xs sm:text-sm md:text-base lg:text-[16px]"
           >
             Paid courses
           </Button>
           <Button
             variant={filter === "free" ? "default" : "outline"}
             onClick={() => setFilter("free")}
-            className="text-xs sm:text-[16px]"
+            className="text-xs sm:text-sm md:text-base lg:text-[16px]"
           >
             Free courses
           </Button>
@@ -148,7 +148,7 @@ export const PopularCourses: React.FC = () => {
                 ))}
               </Slider>
               {/* Pagination Dots */}
-              <div className="flex justify-center gap-2 mt-6 sm:mt-8 items-center">
+              <div className="flex justify-center gap-2 mt-6 sm:mt-8 md:mt-10 items-center">
                 {filteredCourses.map((_, dot) => (
                   <button
                     key={dot}
@@ -185,3 +185,4 @@ export const PopularCourses: React.FC = () => {
 };
 
 export default PopularCourses;
+

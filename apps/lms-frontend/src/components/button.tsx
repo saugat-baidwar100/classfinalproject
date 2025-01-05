@@ -11,7 +11,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    'px-3 py-2 rounded-md font-medium transition-colors focus:outline-none focus-visible:ring focus-visible:ring-offset-2 text-sm sm:text-base';
+    'px-2 sm:px-3 py-1.5 sm:py-2 rounded-md font-medium transition-colors focus:outline-none focus-visible:ring focus-visible:ring-offset-2 text-xs sm:text-sm md:text-base';
   const variantClasses =
     variant === 'default'
       ? 'bg-[#31b991] text-white font-poppins border border-[#31b991] hover:bg-emerald-600'

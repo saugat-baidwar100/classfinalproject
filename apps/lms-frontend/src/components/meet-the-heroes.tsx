@@ -63,9 +63,15 @@ export function MeetTheHeroes() {
     },
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1280,
         settings: {
           slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
         },
       },
       {
@@ -96,13 +102,13 @@ export function MeetTheHeroes() {
   };
 
   return (
-    <section className="w-full py-12 sm:py-16 bg-white overflow-hidden">
+    <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-[32px] font-poppins font-bold text-gray-900 mb-4 tracking-tight">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[32px] font-poppins font-bold text-gray-900 mb-4">
             Meet the Heroes
           </h2>
-          <p className="text-sm sm:text-base md:text-[20px] font-semibold font-poppins text-[#777575]">
+          <p className="text-sm sm:text-base md:text-lg lg:text-[20px] font-semibold font-poppins text-[#777575]">
             We offer the knowledge and abilities.
           </p>
         </div>
@@ -121,13 +127,13 @@ export function MeetTheHeroes() {
                       />
                     </div>
                   </div>
-                  <h3 className="text-white text-sm sm:text-base md:text-[20px] font-poppins font-semibold mb-2">
+                  <h3 className="text-white text-sm sm:text-base md:text-lg lg:text-[20px] font-poppins font-semibold mb-2">
                     {hero.name}
                   </h3>
-                  <p className="text-white text-xs sm:text-sm md:text-base font-poppins mb-3 sm:mb-4">
+                  <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-poppins mb-3 sm:mb-4">
                     {hero.role}
                   </p>
-                  <p className="text-white text-xs sm:text-base leading-relaxed font-poppins">
+                  <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed font-poppins">
                     {hero.description}
                   </p>
                 </div>
@@ -135,7 +141,7 @@ export function MeetTheHeroes() {
             ))}
           </Slider>
 
-          <div className="flex justify-center gap-3 mt-6 sm:mt-10">
+          <div className="flex justify-center gap-3 mt-6 sm:mt-8 md:mt-10">
             {heroes.map((_, index) => (
               <button
                 key={index}
@@ -156,3 +162,4 @@ export function MeetTheHeroes() {
 }
 
 export default MeetTheHeroes;
+

@@ -9,13 +9,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-custom-black text-custom-white py-8 sm:py-10 md:py-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 font-poppins">
+    <div className="bg-custom-black text-custom-white py-8 sm:py-10 md:py-12 lg:py-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 font-poppins">
       <div className="w-full max-w-7xl mx-auto">
         {/* Flex container with centered alignment */}
         <div className="flex flex-col md:flex-row items-center justify-center md:space-x-8">
           {/* Text Section */}
-          <div className="md:w-3/5 space-y-4 lg:space-y-6 text-center md:text-left">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-big-size font-bold text-custom-white">
+          <div className="md:w-3/5 space-y-4 lg:space-y-6 text-center md:text-left mb-8 md:mb-0">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-big-size font-bold text-custom-white">
               Find the best courses for you
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-custom-white leading-relaxed font-light">
@@ -76,3 +76,4 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
 };
 
 export default HeroSection;
+
