@@ -17,12 +17,13 @@ const SuccessSchema = z.object({
 export const reviewSchema = z.object({
   id: z.string(),
   Comment: z.string(),
-  user_id: z.string(),
   course_id: z.string(),
+  username: z.string(),
   rating: z.number(),
+
   created_at: z.string().optional(),
   updated_at: z.string().optional(),
-  course: courseSchema,
+  // course: courseSchema,
 });
 
 export type TreviewSchema = z.infer<typeof reviewSchema>;
@@ -30,7 +31,7 @@ export type TreviewSchema = z.infer<typeof reviewSchema>;
 export const reviewContract = c.router({
   getReview: {
     method: 'GET',
-    path: '/api/courses/:course_id/users/:user_id/reviews',
+    path: '/api/courses/:course_id/users/:username/reviews',
     responses: {
       200: SuccessSchema.extend({
         data: z.array(reviewSchema),
@@ -43,7 +44,7 @@ export const reviewContract = c.router({
 
   getReviewById: {
     method: 'GET',
-    path: '/api/courses/:course_id/users/:user_id/reviews/:reviewId',
+    path: '/api/courses/:course_id/users/:username/reviews/:reviewId',
     responses: {
       200: SuccessSchema.extend({
         data: reviewSchema,
@@ -56,7 +57,7 @@ export const reviewContract = c.router({
 
   createReview: {
     method: 'POST',
-    path: '/api/courses/:course_id/users/:user_id/reviews/add',
+    path: '/api/courses/:course_id/users/:username/reviews/add',
     body: reviewSchema.omit({ id: true }),
     responses: {
       201: SuccessSchema.extend({
@@ -70,7 +71,7 @@ export const reviewContract = c.router({
 
   updateReview: {
     method: 'PUT',
-    path: '/api/courses/:course_id/users/:user_id/reviews/update/:reviewId',
+    path: '/api/courses/:course_id/users/:username/reviews/update/:reviewId',
     body: reviewSchema.omit({ id: true }),
     responses: {
       200: SuccessSchema.extend({
@@ -84,7 +85,7 @@ export const reviewContract = c.router({
 
   deleteReview: {
     method: 'DELETE',
-    path: '/api/courses/:course_id/users/:user_id/reviews/delete/:reviewId',
+    path: '/api/courses/:course_id/users/:username/reviews/delete/:reviewId',
     body: z.object({}),
     responses: {
       200: SuccessSchema.extend({
