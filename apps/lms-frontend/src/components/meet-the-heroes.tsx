@@ -26,7 +26,7 @@ const heroes: Hero[] = [
     name: 'Marvin McKinney',
     role: 'Full-Stack Developer',
     description:
-      'Passionate about creating intuitive and visually appealing user interfaces.',
+      'Strong emphasis on project-based learning, debugging, and industry best practices..',
     image: HeroImage,
   },
   {
@@ -34,7 +34,7 @@ const heroes: Hero[] = [
     name: 'Marvin McKinney',
     role: 'Full Stack Developer',
     description:
-      'Expertise in machine learning algorithms and data visualization techniques.',
+      'Strong emphasis on project-based learning, debugging, and industry best practices.',
     image: HeroImage,
   },
   {
@@ -42,7 +42,7 @@ const heroes: Hero[] = [
     name: 'Marvin Mckinney',
     role: 'Full Stack Developer',
     description:
-      'Skilled in automating and optimizing development and deployment processes.',
+      'Strong emphasis on project-based learning, debugging, and industry best practices.',
     image: HeroImage,
   },
 ];
