@@ -50,7 +50,7 @@ export type TLoginOutput = {
 export async function login(input: TLoginInput): Promise<TLoginOutput> {
   console.log('uri:', env.BACKEND_URL);
 
-  const res = await fetch(`${env.BACKEND_URL}/auth/login`, {
+  const res = await fetch(`${env.BACKEND_URL}auth/login`, {
     method: 'POST',
     credentials: 'include',
     headers: {
