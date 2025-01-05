@@ -1,14 +1,15 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 import HeroSection from '../components/hero-section';
 import Footer from '../components/footer';
 import logo from '../assets/images/logo.png';
-import HeroSectionLogo from '../assets/images/hero-image.png'; // Import your local image
+import HeroSectionLogo from '../assets/images/hero-image.png';
 import TopCategories from '../components/top-categories';
 import PopularCourses from '../components/popular-courses';
 import ConnectBanner from '../components/connect-banner';
 import { MeetTheHeroes } from '../components/meet-the-heroes';
 import AdvertiseBanner from '../components/advertise-banner';
-import Navbar from '../components/Navbar';
+import TestimonialSection from '../components/testimonial-section';
 
 const Home: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const Home: React.FC = () => {
       />
       <MeetTheHeroes />
       <AdvertiseBanner />
+      <TestimonialSection />
       <Footer logoSrc={logo} />
     </div>
   );

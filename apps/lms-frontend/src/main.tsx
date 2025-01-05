@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { NextUIProvider } from '@nextui-org/react';
+
 import App from './app/app';
 
 const root = ReactDOM.createRoot(
