@@ -154,7 +154,6 @@ Jest Runner<br/>
 ---
 
 ### **Environment Setup**
-
 Create a `.env` file in the root directory and add the following:
 
 ```env

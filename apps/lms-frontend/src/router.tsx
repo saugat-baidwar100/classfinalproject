@@ -6,6 +6,7 @@ import { LoginPage } from './pages/login-page';
 
 import { ResetPassword } from './modules/auth/reset-password';
 import { ForgotPassword } from './modules/auth/forget-password';
+import { AllCoursePage } from './pages/all-courses';
 import { RegisterPage } from './pages/register.page';
 import { VerifyOtp } from './modules/auth/verify-otp';
 
@@ -20,8 +21,8 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/instructor',
-    // element: <Navbar />,
+    path: '/courses',
+    element: <AllCoursePage />,
   },
 
   {

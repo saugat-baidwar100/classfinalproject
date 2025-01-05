@@ -118,10 +118,12 @@ CREATE TABLE `Review` (
     `rating` INTEGER NOT NULL,
     `comment` TEXT NULL,
     `user_id` VARCHAR(191) NOT NULL,
+    `username` VARCHAR(191) NOT NULL,
     `course_id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL,
 
+    UNIQUE INDEX `Review_id_course_id_key`(`id`, `course_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

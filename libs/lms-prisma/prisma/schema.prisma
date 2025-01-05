@@ -126,9 +126,11 @@ model Review{
   rating      Int
   comment     String? @db.Text
   user_id     String
+  username    String
   user        User   @relation(fields: [user_id], references: [id])
   course_id   String
   course       Course  @relation(fields: [course_id], references: [id])
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt
+    @@unique([id, course_id]) 
 }
