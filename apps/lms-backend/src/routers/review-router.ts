@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { initServer } from '@ts-rest/express';
 import { reviewRepo } from '../../../../libs/lms-prisma/src/review-repo';
+import { db } from '../../../../libs/lms-prisma/src/client'; // Adjust the import path as necessary
 import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
 import { courseSchema } from '@skillprompt-lms/libs/api-contract/modules/courses';
 
@@ -16,7 +17,7 @@ export const reviewRouter = s.router(reviewContract, {
           return {
             id: t.id,
             Comment: t.comment,
-            user_id: t.user_id,
+            username: t.username,
             course_id: t.course_id,
             rating: t.rating,
             created_at: t.created_at.toISOString(),
@@ -34,7 +35,7 @@ export const reviewRouter = s.router(reviewContract, {
     const review = await reviewRepo.findById({
       reviewId: params.reviewId,
       course_id: params.course_id,
-      user_id: params.user_id,
+      username: params.username,
     });
 
     if (!review) {
@@ -52,7 +53,7 @@ export const reviewRouter = s.router(reviewContract, {
         data: {
           id: review.id,
           Comment: review.comment,
-          user_id: review.user_id,
+          username: review.username,
           course_id: review.course_id,
           rating: review.rating,
           created_at: review.created_at.toISOString(),
@@ -66,36 +67,70 @@ export const reviewRouter = s.router(reviewContract, {
   },
 
   createReview: async ({ body, params }) => {
+    // Fetch the User by username (assuming you use username to identify users)
+    const user = await db.user.findUnique({
+      where: { username: params.username },  // Ensure this matches your actual identifier (like username)
+    });
+  
+    if (!user) {
+      return {
+        status: 404,
+        body: {
+          message: 'User not found',
+          isSuccess: false,
+        },
+      };
+    }
+    const course = await db.course.findUnique({
+      where: { id: params.course_id },  // Ensure this matches your actual course identifier (course_id)
+    });
+  
+    if (!course) {
+      return {
+        status: 404,
+        body: {
+          message: 'Course not found',
+          isSuccess: false,
+        },
+      };
+    }
+  
+    // Now proceed with creating the review and connecting to the user by user.id
     const review = await reviewRepo.create({
       comment: body.Comment,
-      user: { connect: { id: params.user_id } },
+      username: params.username,
       course: { connect: { id: params.course_id } },
       rating: body.rating,
       created_at: body.created_at,
       updated_at: body.updated_at,
+      user: { connect: { username: user.username } },  // Connect the review to the user by user.id
     });
+  
     return {
       status: 201,
       body: {
         data: {
           id: review.id,
+          username: review.username,
           Comment: review.comment,
           rating: review.rating,
           created_at: review.created_at.toISOString(),
           updated_at: review.updated_at.toISOString(),
-          course: courseSchema,
+          course_id: params.course_id, 
         },
         isSuccess: true,
         message: 'Review created',
       },
     };
   },
+  
+  
 
   updateReview: async ({ params, body }) => {
     const review = await reviewRepo.findById({
       reviewId: params.reviewId,
       course_id: params.course_id,
-      user_id: params.user_id,
+      username: params.username,
     });
 
     if (!review) {
@@ -126,7 +161,7 @@ export const reviewRouter = s.router(reviewContract, {
         data: {
           id: review.id,
           Comment: review.comment,
-          user_id: review.user_id,
+          username: review.username,
           course_id: review.course_id,
           rating: review.rating,
           created_at: review.created_at.toISOString(),
@@ -143,7 +178,7 @@ export const reviewRouter = s.router(reviewContract, {
     const review = await reviewRepo.findById({
       reviewId: params.reviewId,
       course_id: params.course_id,
-      user_id: params.user_id,
+      username: params.username,
     });
 
     if (!review) {
