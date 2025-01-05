@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -51,7 +51,7 @@ export function MeetTheHeroes() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const sliderRef = useRef<Slider>(null);
 
-  const settings = {
+  const settings = useMemo(() => ({
     dots: false,
     infinite: true,
     speed: 500,
@@ -81,19 +81,9 @@ export function MeetTheHeroes() {
         },
       },
     ],
-    autoplay: false,
+    autoplay: true, // Simplify by using autoplay directly in the settings
     autoplaySpeed: 3000,
-  };
-
-  useEffect(() => {
-    const autoplayInterval = setInterval(() => {
-      if (sliderRef.current) {
-        sliderRef.current.slickNext();
-      }
-    }, 3000);
-
-    return () => clearInterval(autoplayInterval);
-  }, []);
+  }), []);
 
   const goToSlide = (index: number) => {
     if (sliderRef.current) {
@@ -162,4 +152,3 @@ export function MeetTheHeroes() {
 }
 
 export default MeetTheHeroes;
-

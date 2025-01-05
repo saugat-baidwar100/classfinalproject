@@ -5,6 +5,21 @@ interface HeroSectionProps {
   HeroSectionLogoSrc: string;
 }
 
+const IconWithLabel: React.FC<{ icon: string; label: string; colorClass: string }> = ({
+  icon,
+  label,
+  colorClass,
+}) => (
+  <div className="flex items-center space-x-2">
+    <span className={`text-lg md:text-xl lg:text-2xl ${colorClass}`}>
+      {icon}
+    </span>
+    <span className="text-xs sm:text-sm md:text-base lg:text-small-size text-custom-white font-medium">
+      {label}
+    </span>
+  </div>
+);
+
 const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
   const navigate = useNavigate();
 
@@ -26,35 +41,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
               one course at a time.
             </p>
             <div className="flex flex-wrap gap-4 lg:gap-6 justify-center md:justify-start">
-              <div className="flex items-center space-x-2">
-                <span className="text-yellow-400 text-lg md:text-xl lg:text-2xl">
-                  📖
-                </span>
-                <span className="text-xs sm:text-sm md:text-base lg:text-small-size text-custom-white font-medium">
-                  Learning
-                </span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-orange-500 text-lg md:text-xl lg:text-2xl">
-                  👨‍💻
-                </span>
-                <span className="text-xs sm:text-sm md:text-base lg:text-small-size text-custom-white font-medium">
-                  Career-Oriented
-                </span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-pink-500 text-lg md:text-xl lg:text-2xl">
-                  💡
-                </span>
-                <span className="text-xs sm:text-sm md:text-base lg:text-small-size text-custom-white font-medium">
-                  Creative Thinking
-                </span>
-              </div>
+              <IconWithLabel icon="📖" label="Learning" colorClass="text-yellow-400" />
+              <IconWithLabel icon="👨‍💻" label="Career-Oriented" colorClass="text-orange-500" />
+              <IconWithLabel icon="💡" label="Creative Thinking" colorClass="text-pink-500" />
             </div>
             <div className="flex justify-center md:justify-start">
               <button
                 onClick={() => navigate('/courses')}
                 className="bg-custom-teal px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm sm:text-base text-custom-white font-medium hover:bg-custom-teal transition-all duration-300 ease-in-out"
+                aria-label="Explore courses"
               >
                 Explore Courses
               </button>
@@ -65,7 +60,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
           <div className="md:w-2/5 flex justify-center">
             <img
               src={HeroSectionLogoSrc}
-              alt="Hero Section"
+              alt="Hero section showcasing a variety of courses"
               className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-auto rounded-2xl shadow-2xl object-cover transform transition-transform duration-300"
             />
           </div>
@@ -76,4 +71,3 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
 };
 
 export default HeroSection;
-

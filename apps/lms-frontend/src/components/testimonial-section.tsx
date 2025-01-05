@@ -45,17 +45,17 @@ export default function TestimonialSection() {
     {
       name: "Albert Flores",
       role: "Student",
-      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill. The courses are so well-structured and easy to follow. This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill"
+      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
     },
     {
       name: "Albert Flores",
       role: "Student",
-      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill. The courses are so well-structured and easy to follow. This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill"
+      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
     },
     {
       name: "Albert Flores",
       role: "Student",
-      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill. The courses are so well-structured and easy to follow. This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill"
+      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
     }
   ];
 
@@ -106,4 +106,3 @@ export default function TestimonialSection() {
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
@@ -12,14 +12,15 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+  // Scroll handler optimized using useCallback
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 20);
+  }, []);
 
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -28,11 +29,17 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
     { name: 'Courses', path: '/courses' },
   ];
 
+  // Reusable function for setting active styles
+  const getNavItemClass = (path: string) => 
+    `px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-300 ${
+      location.pathname === path
+        ? 'text-custom-teal font-semibold'
+        : 'text-custom-white hover:text-custom-teal'
+    }`;
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-custom-black text-custom-white py-2 md:py-3 font-poppins transition-all duration-300 ${
-        isScrolled ? 'shadow-lg' : ''
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 bg-custom-black text-custom-white py-2 md:py-3 font-poppins transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         {/* Logo Section */}
@@ -52,11 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
           {navItems.map((item) => (
             <button
               key={item.name}
-              className={`px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-300 ${
-                location.pathname === item.path
-                  ? 'text-custom-teal font-semibold'
-                  : 'text-custom-white hover:text-custom-teal'
-              }`}
+              className={getNavItemClass(item.path)}
               onClick={() => navigate(item.path)}
             >
               {item.name}
@@ -96,9 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden bg-custom-black absolute left-0 right-0 overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`md:hidden bg-custom-black absolute left-0 right-0 overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
           {navItems.map((item) => (
@@ -142,4 +143,3 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 };
 
 export default Navbar;
-

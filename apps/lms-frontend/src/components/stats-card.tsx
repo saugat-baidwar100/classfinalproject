@@ -21,13 +21,12 @@ export function StatsCard({ stat }: StatsCardProps) {
 export default function App() {
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Add an empty div to take up the left space */}
-      <div className="flex-1"></div>
-      {/* Add the StatsCard in a vertically centered div */}
-      <div className="flex items-center">
-        <StatsCard stat={{ value: "123", label: "Example Label" }} />
+      {/* Center the StatsCard with responsive layout */}
+      <div className="flex-1 flex justify-center items-center">
+        <div className="w-full sm:w-auto">
+          <StatsCard stat={{ value: "123", label: "Example Label" }} />
+        </div>
       </div>
     </div>
   );
 }
-

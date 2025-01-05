@@ -10,7 +10,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
     <footer className="bg-custom-black text-white font-poppins py-6 sm:py-8 md:py-10 lg:py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8 md:gap-8">
           {/* Logo and Description */}
           <div className="lg:col-span-4">
             <Link to="/">
@@ -37,6 +37,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/about"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="About Us"
                 >
                   About Us
                 </Link>
@@ -45,6 +46,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/contact"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="Contact Us"
                 >
                   Contact Us
                 </Link>
@@ -62,6 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/javascript"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="JavaScript Courses"
                 >
                   Javascript
                 </Link>
@@ -70,6 +73,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/react"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="React JS Courses"
                 >
                   React Js
                 </Link>
@@ -78,6 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/python"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="Python Courses"
                 >
                   Python
                 </Link>
@@ -95,6 +100,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/teach"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="Teach on SkillPrompt"
                 >
                   Teach on SkillPrompt
                 </Link>
@@ -103,6 +109,7 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
                 <Link
                   to="/pricing"
                   className="text-custom-white hover:text-custom-teal text-xs sm:text-sm md:text-base"
+                  aria-label="Plans and Pricing"
                 >
                   Plans and Pricing
                 </Link>
@@ -123,26 +130,30 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
             <Link
               to="/about"
               className="text-xs sm:text-sm text-custom-white hover:text-custom-teal"
+              aria-label="About Us"
             >
               About Us
             </Link>
             <Link
               to="/contact"
               className="text-xs sm:text-sm text-custom-white hover:text-custom-teal"
+              aria-label="Contact"
             >
               Contact
             </Link>
             <Link
               to="/privacy"
               className="text-xs sm:text-sm text-custom-white hover:text-custom-teal"
+              aria-label="Privacy Policy"
             >
               Privacy Policy
             </Link>
             <Link
               to="/terms"
               className="text-xs sm:text-sm text-custom-white hover:text-custom-teal"
+              aria-label="Terms & Conditions"
             >
-              Terms & Condition
+              Terms & Conditions
             </Link>
           </div>
         </div>
@@ -152,4 +163,3 @@ export const Footer: React.FC<FooterProps> = ({ logoSrc }) => {
 };
 
 export default Footer;
-

@@ -85,27 +85,16 @@ export const PopularCourses: React.FC = () => {
     if (sliderRef.current) {
       sliderRef.current.slickGoTo(0);
     }
-
-    if (filter === "all") {
-      const autoplayInterval = setInterval(() => {
-        if (sliderRef.current && filteredCourses.length > 1) {
-          sliderRef.current.slickNext();
-        }
-      }, 3000);
-
-      return () => clearInterval(autoplayInterval);
-    }
-  }, [filter, filteredCourses.length]);
+  }, [filter]);
 
   const goToSlide = (index: number) => {
-    if (sliderRef.current) {
+    if (sliderRef.current && filter === "all") {
       sliderRef.current.slickGoTo(index);
     }
   };
 
   return (
     <section className="py-8 sm:py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Header with Filter Buttons */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 sm:mb-8 md:mb-10 gap-4">
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[32px] font-bold font-poppins text-center md:text-left">
           Our Popular Courses
@@ -135,45 +124,36 @@ export const PopularCourses: React.FC = () => {
         </div>
       </div>
 
-      {/* Courses Display */}
       <div className="relative">
         {filter === "all" ? (
-          filteredCourses.length > 1 ? (
-            <>
-              <Slider ref={sliderRef} {...settings}>
-                {filteredCourses.map((course) => (
-                  <div key={course.id} className="px-2">
-                    <CourseCard course={course} />
-                  </div>
-                ))}
-              </Slider>
-              {/* Pagination Dots */}
-              <div className="flex justify-center gap-2 mt-6 sm:mt-8 md:mt-10 items-center">
-                {filteredCourses.map((_, dot) => (
-                  <button
-                    key={dot}
-                    onClick={() => goToSlide(dot)}
-                    className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${
-                      currentSlide === dot
-                        ? 'bg-custom-teal'
-                        : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                    aria-label={`Go to slide ${dot + 1}`}
-                  />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              <div className="px-2">
-                <CourseCard course={filteredCourses[0]} />
-              </div>
+          <>
+            <Slider ref={sliderRef} {...settings}>
+              {filteredCourses.map((course) => (
+                <div key={course.id} className="px-2">
+                  <CourseCard course={course} />
+                </div>
+              ))}
+            </Slider>
+            
+            <div className="flex justify-center gap-2 mt-6 sm:mt-8 md:mt-10 items-center">
+              {filteredCourses.map((_, dot) => (
+                <button
+                  key={dot}
+                  onClick={() => goToSlide(dot)}
+                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${
+                    currentSlide === dot
+                      ? 'bg-custom-teal'
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Go to slide ${dot + 1}`}
+                />
+              ))}
             </div>
-          )
+          </>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredCourses.map((course) => (
-              <div key={course.id} className="px-2">
+              <div key={course.id}>
                 <CourseCard course={course} />
               </div>
             ))}
@@ -185,4 +165,3 @@ export const PopularCourses: React.FC = () => {
 };
 
 export default PopularCourses;
-
