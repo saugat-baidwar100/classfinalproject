@@ -168,7 +168,6 @@ export const LoginForm = () => {
                 className="text-sm text-blue-400 hover:underline"
                 onClick={() => sendOtp(inputEmail)}
               >
-                
                 Forgot password?
               </a>
             </div>
@@ -179,8 +178,6 @@ export const LoginForm = () => {
             >
               Sign in to your account
             </button>
-
-            
           </form>
 
           <p className="mt-4 text-center text-sm">

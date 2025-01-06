@@ -17,9 +17,11 @@
     "paths": {
       "@skillprompt-lms/auth": ["libs/auth/src/index.ts"],
       "@skillprompt-lms/libs/api-contract/*": ["libs/api-contract/src/*"],
-      "@skillprompt-lms/libs/lms-kysely/*": ["libs/lms-kysely/src/*"],
       "@skillprompt-lms/libs/lms-prisma/*": ["libs/lms-prisma/src/*"],
-      "@skillprompt-lms/libs/todo-feature/*": ["libs/todo-feature/src/*"]
+      "@skillprompt-lms/libs/todo-feature/*": ["libs/todo-feature/src/*"],
+      "@skillprompt-lms/libs/ui-components/*": [
+        "libs/ui-components/src/*"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
