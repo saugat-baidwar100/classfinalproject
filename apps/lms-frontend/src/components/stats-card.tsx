@@ -1,4 +1,3 @@
-import React from 'react';
 import { CategoryStats } from '../components/types/category';
 
 interface StatsCardProps {

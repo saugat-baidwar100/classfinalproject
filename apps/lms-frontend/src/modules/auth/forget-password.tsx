@@ -27,10 +27,11 @@ export const ForgotPassword = () => {
           </div>
 
           <button
-            type="submit"
+            type="button"
+            onClick={() => window.location.href = '/resetpassword'}
             className="w-full px-4 py-2 text-white bg-[#31B991] rounded-md shadow  hover:bg-[#27a37f]  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
-            <a href="/resetpassword"> Send Email</a>
+            Send Email
           </button>
         </form>
 
