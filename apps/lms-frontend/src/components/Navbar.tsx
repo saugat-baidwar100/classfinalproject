@@ -12,7 +12,6 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Scroll handler optimized using useCallback
   const handleScroll = useCallback(() => {
     setIsScrolled(window.scrollY > 20);
   }, []);
@@ -29,7 +28,6 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
     { name: 'Courses', path: '/courses' },
   ];
 
-  // Reusable function for setting active styles
   const getNavItemClass = (path: string) => 
     `px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-300 ${
       location.pathname === path
@@ -39,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 bg-custom-black text-custom-white py-2 md:py-3 font-poppins transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`}
+      className={`fixed top-0 left-0 right-0 z-50 bg-custom-black text-custom-white py-2 md:py-3 lg:py-4 font-poppins transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         {/* Logo Section */}
@@ -55,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
         </button>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
+        <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
           {navItems.map((item) => (
             <button
               key={item.name}
@@ -68,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
         </div>
 
         {/* Desktop Buttons */}
-        <div className="hidden md:flex items-center space-x-2 lg:space-x-3">
+        <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
           <button
             className="border-2 border-custom-teal text-custom-teal px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-custom-teal hover:text-custom-white transition duration-300"
             onClick={() => navigate('/auth/login')}
@@ -143,3 +141,4 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
 };
 
 export default Navbar;
+
