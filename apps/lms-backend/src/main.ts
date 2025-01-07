@@ -30,7 +30,6 @@ app.use(compression());
 
 //-------ts-rest with swagger----------
 
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
 // ------------------------- CORS Setup -------------------------
@@ -59,8 +58,6 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-
-
 // ------------------------- Testing Routes -------------------------
 app.get('/', (req: Request, res: Response) => {
   res.json({
@@ -72,7 +69,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // ------------------------- Routes -------------------------
 // Add your application routes here
-createAuth(app)
+createAuth(app);
 
 // generateEndPoints(app)
 generateEndPoints(app);
@@ -105,5 +102,8 @@ app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
 app.listen(env.PORT, () => {
   console.log(
     `Server starting at port ${env.PORT} http://localhost:${env.PORT}`
+  );
+  console.log(
+    `🚀Swagger UI starting at port ${env.PORT} http://localhost:${env.PORT}/api-docs`
   );
 });
