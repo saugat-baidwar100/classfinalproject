@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   logoSrc: string;
@@ -7,131 +8,133 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = useCallback(() => {
+    setIsScrolled(window.scrollY > 20);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Courses', path: '/courses' },
+  ];
+
+  const getNavItemClass = (path: string) => 
+    `px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-300 ${
+      location.pathname === path
+        ? 'text-custom-teal font-semibold'
+        : 'text-custom-white hover:text-custom-teal'
+    }`;
 
   return (
-    <nav className="bg-custom-black text-custom-white px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-3 md:py-4 flex justify-between items-center font-poppins relative">
-      {/* Logo Section */}
-      <div className="flex items-center">
-        <button onClick={() => navigate('/')}>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 bg-custom-black text-custom-white py-2 md:py-3 lg:py-4 font-poppins transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`}
+    >
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+        {/* Logo Section */}
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-custom-teal rounded-md"
+        >
           <img
             src={logoSrc}
             alt="Logo"
-            className="h-6 sm:h-8 md:h-10 w-auto mr-2 sm:mr-3"
+            className="h-8 sm:h-10 md:h-12 w-auto"
           />
         </button>
-      </div>
 
-      {/* Desktop Navigation Links */}
-      <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
-        <button
-          className="text-sm lg:text-medium-size text-custom-teal border-b-2 border-custom-teal pb-1 font-semibold"
-          onClick={() => navigate('/')}
-        >
-          Home
-        </button>
-        <button
-          className="text-sm lg:text-medium-size hover:text-custom-teal transition-colors duration-300 font-medium"
-          onClick={() => navigate('/courses')}
-        >
-          Courses
-        </button>
-      </div>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+          {navItems.map((item) => (
+            <button
+              key={item.name}
+              className={getNavItemClass(item.path)}
+              onClick={() => navigate(item.path)}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
 
-      {/* Buttons */}
-      <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
-        <button
-          className="border-2 border-custom-teal text-xs sm:text-sm lg:text-base text-custom-teal px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg font-semibold hover:text-custom-white hover:bg-custom-teal transition duration-300"
-          onClick={() => navigate('/auth/login')}
-        >
-          Login
-        </button>
-        <button
-          className="bg-custom-teal px-3 lg:px-4 py-1 lg:py-1.5 rounded-lg font-semibold text-xs sm:text-sm lg:text-base text-custom-white hover:bg-custom-teal transition duration-300"
-          onClick={() => navigate('/auth/register')}
-        >
-          Signup
-        </button>
-      </div>
+        {/* Desktop Buttons */}
+        <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+          <button
+            className="border-2 border-custom-teal text-custom-teal px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-custom-teal hover:text-custom-white transition duration-300"
+            onClick={() => navigate('/auth/login')}
+          >
+            Login
+          </button>
+          <button
+            className="bg-custom-teal text-custom-white px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-custom-teal-dark transition duration-300"
+            onClick={() => navigate('/auth/register')}
+          >
+            Signup
+          </button>
+        </div>
 
-      {/* Mobile Menu Toggle */}
-      <div className="md:hidden">
+        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="text-custom-white focus:outline-none"
-          aria-label="Toggle menu"
+          className="md:hidden text-custom-white focus:outline-none focus-visible:ring-2 focus-visible:ring-custom-teal rounded-md"
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         >
-          <svg
-            className={`w-6 h-6 transform transition-transform duration-300 ${
-              isMenuOpen ? 'rotate-90' : ''
-            }`}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-            />
-          </svg>
+          {isMenuOpen ? (
+            <X className="w-6 h-6" />
+          ) : (
+            <Menu className="w-6 h-6" />
+          )}
         </button>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`absolute top-full left-0 w-full bg-custom-teal text-custom-white flex flex-col items-center py-6 md:hidden font-poppins transition-all duration-500 ease-in-out transform ${
-          isMenuOpen ? 'translate-y-0 opacity-100 visible' : '-translate-y-10 opacity-0 invisible'
-        } z-50`}
+        className={`md:hidden bg-custom-black absolute left-0 right-0 overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}
       >
-        {/* Centered Image */}
-        <div className="flex justify-center items-center mb-4">
-          <img
-            src={logoSrc}
-            alt="Menu Logo"
-            className="w-16 h-16 rounded-full object-cover shadow-lg"
-          />
+        <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+          {navItems.map((item) => (
+            <button
+              key={item.name}
+              className={`text-left px-3 py-2 rounded-md text-base transition-colors duration-300 ${
+                location.pathname === item.path
+                  ? 'text-custom-teal font-semibold'
+                  : 'text-custom-white hover:text-custom-teal'
+              }`}
+              onClick={() => {
+                navigate(item.path);
+                closeMenu();
+              }}
+            >
+              {item.name}
+            </button>
+          ))}
+          <button
+            className="w-full border-2 border-custom-teal text-custom-teal px-3 py-2 rounded-md text-base font-semibold hover:bg-custom-teal hover:text-custom-white transition duration-300"
+            onClick={() => {
+              navigate('/auth/login');
+              closeMenu();
+            }}
+          >
+            Login
+          </button>
+          <button
+            className="w-full bg-custom-teal text-custom-white px-3 py-2 rounded-md text-base font-semibold hover:bg-custom-teal-dark transition duration-300"
+            onClick={() => {
+              navigate('/auth/register');
+              closeMenu();
+            }}
+          >
+            Signup
+          </button>
         </div>
-
-        {/* Menu Items */}
-        <button
-          className="text-base font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-4 py-2 rounded-lg w-11/12 text-center mb-2"
-          onClick={() => {
-            navigate('/');
-            setIsMenuOpen(false);
-          }}
-        >
-          Home
-        </button>
-        <button
-          className="text-base font-medium hover:bg-[#2ca386] hover:scale-105 transition-all px-4 py-2 rounded-lg w-11/12 text-center mb-2"
-          onClick={() => {
-            navigate('/courses');
-            setIsMenuOpen(false);
-          }}
-        >
-          Courses
-        </button>
-        <button
-          className="text-base font-medium border-2 border-white hover:bg-white hover:text-custom-teal transition-all px-4 py-2 rounded-lg w-11/12 text-center mb-2"
-          onClick={() => {
-            navigate('/auth/login');
-            setIsMenuOpen(false);
-          }}
-        >
-          Login
-        </button>
-        <button
-          className="text-base font-medium bg-white text-custom-teal hover:bg-[#2ca386] hover:text-white transition-all px-4 py-2 rounded-lg w-11/12 text-center"
-          onClick={() => {
-            navigate('/signup');
-            setIsMenuOpen(false);
-          }}
-        >
-          Signup
-        </button>
       </div>
     </nav>
   );
