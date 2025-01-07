@@ -184,13 +184,13 @@ export const RegisterForm = () => {
               />
               <label className="ml-2 text-sm">
                 I agree to the{' '}
-                <a href="#" className="text-blue-400 hover:underline">
+                <button type="button" className="text-blue-400 hover:underline">
                   Terms of Service
-                </a>{' '}
+                </button>{' '}
                 and{' '}
-                <a href="#" className="text-blue-400 hover:underline">
+                <button type="button" className="text-blue-400 hover:underline">
                   Privacy Policy
-                </a>
+                </button>
               </label>
             </div>
             {errors.terms && (
