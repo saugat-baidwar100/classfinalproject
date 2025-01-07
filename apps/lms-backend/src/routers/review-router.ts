@@ -69,9 +69,9 @@ export const reviewRouter = s.router(reviewContract, {
   createReview: async ({ body, params }) => {
     // Fetch the User by username (assuming you use username to identify users)
     const user = await db.user.findUnique({
-      where: { username: params.username },  // Ensure this matches your actual identifier (like username)
+      where: { username: params.username }, // Ensure this matches your actual identifier (like username)
     });
-  
+
     if (!user) {
       return {
         status: 404,
@@ -82,9 +82,9 @@ export const reviewRouter = s.router(reviewContract, {
       };
     }
     const course = await db.course.findUnique({
-      where: { id: params.course_id },  // Ensure this matches your actual course identifier (course_id)
+      where: { id: params.course_id }, // Ensure this matches your actual course identifier (course_id)
     });
-  
+
     if (!course) {
       return {
         status: 404,
@@ -94,7 +94,7 @@ export const reviewRouter = s.router(reviewContract, {
         },
       };
     }
-  
+
     // Now proceed with creating the review and connecting to the user by user.id
     const review = await reviewRepo.create({
       comment: body.Comment,
@@ -103,9 +103,9 @@ export const reviewRouter = s.router(reviewContract, {
       rating: body.rating,
       created_at: body.created_at,
       updated_at: body.updated_at,
-      user: { connect: { username: user.username } },  // Connect the review to the user by user.id
+      user: { connect: { username: user.username } }, // Connect the review to the user by user.id
     });
-  
+
     return {
       status: 201,
       body: {
@@ -116,15 +116,13 @@ export const reviewRouter = s.router(reviewContract, {
           rating: review.rating,
           created_at: review.created_at.toISOString(),
           updated_at: review.updated_at.toISOString(),
-          course_id: params.course_id, 
+          course_id: params.course_id,
         },
         isSuccess: true,
         message: 'Review created',
       },
     };
   },
-  
-  
 
   updateReview: async ({ params, body }) => {
     const review = await reviewRepo.findById({

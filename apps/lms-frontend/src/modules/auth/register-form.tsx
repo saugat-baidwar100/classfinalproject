@@ -1,7 +1,10 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FaGoogle, FaApple } from 'react-icons/fa';
+import person1 from '../../assets/images/person1.png';
+import person2 from '../../assets/images/person2.png';
+import person3 from '../../assets/images/person3.png';
+import person4 from '../../assets/images/person4.png';
 import { toastError, toastSuccess } from '../../toaster';
 import { useNavigate } from 'react-router-dom';
 import { useSendOtpMutation, useSignUpMutation } from '../../api/auth/query';
@@ -29,7 +32,13 @@ export const RegisterForm = () => {
   } = useForm({
     mode: 'all',
     resolver: zodResolver(registerSchema),
-    defaultValues: { fullName: '', username: '', email: '', password: '', terms: false },
+    defaultValues: {
+      fullName: '',
+      username: '',
+      email: '',
+      password: '',
+      terms: false,
+    },
   });
 
   const sendOtp = async (email: string) => {
@@ -93,24 +102,14 @@ export const RegisterForm = () => {
       <div className="flex flex-col lg:flex-row w-full max-w-6xl bg-gray-800 text-white rounded-lg shadow-lg overflow-hidden">
         {/* Left Section */}
         <div className="w-full lg:w-1/2 p-8 lg:p-12">
-          <h2 className="text-3xl font-bold mb-6">Create Your Account</h2>
-
-          {/* Social Buttons */}
-          <div className="flex flex-col gap-4">
-            <button className="flex items-center justify-center gap-3 w-full bg-gray-700 hover:bg-gray-600 py-2 rounded-md">
-              <FaGoogle className="text-red-500" />
-              <span>Sign up with Google</span>
-            </button>
-            <button className="flex items-center justify-center gap-3 w-full bg-gray-700 hover:bg-gray-600 py-2 rounded-md">
-              <FaApple className="text-gray-200" />
-              <span>Sign up with Apple</span>
-            </button>
-          </div>
+          <h2 className="text-3xl flex justify-center font-bold mb-6">
+            Create Your Account
+          </h2>
 
           {/* OR Separator */}
           <div className="flex items-center my-6">
             <div className="flex-grow h-px bg-gray-600"></div>
-            <span className="px-3 text-sm text-gray-400">or</span>
+
             <div className="flex-grow h-px bg-gray-600"></div>
           </div>
 
@@ -127,7 +126,9 @@ export const RegisterForm = () => {
                 {...register('fullName')}
               />
               {errors.fullName && (
-                <p className="text-red-400 text-sm mt-1">{errors.fullName.message}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.fullName.message}
+                </p>
               )}
             </div>
 
@@ -142,7 +143,9 @@ export const RegisterForm = () => {
                 {...register('username')}
               />
               {errors.username && (
-                <p className="text-red-400 text-sm mt-1">{errors.username.message}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.username.message}
+                </p>
               )}
             </div>
 
@@ -157,7 +160,9 @@ export const RegisterForm = () => {
                 {...register('email')}
               />
               {errors.email && (
-                <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.email.message}
+                </p>
               )}
             </div>
 
@@ -172,7 +177,9 @@ export const RegisterForm = () => {
                 {...register('password')}
               />
               {errors.password && (
-                <p className="text-red-400 text-sm mt-1">{errors.password.message}</p>
+                <p className="text-red-400 text-sm mt-1">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 
@@ -184,62 +191,72 @@ export const RegisterForm = () => {
               />
               <label className="ml-2 text-sm">
                 I agree to the{' '}
-                <a href="#" className="text-blue-400 hover:underline">
+                <a href="#" className="text-custom-teal hover:underline">
                   Terms of Service
                 </a>{' '}
                 and{' '}
-                <a href="#" className="text-blue-400 hover:underline">
+                <a href="#" className="text-custom-teal hover:underline">
                   Privacy Policy
                 </a>
               </label>
             </div>
             {errors.terms && (
-              <p className="text-red-400 text-sm mb-2">{errors.terms.message}</p>
+              <p className="text-red-400 text-sm mb-2">
+                {errors.terms.message}
+              </p>
             )}
 
             <button
               type="submit"
-              className="w-full py-2 bg-blue-500 hover:bg-blue-600 rounded-md font-semibold shadow-md"
+              className="w-full py-2 bg-custom-teal hover:bg-custom-dark-teal rounded-md font-semibold shadow-md"
             >
-              Create an account 
+              Create an account
             </button>
           </form>
 
           <p className="mt-4 text-center text-sm">
             Already have an account?{' '}
-            <a href="/auth/login" className="text-blue-400 hover:underline">
+            <a href="/auth/login" className="text-custom-teal hover:underline">
               Login here
             </a>
           </p>
         </div>
 
         {/* Right Section */}
-        <div className="w-full lg:w-1/2 bg-blue-600 flex flex-col justify-center items-center p-6">
+        <div className="w-full lg:w-1/2 bg-custom-teal flex flex-col justify-center items-center p-6">
           <h2 className="text-3xl font-bold mb-4 text-center">
-            Explore the world’s leading design portfolios.
+            Discover SkillPrompt’s Expert Learning Community
           </h2>
           <p className="text-center text-gray-200 text-sm">
-            Millions of designers and agencies showcase their work on Flowbite -
-            the home to the world’s best design professionals.
+            Thousands of learners and educators share knowledge and showcase
+            their expertise on SkillPrompt – your gateway to professional
+            growth.
           </p>
           <div className="mt-6 flex -space-x-2">
             <img
-              src="https://via.placeholder.com/40"
+              src={person1}
               alt="User 1"
               className="w-10 h-10 rounded-full border-2 border-white"
             />
             <img
-              src="https://via.placeholder.com/40"
+              src={person2}
               alt="User 2"
               className="w-10 h-10 rounded-full border-2 border-white"
             />
             <img
-              src="https://via.placeholder.com/40"
+              src={person3}
               alt="User 3"
               className="w-10 h-10 rounded-full border-2 border-white"
             />
+            <img
+              src={person4}
+              alt="User 4"
+              className="w-10 h-10 rounded-full border-2 border-white"
+            />
           </div>
-          <p className="mt-4 text-white text-sm">Over 15.7k Happy Customers</p>
+          <p className="mt-4 text-white text-sm">
+            Join over 15.7k satisfied learners
+          </p>
         </div>
       </div>
     </div>
