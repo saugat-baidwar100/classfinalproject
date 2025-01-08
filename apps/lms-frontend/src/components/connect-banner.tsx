@@ -25,7 +25,7 @@ const ConnectBanner: React.FC<ConnectBannerProps> = ({
             />
           </div>
           {/* Heading */}
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold font-poppins text-black text-center sm:text-left">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-[20px] font-semibold font-poppins text-black text-center sm:text-left">
             Let&apos;s Get Connected With Us!
           </h2>
         </div>
@@ -34,13 +34,13 @@ const ConnectBanner: React.FC<ConnectBannerProps> = ({
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <button
             onClick={onStudentClick}
-            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-xl border-2 border-teal-500 text-teal-500 font-semibold font-poppins rounded-lg hover:bg-teal-500 hover:text-white transition-all duration-200"
+            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-[18px] border-2 border-teal-500 text-teal-500 font-semibold font-poppins rounded-lg hover:bg-teal-500 hover:text-white transition-all duration-200"
           >
             I&apos;m A Student
           </button>
           <button
             onClick={onInstructorClick}
-            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-xl bg-teal-500 text-white font-semibold font-poppins rounded-lg hover:bg-teal-600 transition-all duration-200"
+            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-[18px] bg-teal-500 text-white font-semibold font-poppins rounded-lg hover:bg-teal-600 transition-all duration-200"
           >
             Become An Instructor
           </button>

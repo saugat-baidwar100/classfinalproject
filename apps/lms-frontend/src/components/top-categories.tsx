@@ -4,10 +4,10 @@ import { CategoryStats, Category } from '../components/types/category';
 
 export function TopCategories() {
   const stats: CategoryStats[] = [
-    { value: '2K+', label: 'Active Students' },
     { value: '10+', label: 'Total Courses' },
     { value: '5+', label: 'Instructors' },
     { value: '100%', label: 'Satisfaction Rate' },
+    { value: '2K+', label: 'Active Students' },
   ];
 
   const categories: Category[] = [
@@ -32,7 +32,7 @@ export function TopCategories() {
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[32px] font-bold font-poppins text-black mb-2 sm:mb-4">
           Top Categories
         </h2>
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#777575] font-poppins">
+        <p className="text-sm sm:text-base md:text-lg lg:text-[18px] text-[#777575] font-poppins">
           Explore our Popular Categories
         </p>
       </div>

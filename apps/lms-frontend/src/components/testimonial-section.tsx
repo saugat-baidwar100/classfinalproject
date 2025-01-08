@@ -45,17 +45,17 @@ export default function TestimonialSection() {
     {
       name: "Albert Flores",
       role: "Student",
-      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
+      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill. The courses are so well-structured and easy to follow. This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
     },
     {
       name: "Albert Flores",
       role: "Student",
-      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
+      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill. The courses are so well-structured and easy to follow. This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
     },
     {
       name: "Albert Flores",
       role: "Student",
-      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
+      testimonial: "This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill. The courses are so well-structured and easy to follow. This platform transformed my career! The courses are so well-structured and easy to follow. Highly recommend it to anyone looking to upskill."
     }
   ];
 
@@ -83,7 +83,7 @@ export default function TestimonialSection() {
                       />
                     </div>
                   </div>
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl font-poppins mb-4 sm:mb-6">
+                  <p className="text-sm sm:text-base md:text-lg lg:text-[16px] font-poppins mb-4 sm:mb-6">
                     "{testimonial.testimonial}"
                   </p>
                   <h1 className="text-base sm:text-lg md:text-xl lg:text-[24px] font-poppins mb-2 sm:mb-3">

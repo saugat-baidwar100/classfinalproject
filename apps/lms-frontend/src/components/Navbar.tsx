@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
   ];
 
   const getNavItemClass = (path: string) => 
-    `px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-300 ${
+    `px-3 py-2 rounded-md text-sm lg:text-[20px] transition-colors duration-300 ${
       location.pathname === path
         ? 'text-custom-teal font-semibold'
         : 'text-custom-white hover:text-custom-teal'
