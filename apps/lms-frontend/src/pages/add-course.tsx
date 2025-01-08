@@ -67,6 +67,7 @@ const initialCourses: Course[] = [
 const AddCourse: React.FC = () => {
   const [courses] = useState<Course[]>(initialCourses);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeButton, setActiveButton] = useState('courses');
 
   const filteredCourses = courses.filter((course) =>
     course.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -82,7 +83,10 @@ const AddCourse: React.FC = () => {
         {/* Sidebar */}
         <aside className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg shadow-sm p-6 mb-6 lg:mb-0 lg:mr-6">
           <nav className="space-y-6">
-            <button className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-50">
+            <button
+              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-50"
+              onClick={() => setActiveButton('courses')}
+            >
               <svg
                 width="20"
                 height="20"
@@ -90,14 +94,29 @@ const AddCourse: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                className="text-emerald-400"
+                className={
+                  activeButton === 'courses'
+                    ? 'text-emerald-400'
+                    : 'text-gray-900'
+                }
               >
                 <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
                 <path d="M10 8l6 4-6 4V8z" />
               </svg>
-              <span className="text-sm">Courses</span>
+              <span
+                className={
+                  activeButton === 'courses'
+                    ? 'text-emerald-400'
+                    : 'text-gray-900'
+                }
+              >
+                Courses
+              </span>
             </button>
-            <button className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-50">
+            <button
+              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-50"
+              onClick={() => setActiveButton('profile')}
+            >
               <svg
                 width="20"
                 height="20"
@@ -105,12 +124,24 @@ const AddCourse: React.FC = () => {
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
-                className="text-gray-900"
+                className={
+                  activeButton === 'profile'
+                    ? 'text-emerald-400'
+                    : 'text-gray-900'
+                }
               >
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-              <span className="text-sm">Profile</span>
+              <span
+                className={
+                  activeButton === 'profile'
+                    ? 'text-emerald-400'
+                    : 'text-gray-900'
+                }
+              >
+                Profile
+              </span>
             </button>
           </nav>
         </aside>
