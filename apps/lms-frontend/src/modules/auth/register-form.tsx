@@ -98,7 +98,7 @@ export const RegisterForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen w-screen bg-gray-900">
+    <div className="flex items-center justify-center min-h-screen w-screen bg-[#1c1c1c]">
       <div className="flex flex-col lg:flex-row w-full max-w-6xl bg-gray-800 text-white rounded-lg shadow-lg overflow-hidden">
         {/* Left Section */}
         <div className="w-full lg:w-1/2 p-8 lg:p-12">
@@ -184,21 +184,23 @@ export const RegisterForm = () => {
             </div>
 
             <div className="flex items-start mb-4">
-              <input
-                type="checkbox"
-                className="mt-1 form-checkbox h-4 w-4 text-blue-500"
-                {...register('terms')}
-              />
-              <label className="ml-2 text-sm">
-                I agree to the{' '}
-                <a href="#" className="text-custom-teal hover:underline">
-                  Terms of Service
-                </a>{' '}
-                and{' '}
-                <a href="#" className="text-custom-teal hover:underline">
-                  Privacy Policy
-                </a>
-              </label>
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  className="mt-1 form-checkbox h-3 w-3 text-custom-teal focus:ring-0"
+                  {...register('terms')}
+                />
+                <span className="ml-2 text-sm">
+                  I agree to the{' '}
+                  <a href="#" className="text-custom-teal hover:underline">
+                    Terms of Service
+                  </a>{' '}
+                  and{' '}
+                  <a href="#" className="text-custom-teal hover:underline">
+                    Privacy Policy
+                  </a>
+                </span>
+              </div>
             </div>
             {errors.terms && (
               <p className="text-red-400 text-sm mb-2">
@@ -223,7 +225,7 @@ export const RegisterForm = () => {
         </div>
 
         {/* Right Section */}
-        <div className="w-full lg:w-1/2 bg-custom-teal flex flex-col justify-center items-center p-6">
+        <div className="w-full lg:w-1/2 bg-custom-teal flex flex-col justify-center items-center p-6 lg:p-12 text-center lg:text-left">
           <h2 className="text-3xl font-bold mb-4 text-center">
             Discover SkillPrompt’s Expert Learning Community
           </h2>

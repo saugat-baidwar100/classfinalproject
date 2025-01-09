@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation, useSendOtpMutation } from '../../api/auth/query';
 import { toastError, toastSuccess } from '../../toaster';
@@ -11,6 +10,7 @@ import person3 from '../../assets/images/person3.png';
 import person4 from '../../assets/images/person4.png';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { input } from '@nextui-org/theme';
+
 // Define Zod schema for form validation
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -105,9 +105,7 @@ export const LoginForm = () => {
           <h2 className="text-3xl flex justify-center font-bold text-white mb-6">
             Welcome back
           </h2>
-          {/* Social Buttons */}
 
-          {/* OR Separator */}
           <div className="flex items-center my-4">
             <div className="flex-grow h-px bg-gray-600"></div>
 
@@ -154,13 +152,13 @@ export const LoginForm = () => {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  className="text-customGreen form-checkbox focus:ring-0"
+                  className="text-custom-teal form-checkbox focus:ring-0"
                 />
                 <span className="ml-2 text-sm">Remember me</span>
               </label>
               <a
                 href="/resetpassword"
-                className="text-sm text-blue-400 hover:underline"
+                className="text-sm text-custom-teal hover:underline"
                 onClick={() => sendOtp(inputEmail)}
               >
                 Forgot password?
@@ -169,7 +167,7 @@ export const LoginForm = () => {
 
             <button
               type="submit"
-              className="w-full py-2 bg-custom-teal hover:bg-blue-600 rounded-md font-semibold shadow-md"
+              className="w-full py-2 bg-custom-teal hover:bg-custom-dark-teal rounded-md font-semibold shadow-md"
             >
               Sign in to your account
             </button>
@@ -177,14 +175,17 @@ export const LoginForm = () => {
 
           <p className="mt-4 text-center text-sm">
             Don't have an account?{' '}
-            <a href="/auth/register" className="text-blue-400 hover:underline">
+            <a
+              href="/auth/register"
+              className="text-custom-teal hover:underline"
+            >
               Sign up
             </a>
           </p>
         </div>
 
         {/* Right Section */}
-        <div className="w-full lg:w-1/2 bg-custom-teal flex flex-col justify-center items-center p-6 h-[600px]">
+        <div className="w-full lg:w-1/2 bg-custom-teal flex flex-col justify-center items-center p-6 lg:p-12 text-center lg:text-left">
           <h2 className="text-3xl font-bold mb-4 text-center">
             Discover SkillPrompt’s Expert Learning Community
           </h2>
