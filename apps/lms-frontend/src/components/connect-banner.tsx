@@ -34,13 +34,13 @@ const ConnectBanner: React.FC<ConnectBannerProps> = ({
         <div className="flex flex-col sm:flex-row gap-4 items-center">
           <button
             onClick={onStudentClick}
-            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-[18px] border-2 border-teal-500 text-teal-500 font-semibold font-poppins rounded-lg hover:bg-teal-500 hover:text-white transition-all duration-200"
+            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-[18px] border-2 border-[#3EBD98] text-[#3EBD98] font-semibold font-poppins rounded-lg hover:bg-[#3EBD98] hover:text-white transition-all duration-200"
           >
             I&apos;m A Student
           </button>
           <button
             onClick={onInstructorClick}
-            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-[18px] bg-teal-500 text-white font-semibold font-poppins rounded-lg hover:bg-teal-600 transition-all duration-200"
+            className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 text-sm sm:text-base md:text-lg lg:text-[18px] bg-[#3EbD98] text-white font-semibold font-poppins rounded-lg hover:bg-[#289675] transition-all duration-200"
           >
             Become An Instructor
           </button>

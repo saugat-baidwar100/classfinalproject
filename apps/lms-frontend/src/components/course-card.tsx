@@ -31,7 +31,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
       {/* Content Section */}
       <div className="p-3 sm:p-4">
         {/* Title - Updates text color on hover */}
-        <h3 className="text-xs sm:text-sm md:text-base lg:text-[20px] font-poppins font-semibold mb-1 sm:mb-2 line-clamp-2 group-hover:text-white">
+        <h3 className="text-xs sm:text-sm md:text-base lg:text-[20px] text-black  font-poppins font-semibold mb-1 sm:mb-2 line-clamp-2 group-hover:text-white">
           {course.title}
         </h3>
 
@@ -42,7 +42,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
         {/* Rating Section - Updates text colors on hover */}
         <div className="flex items-center gap-1 mb-2 sm:mb-3">
-          <span className="text-sm sm:text-base md:text-lg lg:text-xl font-poppins font-semibold group-hover:text-white">
+          <span className="text-sm sm:text-base md:text-lg lg:text-xl text-black font-poppins font-semibold group-hover:text-white">
             {course.rating}
           </span>
           <svg
@@ -60,10 +60,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         <div className="flex items-center gap-2">
           {course.currentPrice === 'Free' ? (
             <>
-              <span className="text-[#9d9d9d] font-poppins text-xs sm:text-sm md:text-base lg:text-lg line-through group-hover:text-white/70">
+              <span className="text-[#9D9D9D] font-poppins text-xs sm:text-sm md:text-base lg:text-lg line-through group-hover:text-white/70">
                 Rs 299
               </span>
-              <span className="text-[#31b991] font-poppins text-xs sm:text-sm md:text-base lg:text-[20px] group-hover:text-white">
+              <span className="text-[#3EBD98] font-poppins text-xs sm:text-sm md:text-base lg:text-[20px] group-hover:text-white">
                 Free
               </span>
             </>
@@ -72,7 +72,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
               <span className="text-[#9d9d9d] font-poppins text-xs sm:text-sm md:text-base lg:text-lg line-through group-hover:text-white/70">
                 Rs {course.originalPrice}
               </span>
-              <span className="text-red-500 font-poppins text-xs sm:text-sm md:text-base lg:text-[20px] group-hover:text-white">
+              <span className="text-[#F51A1A] font-poppins text-xs sm:text-sm md:text-base lg:text-[20px] group-hover:text-white">
                 Rs {course.currentPrice}
               </span>
             </>
