@@ -26,20 +26,13 @@ export function CreateNewCourse() {
         .number({ invalid_type_error: 'Price must be a number' })
         .positive('Price must be greater than 0')
         .optional(), // Price is optional initially
-      thumbnail: z.any().refine(
-        (file) => {
-          if (file?.[0] instanceof File) {
-            // Client-side: Check File instance
-            return file?.[0]?.size <= 5 * 1024 * 1024;
-          }
-          if (typeof file === 'object' && file?.size) {
-            // Server-side: Check retrieved object
-            return file.size <= 5 * 1024 * 1024;
-          }
-          return false; // Invalid file
-        },
-        { message: 'Please select a valid file under 5MB' }
-      ),
+      thumbnail: z
+        .any()
+        .refine(
+          (file) =>
+            file?.[0] instanceof File && file?.[0]?.size <= 5 * 1024 * 1024,
+          { message: 'Please select a valid file under 5MB' }
+        ),
     })
     .refine(
       (data) => {
