@@ -15,30 +15,63 @@ async function create(input: Prisma.CourseCreateInput) {
   });
 }
 
-async function updateById(id: string, input: Prisma.CourseUpdateInput) {
+async function updateById({
+  categories_id,
+  courseId,
+  input,
+}: {
+  categories_id: string;
+  courseId: string;
+  input: Prisma.CourseUpdateInput;
+}) {
   return db.course.update({
     where: {
-      id,
+      // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
+      id_categories_id: {
+        id: courseId, // The unique course ID
+        categories_id: categories_id, // The categories ID (foreign key)
+      },
     },
     data: input,
   });
 }
 
-async function deleteById(id: string) {
+async function deleteById({
+  categories_id,
+  courseId,
+}: {
+  categories_id: string;
+  courseId: string;
+}) {
   return db.course.delete({
     where: {
-      id,
+      // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
+      id_categories_id: {
+        id: courseId, // The unique course ID
+        categories_id: categories_id, // The categories ID (foreign key)
+      },
     },
   });
 }
 
-export async function findById(id: string) {
+async function findById({
+  categories_id,
+  courseId,
+}: {
+  categories_id: string;
+  courseId: string;
+}) {
   return db.course.findUnique({
     where: {
-      id,
+      // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
+      id_categories_id: {
+        id: courseId, // The unique course ID
+        categories_id: categories_id, // The categories ID (foreign key)
+      },
     },
   });
 }
+
 async function findAll(input: Prisma.CourseWhereInput) {
   return db.course.findMany({
     where: input,

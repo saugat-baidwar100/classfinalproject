@@ -15,6 +15,7 @@ import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { generateEndPoints } from './routers/merge';
 import { openApiDocument } from './utils/swagger';
 import { errorHandler, notFoundHandler } from './utils/error-handler';
+import { validateAccessToken } from '@baijanstack/express-auth';
 
 // logger.debug(env,'Environment variables');
 
@@ -29,7 +30,6 @@ app.use(helmet());
 app.use(compression());
 
 //-------ts-rest with swagger----------
-
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
@@ -59,10 +59,8 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-
-
 // ------------------------- Testing Routes -------------------------
-app.get('/', (req: Request, res: Response) => {
+app.get('/', validateAccessToken, (req: Request, res: Response) => {
   res.json({
     message: 'Welcome to Backend',
     data: null,
@@ -72,7 +70,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // ------------------------- Routes -------------------------
 // Add your application routes here
-createAuth(app)
+createAuth(app);
 
 // generateEndPoints(app)
 generateEndPoints(app);
@@ -100,6 +98,8 @@ app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
     isSuccess: false,
   });
 });
+
+// Use authentication middleware and admin check middleware
 
 // Start Server
 app.listen(env.PORT, () => {

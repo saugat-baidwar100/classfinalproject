@@ -1,5 +1,4 @@
 import { z } from 'zod';
-// import { chapterSchema } from './chapter';
 import { initContract } from '@ts-rest/core';
 const c = initContract();
 
@@ -11,81 +10,74 @@ const SuccessSchema = z.object({
   message: z.string(),
   isSuccess: z.boolean(),
 });
-export const courseSchema = z.object({
+export const categoriesSchema = z.object({
   id: z.string(),
   title: z.string(),
-  type: z.string(),
-  instructor: z.string(),
-  categories_id: z.string(),
-  description: z.string(),
-  category: z.string(),
-  level: z.string(),
-  thumbnail: z.string().optional(),
   price: z.string(),
-  completed: z.boolean(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
+  instructor: z.string(),
+  description: z.string(),
+  role: z.string(),
 });
-export type TcourseSchema = z.infer<typeof courseSchema>;
+export type TcategoriesSchema = z.infer<typeof categoriesSchema>;
 
-export const courseContract = c.router({
-  getCourse: {
+export const categoriesContract = c.router({
+  getCategory: {
     method: 'GET',
-    path: '/api/courses',
+    path: '/api/category',
     responses: {
       200: SuccessSchema.extend({
-        data: z.array(courseSchema),
+        data: z.array(categoriesSchema),
       }),
       400: errorSchema,
       500: errorSchema,
     },
     summary: 'Get all the courses',
   },
-  getCourseById: {
+  getCategoryById: {
     method: 'GET',
-    path: '/api/courses/:id',
+    path: '/api/category/:id',
     responses: {
       200: SuccessSchema.extend({
-        data: courseSchema,
+        data: categoriesSchema,
       }),
       400: errorSchema,
       500: errorSchema,
     },
     summary: 'Get the course by id',
   },
-  createCourse: {
+  createCategory: {
     method: 'POST',
-    path: '/api/courses/add',
-    body: courseSchema.omit({ id: true }),
+    path: '/api/category/add',
+    body: categoriesSchema.omit({ id: true }),
     responses: {
       201: SuccessSchema.extend({
-        data: courseSchema,
+        data: categoriesSchema,
       }),
       400: errorSchema,
       500: errorSchema,
     },
     summary: 'Create Course',
   },
-  updateCourse: {
+  updateCategory: {
     method: 'PUT',
-    path: '/api/courses/update-course/:id',
-    body: courseSchema.omit({ id: true }),
+    path: '/api/category/update-category/:id',
+    body: categoriesSchema.omit({ id: true }),
     responses: {
       200: SuccessSchema.extend({
-        data: courseSchema,
+        data: categoriesSchema,
       }),
       400: errorSchema,
       500: errorSchema,
     },
     summary: 'Update Courses by id',
   },
-  deleteCourse: {
+  deleteCategory: {
     method: 'DELETE',
-    path: '/api/courses/delete-course/:id',
+    path: '/api/category/delete-category/:id',
     body: z.object({}),
     responses: {
       200: SuccessSchema.extend({
-        data: courseSchema,
+        data: categoriesSchema,
       }),
       400: errorSchema,
       404: errorSchema,
