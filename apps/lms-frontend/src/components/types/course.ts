@@ -11,13 +11,13 @@ export interface Course {
 export interface AllCourse {
     id: string
     title: string
-    author: string
+    instructor: string
     category:string
     type:string
     lastUpdated:string
     totalLecture:number
     totalStudents:number
-    originalPrice: number 
-    currentPrice: number | "Free"
-    imageUrl: string
+    originalPrice: string 
+    currentPrice: string | "Free"
+    thumbnail?: string;
   }  

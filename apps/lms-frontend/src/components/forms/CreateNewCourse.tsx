@@ -6,10 +6,14 @@ import { TextArea } from '@skillprompt-lms/libs/ui-components/components/textare
 import { Select } from '@skillprompt-lms/libs/ui-components/components/my-select';
 import { Button } from '@skillprompt-lms/libs/ui-components/components/button';
 import { useState } from 'react';
+import { courseApi } from '../../api/course';
 
 export function CreateNewCourse() {
   // State to handle the selected course type (free or paid)
   const [selectedType, setSelectedType] = useState('');
+
+  //adding new course
+  const { mutate:createMutation } = courseApi.createCourse.useMutation();
 
   // Course validation schema using Zod
   const courseSchema = z
@@ -68,6 +72,33 @@ export function CreateNewCourse() {
   // Form submit handler
   const onSubmit: SubmitHandler<CourseFormData> = (data) => {
     console.log('Form Data:', data);
+    createMutation(
+      {
+        body: {
+          description: data.description,
+          type: data.type,
+          title: data.title,
+          category: data.category,
+          price: data.price?.toString() || '',
+          thumbnail: data.thumbnail?.toString(),
+          created_at: '1/8/2025',
+          updated_at: '1/8/2025',
+          completed: true,
+          instructor: 'john doe',
+          level: 'Intermediate',
+        },
+      },
+      {
+        onSuccess: (data) => {
+          console.log('courses added successfully:', data);
+          alert('courses added successfully');
+        },
+        onError: (error) => {
+          console.error('Error adding courses:', error);
+          alert('Failed to add course');
+        },
+      }
+    );
   };
 
   return (
@@ -156,6 +187,7 @@ export function CreateNewCourse() {
           <div className="flex flex-col gap-2">
             <Input
               type="file"
+              accept='image'
               label={<p className="text-green-500">Thumbnail</p>}
               placeholder="Upload course thumbnail"
               {...register('thumbnail')}

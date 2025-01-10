@@ -129,11 +129,9 @@ export const courseRouter = s.router(courseContract, {
       body: {
         data: {
           id: course.id,
- 
           title: course.title,
           description: course.description,
           category: course.category,
-
           price: course.price.toString(),
           completed: course.is_completed,
           chapters: chapterSchema,
