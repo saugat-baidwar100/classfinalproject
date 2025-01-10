@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AllCourse } from './types/course';
 import { GiOpenBook, GiGraduateCap } from 'react-icons/gi';
-// Import the image directly
 import courseImage from '../assets/images/popular-courses.png';
 import { Divider } from '@nextui-org/react';
 
@@ -29,7 +28,7 @@ export const AllCourseCard: React.FC<AllCourse> = ({
   return (
     <div className="flex flex-row h-32 sm:h-auto rounded-[20px] border border-[#EAEAEA] overflow-hidden group cursor-pointer transition-transform duration-300 ease-in-out hover:shadow-lg hover:scale-102 hover:bg-custom-teal">
       {/* Image Section */}
-      <div className="overflow-hidden flex-shrink-0 bg-red-500 w-20 sm:w-52 md:w-52 lg:w-56">
+      <div className="overflow-hidden flex-shrink-0 w-20 sm:w-52 md:w-52 lg:w-56">
         <img
           src={thumbnail || courseImage}
           alt={title}

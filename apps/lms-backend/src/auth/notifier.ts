@@ -1,6 +1,5 @@
 import { INotifyService } from '@baijanstack/express-auth';
 import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
-import { text } from 'stream/consumers';
 import { sendingEmail } from '../utils/mailer';
 
 

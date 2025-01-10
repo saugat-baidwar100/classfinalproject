@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 import { Sidebar } from '../modules/sidebar/sidebar-container';
 import logo from '../assets/images/logo.png';
 import Footer from '../components/footer';
@@ -100,7 +100,7 @@ export const AllCoursePage = () => {
   return (
     <>
       <Navbar logoSrc={logo} />
-      <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 mt-14 mb-14 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[4fr,1fr] lg:gap-16 relative">
+      <div className="mx-auto px-4 sm:px-6 mt-20 bg-red sm:mt-24 md:mt-28 xl:mt-28 lg:mt-28 mb-14 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[4fr,1fr] lg:gap-16 relative">
         <div>
           <div className="flex justify-between items-center mb-10">
             <h2 className="text-[20px] sm:text-[24px] md:text-[26px] lg:text-[36px] font-bold font-poppins text-black">
