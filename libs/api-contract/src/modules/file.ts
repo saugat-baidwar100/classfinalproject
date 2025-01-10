@@ -58,15 +58,13 @@ export const fileContract = c.router({
     summary: 'Get file by ID',
   },
 
-  // Upload File
+  // Upload File (with multer support)
   uploadFile: {
     method: 'POST',
     path: '/api/files/upload',
+    contentType: 'multipart/form-data', // Corrected to singular form
     body: z.object({
-      fileName: z.string(),
-      filePath: z.string(),
-      fileSize: z.number(),
-      fileBuffer: z.instanceof(Buffer).optional(), // Expect a file buffer for upload
+      file: z.any(),
     }),
     responses: {
       200: successSchema.extend({
@@ -75,7 +73,7 @@ export const fileContract = c.router({
       400: errorSchema,
       500: errorSchema,
     },
-    summary: 'Upload a file',
+    summary: 'Upload a file using multipart/form-data',
   },
 
   // Update File by ID

@@ -26,7 +26,6 @@ async function updateById({
 }) {
   return db.course.update({
     where: {
-      // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
       id_categories_id: {
         id: courseId, // The unique course ID
         categories_id: categories_id, // The categories ID (foreign key)
@@ -45,7 +44,6 @@ async function deleteById({
 }) {
   return db.course.delete({
     where: {
-      // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
       id_categories_id: {
         id: courseId, // The unique course ID
         categories_id: categories_id, // The categories ID (foreign key)
@@ -63,7 +61,6 @@ async function findById({
 }) {
   return db.course.findUnique({
     where: {
-      // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
       id_categories_id: {
         id: courseId, // The unique course ID
         categories_id: categories_id, // The categories ID (foreign key)

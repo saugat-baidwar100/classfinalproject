@@ -101,7 +101,6 @@ export const reviewRouter = s.router(reviewContract, {
         };
       }
 
-      // Now proceed with creating the review and connecting to the user by user.id
       const review = await reviewRepo.create({
         comment: body.Comment,
         username: params.username,

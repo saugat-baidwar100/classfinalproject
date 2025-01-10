@@ -37,7 +37,6 @@ export const courseRouter = s.router(courseContract, {
   getCourseById: {
     middleware: [validateAccessToken, storeUserDataFromToken],
     handler: async ({ req, params }) => {
-      console.log('User Data:', req.user); // Check if req.user is populated
       const course = await courseRepo.findById({
         categories_id: params.id,
         courseId: params.id,
@@ -138,7 +137,6 @@ export const courseRouter = s.router(courseContract, {
       checkRole(['admin', 'instructor']),
     ],
     handler: async ({ req, params, body }) => {
-      console.log('User Data:', req.user); // Check if req.user is populated
       const course = await courseRepo.findById({
         categories_id: params.id,
         courseId: params.id,
@@ -192,7 +190,6 @@ export const courseRouter = s.router(courseContract, {
       checkRole(['admin', 'instructor']),
     ],
     handler: async ({ req, params }) => {
-      console.log('User Data:', req.user); // Check if req.user is populated
       const course = await courseRepo.findById({
         categories_id: params.id,
         courseId: params.id,
