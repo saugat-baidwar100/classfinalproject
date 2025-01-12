@@ -84,7 +84,7 @@ const AddCourse: React.FC = () => {
         <aside className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg shadow-sm p-6 mb-6 lg:mb-0 lg:mr-6">
           <nav className="space-y-6">
             <button
-              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-50"
+              className="flex items-center gap-4 px-4 py-3 text-[20px] rounded-lg hover:bg-gray-50"
               onClick={() => setActiveButton('courses')}
             >
               <svg
@@ -96,8 +96,8 @@ const AddCourse: React.FC = () => {
                 strokeWidth="2"
                 className={
                   activeButton === 'courses'
-                    ? 'text-emerald-400'
-                    : 'text-gray-900'
+                    ? 'text-[#3EBD98]'
+                    : 'text-black'
                 }
               >
                 <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
@@ -106,15 +106,15 @@ const AddCourse: React.FC = () => {
               <span
                 className={
                   activeButton === 'courses'
-                    ? 'text-emerald-400'
-                    : 'text-gray-900'
+                    ? 'text-[#3EBD98]'
+                    : 'text-black'
                 }
               >
                 Courses
               </span>
             </button>
             <button
-              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-50"
+              className="flex items-center gap-4 px-4 py-3 text-[20px]  rounded-lg hover:bg-gray-50"
               onClick={() => setActiveButton('profile')}
             >
               <svg
@@ -126,8 +126,8 @@ const AddCourse: React.FC = () => {
                 strokeWidth="2"
                 className={
                   activeButton === 'profile'
-                    ? 'text-emerald-400'
-                    : 'text-gray-900'
+                    ? 'text-[#3EBD98]'
+                    : 'text-black'
                 }
               >
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -136,8 +136,8 @@ const AddCourse: React.FC = () => {
               <span
                 className={
                   activeButton === 'profile'
-                    ? 'text-emerald-400'
-                    : 'text-gray-900'
+                    ? 'text-[#3EBD98]'
+                    : 'text-black'
                 }
               >
                 Profile
@@ -151,14 +151,14 @@ const AddCourse: React.FC = () => {
           <div className="max-w-full">
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
-              <h1 className="text-2xl font-semibold">All Courses</h1>
-              <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg transition-colors">
+              <h1 className="text-[36px] text-black font-semibold">All Courses</h1>
+              <button className="bg-[#3EBD98] hover:bg-[#289675] text-white px-6 py-3 rounded-lg transition-colors">
                 Add Course
               </button>
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 mb-6">
+            <p className="text-black mb-6">
               Create an engaging course, include real-life examples, and provide
               activities that help students understand the contents.
             </p>
@@ -172,7 +172,7 @@ const AddCourse: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button className="absolute right-3 top-1/2 -translate-y-1/2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm transition-colors">
+              <button className="absolute right-3 top-1/2 -translate-y-1/2 text-[16px] bg-[#3EBD98] hover:bg-[#289675] text-white px-5 py-2 rounded-lg text-sm transition-colors">
                 Search
               </button>
             </div>
@@ -182,19 +182,19 @@ const AddCourse: React.FC = () => {
               <table className="min-w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-4 px-6 font-medium text-gray-600">
+                    <th className="text-left text-[16px]  py-4 px-6 font-bold text-black">
                       Course name
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-600">
+                    <th className="text-left text-[16px]  py-4 px-6 font-bold text-black">
                       Status
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-600">
+                    <th className="text-left text-[16px]  py-4 px-6 font-bold text-black">
                       Enrolled students
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-600">
+                    <th className="text-left text-[16px]  py-4 px-6 font-bold text-black">
                       Price
                     </th>
-                    <th className="text-left py-4 px-6 font-medium text-gray-600">
+                    <th className="text-left text-[16px]  py-4 px-6 font-bold text-black">
                       Action
                     </th>
                   </tr>
@@ -203,27 +203,27 @@ const AddCourse: React.FC = () => {
                   {filteredCourses.map((course, index) => (
                     <tr
                       key={index}
-                      className="border-b border-gray-100 hover:bg-gray-50"
+                      className="border-b text-[16px] border-gray-100 hover:bg-gray-50"
                     >
-                      <td className="py-4 px-6">{course.name}</td>
+                      <td className="py-4 px-6 text-black">{course.name}</td>
                       <td className="py-4 px-6">
                         <span
                           className={`inline-block px-4 py-1 rounded-full text-xs ${
                             course.status === 'published'
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-yellow-100 text-yellow-800'
+                              ? 'bg-emerald-100 text-black'
+                              : 'bg-yellow-100 text-black'
                           }`}
                         >
                           {course.status}
                         </span>
                       </td>
-                      <td className="py-4 px-6">{course.students}</td>
-                      <td className="py-4 px-6">{course.price}</td>
+                      <td className="py-4 px-6 text-black">{course.students}</td>
+                      <td className="py-4 px-6 text-black">{course.price}</td>
                       <td className="py-4 px-6">
                         <div className="flex gap-4">
                           <button
                             title="Edit"
-                            className="p-2 rounded-full bg-emerald-100 text-emerald-600 hover:bg-emerald-200 transition-colors"
+                            className="p-2 rounded-full bg-emerald-100 text-[#3EBD98] hover:bg-[289675] transition-colors"
                           >
                             <svg
                               width="16"
