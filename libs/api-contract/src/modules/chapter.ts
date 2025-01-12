@@ -1,7 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import { z } from 'zod';
 
-
 const c = initContract();
 
 const errorSchema = z.object({
@@ -90,8 +89,7 @@ export const chapterContract = c.router({
     path: '/api/courses/:courseId/chapters/delete-chapter/:chapterId',
     body: z.object({}),
     responses: {
-      200: SuccessSchema.extend({
-      }),
+      200: SuccessSchema.extend({}),
       400: errorSchema,
       404: errorSchema,
       500: errorSchema,

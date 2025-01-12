@@ -117,10 +117,12 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  
-
   // Get Task Progress by User and Course
-  getTaskProgress: async ({ params }: { params: { course_id: string, username: string } }) => {
+  getTaskProgress: async ({
+    params,
+  }: {
+    params: { course_id: string; username: string };
+  }) => {
     try {
       const progress = await taskProgressRepo.findTaskProgressById(
         params.username, // Ensure the username is passed as a param
@@ -163,7 +165,9 @@ export const taskProgressRouter = s.router(taskProgressContract, {
   // Get All Task Progress for a Course
   getAllTaskProgress: async ({ params }) => {
     try {
-      const progressList = await taskProgressRepo.findAllTaskProgress(params.course_id);
+      const progressList = await taskProgressRepo.findAllTaskProgress(
+        params.course_id
+      );
 
       if (progressList.length === 0) {
         return {
@@ -180,7 +184,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
         body: {
           isSuccess: true,
           message: 'All task progress retrieved successfully',
-          data: progressList.map(progress => ({
+          data: progressList.map((progress) => ({
             ...progress,
             last_updated: progress.last_updated.toISOString(),
           })),
@@ -204,11 +208,23 @@ export const taskProgressRouter = s.router(taskProgressContract, {
       const { course_id, username } = params;
 
       // Get user progress, completed contents, quizzes, and courses
-      const progress = await taskProgressRepo.calculateUserProgress(course_id, username);
-      const completedContents = await taskProgressRepo.calculateCompletedContents(course_id, username);
-      const completedQuizzes = await taskProgressRepo.calculateCompletedQuizzes(course_id, username);
-      const completedCourses = await taskProgressRepo.calculateCompletedCourses(username);
-      const totalProgress = await taskProgressRepo.calculateTotalProgress(course_id, username);
+      const progress = await taskProgressRepo.calculateUserProgress(
+        course_id,
+        username
+      );
+      const completedContents =
+        await taskProgressRepo.calculateCompletedContents(course_id, username);
+      const completedQuizzes = await taskProgressRepo.calculateCompletedQuizzes(
+        course_id,
+        username
+      );
+      const completedCourses = await taskProgressRepo.calculateCompletedCourses(
+        username
+      );
+      const totalProgress = await taskProgressRepo.calculateTotalProgress(
+        course_id,
+        username
+      );
 
       return {
         status: 200,
@@ -238,7 +254,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  //calculated total progress of a user 
+  //calculated total progress of a user
   calculateTotalProgress: async ({ params }) => {
     try {
       // Call the method to calculate total progress for the given user and course
@@ -246,7 +262,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
         params.course_id,
         params.username
       );
-  
+
       // Return the successful response
       return {
         status: 200,
@@ -258,7 +274,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
       };
     } catch (error) {
       console.error('Error calculating total progress:', error);
-  
+
       // Handle errors and return a response
       return {
         status: 500,
@@ -268,16 +284,17 @@ export const taskProgressRouter = s.router(taskProgressContract, {
         },
       };
     }
-  },  
+  },
 
   // Calculate Completed Contents for a User in a Course
   calculateCompletedContents: async ({ params }) => {
     try {
-      const completedContents = await taskProgressRepo.calculateCompletedContents(
-        params.course_id,
-        params.username
-      );
-      
+      const completedContents =
+        await taskProgressRepo.calculateCompletedContents(
+          params.course_id,
+          params.username
+        );
+
       return {
         status: 200,
         body: {
@@ -305,7 +322,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
         params.course_id,
         params.username
       );
-      
+
       return {
         status: 200,
         body: {
@@ -325,35 +342,38 @@ export const taskProgressRouter = s.router(taskProgressContract, {
       };
     }
   },
-// Calculate Completed Chapters for a User
-calculateCompletedChapters: async ({ params }) => {
-  try {
-    const completedChapters = await taskProgressRepo.calculateCompletedChapters(params.username);
-    
-    return {
-      status: 200,
-      body: {
-        isSuccess: true,
-        message: 'Completed courses retrieved successfully',
-        data: { completedChapters },
-      },
-    };
-  } catch (error) {
-    console.error('Error calculating completed courses:', error);
-    return {
-      status: 500,
-      body: {
-        isSuccess: false,
-        message: 'Internal server error',
-      },
-    };
-  }
-},
+  // Calculate Completed Chapters for a User
+  calculateCompletedChapters: async ({ params }) => {
+    try {
+      const completedChapters =
+        await taskProgressRepo.calculateCompletedChapters(params.username);
+
+      return {
+        status: 200,
+        body: {
+          isSuccess: true,
+          message: 'Completed courses retrieved successfully',
+          data: { completedChapters },
+        },
+      };
+    } catch (error) {
+      console.error('Error calculating completed courses:', error);
+      return {
+        status: 500,
+        body: {
+          isSuccess: false,
+          message: 'Internal server error',
+        },
+      };
+    }
+  },
   // Calculate Completed Courses for a User
   calculateCompletedCourses: async ({ params }) => {
     try {
-      const completedCourses = await taskProgressRepo.calculateCompletedCourses(params.username);
-      
+      const completedCourses = await taskProgressRepo.calculateCompletedCourses(
+        params.username
+      );
+
       return {
         status: 200,
         body: {
