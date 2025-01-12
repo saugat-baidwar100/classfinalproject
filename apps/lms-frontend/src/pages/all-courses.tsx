@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar';
 import { Sidebar } from '../modules/sidebar/sidebar-container';
 import logo from '../assets/images/logo.png';
 import Footer from '../components/footer';
