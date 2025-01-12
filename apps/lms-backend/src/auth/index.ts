@@ -1,5 +1,9 @@
 import { Application } from 'express';
-import { initAuth, RouteGenerator } from '@baijanstack/express-auth';
+import {
+  initAuth,
+  RouteGenerator,
+  validateAccessToken,
+} from '@baijanstack/express-auth';
 import { config } from './config';
 import { EmailNotificationService } from './notifier';
 import {
@@ -18,6 +22,7 @@ export function createAuth(app: Application) {
   const notificationService = new EmailNotificationService();
 
   const routeGenerator = new RouteGenerator(app, notificationService, config);
+
   initAuth({
     routeGenerator,
     signUpHandler: new SignUpHandler(),
@@ -30,6 +35,7 @@ export function createAuth(app: Application) {
     forgotPasswordHandler: new ForgotPasswordHandler(),
     sendOtpHandler: new SendOtpHandler(),
   });
-
+  // Protect all authenticated routes with validateAccessToken
+  app.use('/protected', validateAccessToken);
   return routeGenerator;
 }

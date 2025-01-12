@@ -1,7 +1,10 @@
 import {
   TForgotPasswordResponseCodes,
   TLoginResponseCodes,
+  TMeResponseCodes,
+  TRefreshResponseCodes,
   TSendOtpResponseCodes,
+  TValidateTokenResponseCodes,
   TVerifyEmailResponseCodes,
 } from '../../../../../libs/api-contract/src/modules/auth';
 import { env } from '../../app/env';
@@ -12,7 +15,10 @@ export type TSignUpInput = {
   fullname: string;
   username: string;
   password: string;
+  
 };
+
+
 export type TSignUpOutput = {
   message: string;
   code: TSignUpResponseCodes;
@@ -38,6 +44,12 @@ export async function signUp(input: TSignUpInput): Promise<TSignUpOutput> {
   return data;
 }
 
+
+// for login api
+
+export type TUserRole = 'admin' | 'user';
+
+
 export type TLoginInput = {
   email: string;
   password: string;
@@ -45,6 +57,7 @@ export type TLoginInput = {
 export type TLoginOutput = {
   message: string;
   code: TLoginResponseCodes;
+  data:{}
 };
 
 export async function login(input: TLoginInput): Promise<TLoginOutput> {
@@ -66,6 +79,39 @@ export async function login(input: TLoginInput): Promise<TLoginOutput> {
   const data = await res.json();
   console.log('data', data);
 
+  return data;
+}
+
+export type TMeOutput={
+  message: string,
+  isSucess:boolean,
+  // data:{username:string, email:string, id:string, role:TUserRole}
+  code: TMeResponseCodes | TValidateTokenResponseCodes;
+  accessToken: string;
+  data:{
+    me:{
+      email:string,
+      password:string,
+
+    };
+    token:{
+      name:string;
+      email: string;
+      iat: number;
+      exp :number;
+    }
+  }
+}
+
+export async function me():Promise<TMeOutput> {
+  const res = await fetch (`${env.BACKEND_URL}/auth/me`,{
+    method :"GET",
+    credentials:"include",
+    headers:{
+      'Content-Type': 'application/json'
+    },
+  });
+  const data = await res.json()
   return data;
 }
 
@@ -102,6 +148,25 @@ export type TVerifyEmailOutput = {
   message: string;
   code: TVerifyEmailResponseCodes;
 };
+export type TRefreshTokenOutput = {
+  message: string;
+  code: TRefreshResponseCodes;
+};
+
+   export async function refreshToken(): Promise<TRefreshTokenOutput> {
+  const res = await fetch(`${env.BACKEND_URL}/auth/refresh`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const data = await res.json();
+
+  return data;
+}
+
 
 export async function verifyEmail(
   input: TVerifyEmailInput

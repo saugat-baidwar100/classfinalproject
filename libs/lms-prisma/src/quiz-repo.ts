@@ -16,17 +16,17 @@ async function create(input: Prisma.QuizCreateInput) {
 }
 
 async function updateById({
-quizId,
-chapter_id,
-input,
-
-  }:{quizId: string;
-    chapter_id: string;
-    input: Prisma.QuizUpdateInput}) {
+  quizId,
+  chapter_id,
+  input,
+}: {
+  quizId: string;
+  chapter_id: string;
+  input: Prisma.QuizUpdateInput;
+}) {
   return db.quiz.update({
     where: {
       id_chapter_id: {
-        // Use the generated name for the compound unique constraint
         id: quizId,
         chapter_id: chapter_id,
       },
@@ -37,21 +37,20 @@ input,
 
 async function deleteById({
   quizId,
-chapter_id,
-}:{quizId: string;
+  chapter_id,
+}: {
+  quizId: string;
   chapter_id: string;
-  input: Prisma.QuizUpdateInput
+  input: Prisma.QuizUpdateInput;
 }) {
   return db.quiz.delete({
     where: {
       id_chapter_id: {
-        // Use the generated name for the compound unique constraint
         id: quizId,
-        chapter_id: chapter_id
+        chapter_id: chapter_id,
+      },
     },
-    
-  },
-});
+  });
 }
 
 async function findById({
@@ -64,14 +63,13 @@ async function findById({
   return db.quiz.findUnique({
     where: {
       id_chapter_id: {
-        // Use the generated name for the compound unique constraint
         id: quizId,
         chapter_id: chapter_id,
       },
     },
   });
 }
-async function findAll(course_id: string,input: Prisma.QuizWhereInput) {
+async function findAll(course_id: string, input: Prisma.QuizWhereInput) {
   return db.quiz.findMany({
     where: input,
   });

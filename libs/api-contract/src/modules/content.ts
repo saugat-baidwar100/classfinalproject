@@ -19,9 +19,9 @@ export const contentSchema = z.object({
   content_type: z.string(),
   content_url: z.string(),
   duration: z.number(),
-  order:z.number(),
-  created_at: z.date().default(() => new Date()), 
-  updated_at: z.date().default(() => new Date()), 
+  order: z.number(),
+  created_at: z.date().default(() => new Date()),
+  updated_at: z.date().default(() => new Date()),
   completed: z.boolean(),
 });
 export const createContentSchema = z.object({
@@ -32,7 +32,7 @@ export const createContentSchema = z.object({
 export type TcontentSchema = z.infer<typeof contentSchema>;
 
 export const contentContract = c.router({
-  getContent: {
+  getContentById: {
     method: 'GET',
     path: '/api/chapters/:chapterId/contents/:contentId',
     responses: {
