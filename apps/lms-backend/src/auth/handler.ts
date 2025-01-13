@@ -50,7 +50,6 @@ export class SignUpHandler implements ISignUpHandler {
       username: body.username,
       email: body.email,
       password: hashedPassword,
-      role: body.role,
       is_email_verified: false,
     });
   };

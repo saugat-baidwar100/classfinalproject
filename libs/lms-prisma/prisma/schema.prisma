@@ -124,11 +124,11 @@ model Task {
   course      Course @relation(fields: [course_id], references: [id])
 }
 
-// enum Role {
-// user
-// admin
-// instructor
-// }
+enum Role {
+  student
+  admin
+  instructor
+}
 
 model User {
   id                String         @id @default(cuid())
@@ -137,7 +137,7 @@ model User {
   username          String         @unique
   password          String
   reviews           Review[]
-  role              String
+  role              Role           @default(student)
   is_email_verified Boolean        @default(false)
   progress          TaskProgress[] // one-to-many relation with TaskProgress
 
