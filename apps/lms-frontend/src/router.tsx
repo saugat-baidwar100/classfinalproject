@@ -9,13 +9,13 @@ import { AllCoursePage } from './pages/all-courses';
 import { RegisterPage } from './pages/register.page';
 import { VerifyOtp } from './modules/auth/verify-otp';
 import AddCourse from './pages/add-course';
+import { CourseCurriculum } from './components/forms/course-curriculum';
+import { CourseDetail } from './pages/course-detail-page';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <Home />
-    ),
+    element: <Home />,
   },
   {
     path: '/courses',
@@ -48,6 +48,15 @@ const router = createBrowserRouter([
   {
     path: '/add-course',
     element: <AddCourse />,
+  },
+  {
+    path: '/coursedetail',
+    // element: <Navbar />,
+    element: <CourseDetail />,
+  },
+  {
+    path: '/course-curriculum',
+    element: <CourseCurriculum />,
   },
 ]);
 
