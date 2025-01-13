@@ -62,26 +62,6 @@ export class LoginHandler implements ILoginHandler {
     return user;
   };
 
-  // export const loginHandler = async (req: Request, res: Response) => {
-  //   const { email, password } = req.body;
-
-  //   // Validate user credentials (use your own user authentication logic)
-  //   const user = await User.findOne({ email });
-
-  //   if (!user || user.password !== password) {
-  //     return res.status(401).json({ message: 'Invalid credentials' });
-  //   }
-
-  //   // Create JWT token including the role
-  //   const token = jwt.sign(
-  //     { userId: user.id, role: user.role },
-  //     process.env.TOKEN_SECRET as string, // Secret should be in environment variables
-  //     { expiresIn: '1h' }
-  //   );
-
-  //   res.json({ token });
-  // };
-
   comparePassword = async (
     email: string,
     enteredPassword: string
@@ -142,7 +122,7 @@ export class ResetPasswordHandler implements IResetPasswordHandler {
     email: string,
     hashedPassword: string
   ): Promise<void> => {
-    await userRepo.updateByEmail(email, { password: hashedPassword }, 'admin'); // Example: admin role is used here
+    await userRepo.updateByEmail(email, { password: hashedPassword });
   };
 
   getOldPasswordHash = async (email: string): Promise<string> => {
@@ -174,7 +154,7 @@ export class MeRouteHandler implements IMeRouteHandler {
 export class VerifyEmailHandler implements IVerifyEmailHandler {
   updateIsEmailVerifiedField = async (email: string): Promise<void> => {
     // Same for role, fetch role within the method if needed, or pass role from elsewhere
-    await userRepo.updateByEmail(email, { is_email_verified: true }, 'admin');
+    await userRepo.updateByEmail(email, { is_email_verified: true });
   };
 
   isEmailAlreadyVerified: (email: string) => Promise<boolean> = async (
@@ -195,6 +175,6 @@ export class ForgotPasswordHandler implements IForgotPasswordHandler {
   saveNewPassword = async (email: string, password: string): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, 10);
     // Same here, role is needed for permission checks; handle it outside this method
-    await userRepo.updateByEmail(email, { password: hashedPassword }, 'admin');
+    await userRepo.updateByEmail(email, { password: hashedPassword });
   };
 }
