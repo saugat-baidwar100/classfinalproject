@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import SiteFooter from '../components/footer';
 import logo from '../assets/images/logo.png';
@@ -64,16 +65,17 @@ const initialCourses: Course[] = [
   // Add more courses as needed
 ];
 
-const AddCourse: React.FC = () => {
-  const [courses] = useState<Course[]>(initialCourses);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeButton, setActiveButton] = useState('courses');
-
-  const filteredCourses = courses.filter((course) =>
-    course.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  return (
+  const AddCourse: React.FC = () => {
+    const navigate = useNavigate();
+    const [courses] = useState<Course[]>(initialCourses);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [activeButton, setActiveButton] = useState('courses');
+  
+    const filteredCourses = courses.filter((course) =>
+      course.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  
+    return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-poppins flex flex-col">
       {/* Navbar */}
       <Navbar logoSrc={logo} />
@@ -152,7 +154,9 @@ const AddCourse: React.FC = () => {
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
               <h1 className="text-[36px] text-black font-semibold">All Courses</h1>
-              <button className="bg-[#3EBD98] hover:bg-[#289675] text-white px-6 py-3 rounded-lg transition-colors">
+              <button 
+              onClick={() => navigate('/create-course')}
+              className="bg-[#3EBD98] hover:bg-[#289675] text-white px-6 py-3 rounded-lg transition-colors">
                 Add Course
               </button>
             </div>
