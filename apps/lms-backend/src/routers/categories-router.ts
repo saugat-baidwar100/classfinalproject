@@ -4,13 +4,17 @@ import { categoriesContract } from '@skillprompt-lms/libs/api-contract/modules/c
 import { courseRepo } from '../../../../libs/lms-prisma/src/course-repo';
 import { validateAccessToken } from '@baijanstack/express-auth';
 import { checkRole, storeUserDataFromToken } from '../auth/middlware';
-
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const categoriesRouter = s.router(categoriesContract, {
   // 1. Get All Categories (Admin Only)
   getCategory: {
-    middleware: [validateAccessToken, storeUserDataFromToken], // Only admin can access this
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ], // Only admin can access this
     handler: async () => {
       console.log('Handler executed');
       const categories = await categoriesRepo.findAll({});
@@ -45,7 +49,12 @@ export const categoriesRouter = s.router(categoriesContract, {
 
   // 2. Get Category by ID (Admin Only)
   getCategoryById: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
+
     handler: async ({ params }) => {
       const category = await categoriesRepo.findById(params.id);
 
@@ -91,7 +100,7 @@ export const categoriesRouter = s.router(categoriesContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ body }) => {
       console.log('Handler executed');
@@ -137,7 +146,7 @@ export const categoriesRouter = s.router(categoriesContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
       const category = await categoriesRepo.findById(params.id);
@@ -168,7 +177,7 @@ export const categoriesRouter = s.router(categoriesContract, {
             price: category.price.toString(),
             instructor: category.instructor,
             description: category.description,
-            courses: [], // You can populate courses if necessary
+            courses: [],
           },
           isSuccess: true,
           message: 'Category updated successfully',
@@ -182,7 +191,7 @@ export const categoriesRouter = s.router(categoriesContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const category = await categoriesRepo.findById(params.id);

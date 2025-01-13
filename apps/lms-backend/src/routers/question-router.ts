@@ -4,11 +4,16 @@ import { questionContract } from '@skillprompt-lms/libs/api-contract/modules/que
 import { db } from '@skillprompt-lms/libs/lms-prisma/client';
 import { checkRole, storeUserDataFromToken } from '../auth/middlware';
 import { validateAccessToken } from '@baijanstack/express-auth';
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const questionRouter = s.router(questionContract, {
   getQuestions: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ params }) => {
       const questions = await questionRepo.findAll({});
 
@@ -84,7 +89,7 @@ export const questionRouter = s.router(questionContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ body, params }) => {
       // Validate quiz existence before proceeding
@@ -131,7 +136,7 @@ export const questionRouter = s.router(questionContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
       // Check if the question exists
@@ -189,7 +194,7 @@ export const questionRouter = s.router(questionContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const existingQuestion = await questionRepo.findById({

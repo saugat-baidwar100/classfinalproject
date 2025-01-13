@@ -20,7 +20,8 @@ export const fileSchema = z.object({
   fileName: z.string(),
   filePath: z.string(),
   fileSize: z.number(),
-  createdAt: z.string(),
+  created_at: z.date().default(() => new Date()),
+  updated_at: z.date().default(() => new Date()),
 });
 
 export type TFileSchema = z.infer<typeof fileSchema>;

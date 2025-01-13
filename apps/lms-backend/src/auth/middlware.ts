@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { TUser } from './handler';
-
+// import {Role} from '../../../../libs/lms-prisma/src/client';
+import { Role } from '@prisma/client';
 declare module 'express-serve-static-core' {
   interface Request {
     user?: TUser;
@@ -27,10 +28,9 @@ export const storeUserDataFromToken = (
     return res.status(401).json({ message: 'Unauthorized: Invalid token' });
   }
 };
-
-export const checkRole = (allowedRoles: string[]) => {
+export const checkRole = (allowedRoles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const userRole = req.user?.role; // Access role from `req.user`
+    const userRole = req.user?.role as Role; // Cast to Role for type safety
     console.log('User Role:', userRole); // Debugging user role
 
     if (!userRole || !allowedRoles.includes(userRole)) {

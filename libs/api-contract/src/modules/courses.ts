@@ -23,8 +23,8 @@ export const courseSchema = z.object({
   thumbnail: z.string().optional(),
   price: z.string(),
   completed: z.boolean(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
+  created_at: z.date().default(() => new Date()),
+  updated_at: z.date().default(() => new Date()),
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;
 

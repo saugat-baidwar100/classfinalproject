@@ -19,8 +19,8 @@ export const chapterSchema: z.ZodSchema = z.object({
   description: z.string(),
   order: z.number(),
   thumbnail: z.string(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
+  created_at: z.date().default(() => new Date()),
+  updated_at: z.date().default(() => new Date()),
 });
 
 export const createChapterSchema = z.object({

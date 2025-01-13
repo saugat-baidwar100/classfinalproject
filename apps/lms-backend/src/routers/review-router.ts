@@ -4,13 +4,18 @@ import { reviewRepo } from '../../../../libs/lms-prisma/src/review-repo';
 import { db } from '../../../../libs/lms-prisma/src/client'; // Adjust the import path as necessary
 import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
 import { courseSchema } from '@skillprompt-lms/libs/api-contract/modules/courses';
-import { storeUserDataFromToken } from '../auth/middlware';
+import { storeUserDataFromToken, checkRole } from '../auth/middlware';
 import { validateAccessToken } from '@baijanstack/express-auth';
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const reviewRouter = s.router(reviewContract, {
   getReview: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async () => {
       const review = await reviewRepo.findAll({});
       return {
@@ -23,8 +28,8 @@ export const reviewRouter = s.router(reviewContract, {
               username: t.username,
               course_id: t.course_id,
               rating: t.rating,
-              created_at: t.created_at.toISOString(),
-              updated_at: t.updated_at.toISOString(),
+              created_at: t.created_at,
+              updated_at: t.updated_at,
               course: courseSchema,
             };
           }),
@@ -35,7 +40,11 @@ export const reviewRouter = s.router(reviewContract, {
     },
   },
   getReviewById: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ params }) => {
       const review = await reviewRepo.findById({
         reviewId: params.reviewId,
@@ -61,8 +70,8 @@ export const reviewRouter = s.router(reviewContract, {
             username: review.username,
             course_id: review.course_id,
             rating: review.rating,
-            created_at: review.created_at.toISOString(),
-            updated_at: review.updated_at.toISOString(),
+            created_at: review.created_at,
+            updated_at: review.updated_at,
             course: courseSchema,
           },
           isSuccess: true,
@@ -72,10 +81,14 @@ export const reviewRouter = s.router(reviewContract, {
     },
   },
   createReview: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ body, params }) => {
       const user = await db.user.findUnique({
-        where: { username: params.username }, // Ensure this matches your actual identifier (like username)
+        where: { username: params.username },
       });
 
       if (!user) {
@@ -88,7 +101,7 @@ export const reviewRouter = s.router(reviewContract, {
         };
       }
       const course = await db.course.findUnique({
-        where: { id: params.course_id }, // Ensure this matches your actual course identifier (course_id)
+        where: { id: params.course_id },
       });
 
       if (!course) {
@@ -119,8 +132,8 @@ export const reviewRouter = s.router(reviewContract, {
             username: review.username,
             Comment: review.comment,
             rating: review.rating,
-            created_at: review.created_at.toISOString(),
-            updated_at: review.updated_at.toISOString(),
+            created_at: review.created_at,
+            updated_at: review.updated_at,
             course_id: params.course_id,
           },
           isSuccess: true,
@@ -131,7 +144,11 @@ export const reviewRouter = s.router(reviewContract, {
   },
 
   updateReview: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ params, body }) => {
       const review = await reviewRepo.findById({
         reviewId: params.reviewId,
@@ -170,8 +187,8 @@ export const reviewRouter = s.router(reviewContract, {
             username: review.username,
             course_id: review.course_id,
             rating: review.rating,
-            created_at: review.created_at.toISOString(),
-            updated_at: review.updated_at.toISOString(),
+            created_at: review.created_at,
+            updated_at: review.updated_at,
             course: courseSchema,
           },
           isSuccess: true,
@@ -181,7 +198,11 @@ export const reviewRouter = s.router(reviewContract, {
     },
   },
   deleteReview: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ params }) => {
       const review = await reviewRepo.findById({
         reviewId: params.reviewId,

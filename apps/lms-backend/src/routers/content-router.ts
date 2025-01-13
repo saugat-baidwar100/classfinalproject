@@ -3,11 +3,16 @@ import { contentRepo } from '../../../../libs/lms-prisma/src/content-repo';
 import { contentContract } from '@skillprompt-lms/libs/api-contract/modules/content';
 import { checkRole, storeUserDataFromToken } from '../auth/middlware';
 import { validateAccessToken } from '@baijanstack/express-auth';
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const contentRouter = s.router(contentContract, {
   getContentById: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ params }) => {
       const content = await contentRepo.findById({
         contentId: params.contentId,
@@ -51,7 +56,7 @@ export const contentRouter = s.router(contentContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ body, params }) => {
       const content = await contentRepo.create({
@@ -88,7 +93,7 @@ export const contentRouter = s.router(contentContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
       const content = await contentRepo.findById({
@@ -143,7 +148,7 @@ export const contentRouter = s.router(contentContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const content = await contentRepo.findById({

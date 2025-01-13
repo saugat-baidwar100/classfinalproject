@@ -5,12 +5,17 @@ import { categoriesRepo } from '../../../../libs/lms-prisma/src/categories-repo'
 import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
 import { checkRole, storeUserDataFromToken } from '../auth/middlware';
 import { validateAccessToken } from '@baijanstack/express-auth';
+import { Role } from '@prisma/client';
 
 const s = initServer();
 
 export const courseRouter = s.router(courseContract, {
   getCourse: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ req }) => {
       const courses = await courseRepo.findAll({});
       return {
@@ -35,7 +40,11 @@ export const courseRouter = s.router(courseContract, {
   },
 
   getCourseById: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async ({ req, params }) => {
       const course = await courseRepo.findById({
         categories_id: params.id,
@@ -80,7 +89,7 @@ export const courseRouter = s.router(courseContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ req, body }) => {
       const category = await categoriesRepo.findById(body.categories_id);
@@ -134,7 +143,7 @@ export const courseRouter = s.router(courseContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ req, params, body }) => {
       const course = await courseRepo.findById({
@@ -187,7 +196,7 @@ export const courseRouter = s.router(courseContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ req, params }) => {
       const course = await courseRepo.findById({

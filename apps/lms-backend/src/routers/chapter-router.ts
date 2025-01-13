@@ -5,11 +5,16 @@ import { contentSchema } from '@skillprompt-lms/libs/api-contract/modules/conten
 import { quizSchema } from '@skillprompt-lms/libs/api-contract/modules/quiz';
 import { checkRole, storeUserDataFromToken } from '../auth/middlware';
 import { validateAccessToken } from '@baijanstack/express-auth';
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const chapterRouter = s.router(chapterContract, {
   getChapter: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
     handler: async () => {
       const chapters = await chapterRepo.findAll({});
       return {
@@ -27,7 +32,11 @@ export const chapterRouter = s.router(chapterContract, {
     },
   },
   getChapterById: {
-    middleware: [validateAccessToken, storeUserDataFromToken],
+    middleware: [
+      validateAccessToken,
+      storeUserDataFromToken,
+      checkRole([Role.student]),
+    ],
 
     handler: async ({ params }) => {
       const chapter = await chapterRepo.findById({
@@ -66,7 +75,7 @@ export const chapterRouter = s.router(chapterContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ body, params }) => {
       const chapter = await chapterRepo.create({
@@ -97,7 +106,7 @@ export const chapterRouter = s.router(chapterContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
       const chapter = await chapterRepo.findById({
@@ -146,7 +155,7 @@ export const chapterRouter = s.router(chapterContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const chapter = await chapterRepo.findById({

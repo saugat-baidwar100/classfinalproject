@@ -3,6 +3,7 @@ import { quizRepo } from '../../../../libs/lms-prisma/src/quiz-repo';
 import { quizContract } from '@skillprompt-lms/libs/api-contract/modules/quiz';
 import { checkRole, storeUserDataFromToken } from '../auth/middlware';
 import { validateAccessToken } from '@baijanstack/express-auth';
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const quizRouter = s.router(quizContract, {
@@ -10,7 +11,7 @@ export const quizRouter = s.router(quizContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ body, params }) => {
       const quiz = await quizRepo.create({
@@ -41,7 +42,7 @@ export const quizRouter = s.router(quizContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
       // Find the quiz by its quiz_id
@@ -94,7 +95,7 @@ export const quizRouter = s.router(quizContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole(['admin', 'instructor']),
+      checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       // Find the quiz to be deleted

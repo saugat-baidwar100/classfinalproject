@@ -1,7 +1,7 @@
 import { initServer } from '@ts-rest/express';
 import { taskProgressRepo } from '../../../../libs/lms-prisma/src/track-progress-repo';
 import { taskProgressContract } from '@skillprompt-lms/libs/api-contract/modules/track-progress';
-
+import { Role } from '@prisma/client';
 const s = initServer();
 
 export const taskProgressRouter = s.router(taskProgressContract, {
@@ -44,7 +44,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
   updateTaskProgress: async ({ params, body }) => {
     try {
       const updated = await taskProgressRepo.updateTaskProgress(
-        body.username, // Ensure the username is in the body
+        body.username,
         params.course_id,
         body.progress,
         body.chapter_id,
@@ -84,7 +84,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
   deleteTaskProgress: async ({ params }) => {
     try {
       const deleted = await taskProgressRepo.deleteTaskProgress(
-        params.username, // Ensure the username is passed as a param
+        params.username,
         params.course_id
       );
 
@@ -125,7 +125,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
   }) => {
     try {
       const progress = await taskProgressRepo.findTaskProgressById(
-        params.username, // Ensure the username is passed as a param
+        params.username,
         params.course_id
       );
 
