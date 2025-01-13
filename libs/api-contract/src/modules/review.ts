@@ -22,7 +22,6 @@ export const reviewSchema = z.object({
 
   created_at: z.date().default(() => new Date()),
   updated_at: z.date().default(() => new Date()),
-  // course: courseSchema,
 });
 
 export type TreviewSchema = z.infer<typeof reviewSchema>;
@@ -97,5 +96,3 @@ export const reviewContract = c.router({
     summary: 'Delete a review for a specific user',
   },
 });
-
-// Use reviewSchema to avoid unused variable error

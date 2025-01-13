@@ -30,7 +30,7 @@ export const storeUserDataFromToken = (
 };
 export const checkRole = (allowedRoles: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const userRole = req.user?.role as Role; // Cast to Role for type safety
+    const userRole = req.user?.role as Role; //  Role for type safety
     console.log('User Role:', userRole); // Debugging user role
 
     if (!userRole || !allowedRoles.includes(userRole)) {

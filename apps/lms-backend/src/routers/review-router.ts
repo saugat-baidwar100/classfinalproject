@@ -14,7 +14,7 @@ export const reviewRouter = s.router(reviewContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async () => {
       const review = await reviewRepo.findAll({});
@@ -43,7 +43,7 @@ export const reviewRouter = s.router(reviewContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const review = await reviewRepo.findById({
@@ -84,7 +84,7 @@ export const reviewRouter = s.router(reviewContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ body, params }) => {
       const user = await db.user.findUnique({
@@ -121,7 +121,7 @@ export const reviewRouter = s.router(reviewContract, {
         rating: body.rating,
         created_at: body.created_at,
         updated_at: body.updated_at,
-        user: { connect: { username: user.username } }, // Connect the review to the user by user.id
+        user: { connect: { username: user.username } },
       });
 
       return {
@@ -147,7 +147,7 @@ export const reviewRouter = s.router(reviewContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
       const review = await reviewRepo.findById({
@@ -201,7 +201,7 @@ export const reviewRouter = s.router(reviewContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const review = await reviewRepo.findById({

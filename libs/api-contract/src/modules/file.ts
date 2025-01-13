@@ -14,7 +14,6 @@ const successSchema = z.object({
   isSuccess: z.boolean(),
 });
 
-// File schema
 export const fileSchema = z.object({
   id: z.number(),
   fileName: z.string(),
@@ -26,9 +25,7 @@ export const fileSchema = z.object({
 
 export type TFileSchema = z.infer<typeof fileSchema>;
 
-// File contract
 export const fileContract = c.router({
-  // Get All Files
   getAllFiles: {
     method: 'GET',
     path: '/api/files',
@@ -42,7 +39,6 @@ export const fileContract = c.router({
     summary: 'Get all files',
   },
 
-  // Get File by ID
   getFileById: {
     method: 'GET',
     path: '/api/files/:id',
@@ -63,7 +59,7 @@ export const fileContract = c.router({
   uploadFile: {
     method: 'POST',
     path: '/api/files/upload',
-    contentType: 'multipart/form-data', // Corrected to singular form
+    contentType: 'multipart/form-data',
     body: z.object({
       file: z.any(),
     }),
@@ -74,10 +70,9 @@ export const fileContract = c.router({
       400: errorSchema,
       500: errorSchema,
     },
-    summary: 'Upload a file using multipart/form-data',
+    summary: 'Upload a file using multipart',
   },
 
-  // Update File by ID
   updateFile: {
     method: 'PUT',
     path: '/api/files/update/:id',
@@ -96,14 +91,13 @@ export const fileContract = c.router({
     summary: 'Update file by ID',
   },
 
-  // Delete File by ID
   deleteFile: {
     method: 'DELETE',
     path: '/api/files/delete/:id',
     body: z.object({}),
     responses: {
       200: successSchema.extend({
-        data: z.null(), // Expect null data for successful deletion
+        data: z.null(),
       }),
       404: errorSchema,
       500: errorSchema,

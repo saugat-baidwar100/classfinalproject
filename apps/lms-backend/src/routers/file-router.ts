@@ -1,34 +1,27 @@
-import multer from 'multer';
-import { Router, Request, Response, NextFunction } from 'express';
-import { initServer } from '@ts-rest/express';
+import { fileRepo } from '../../../../libs/lms-prisma/src/file-repo';
 import { fileContract } from '@skillprompt-lms/libs/api-contract/modules/file';
-import { fileRepo } from '@skillprompt-lms/libs/lms-prisma/file-repo';
+import { initServer } from '@ts-rest/express';
+import multer from 'multer';
 
-const upload = multer({ dest: 'uploads/' }); // Files will be stored in the 'uploads/' directory
 const s = initServer();
-const router = Router();
+
+//  Multer for file uploads
+const upload = multer({ dest: 'uploads/' });
 
 export const fileRouter = s.router(fileContract, {
-  // Get All Files
+  // Get all files
   getAllFiles: async () => {
     const files = await fileRepo.findAll({});
     return {
       status: 200,
       body: {
-        data: files.map((file) => ({
-          id: file.id,
-          fileName: file.fileName,
-          filePath: file.filePath,
-          fileSize: file.fileSize,
-          createdAt: file.createdAt.toISOString(),
-        })),
+        data: files,
         isSuccess: true,
-        message: 'All files are retrieved successfully',
+        message: 'Files retrieved successfully',
       },
     };
   },
 
-  // Get File by ID
   getFileById: async ({ params }) => {
     const file = await fileRepo.findById(Number(params.id));
 
@@ -45,67 +38,52 @@ export const fileRouter = s.router(fileContract, {
     return {
       status: 200,
       body: {
-        data: {
-          id: file.id,
-          fileName: file.fileName,
-          filePath: file.filePath,
-          fileSize: file.fileSize,
-          createdAt: file.createdAt.toISOString(),
-        },
+        data: file,
         isSuccess: true,
-        message: 'File retrieved successfully by ID',
+        message: 'File retrieved successfully',
       },
     };
   },
 
-  // Upload File
-  uploadFile: async ({ req }: { req: Request }) => {
+  uploadFile: async ({ body, req }) => {
     const file = req.file;
 
     if (!file) {
       return {
         status: 400,
         body: {
-          isSuccess: false,
           message: 'No file uploaded',
+          isSuccess: false,
         },
       };
     }
 
     try {
-      const createdFile = await fileRepo.create({
+      const newFile = await fileRepo.create({
         fileName: file.originalname,
         filePath: file.path,
         fileSize: file.size,
-        createdAt: new Date(),
       });
 
       return {
-        status: 201,
+        status: 200,
         body: {
-          data: {
-            id: createdFile.id,
-            fileName: createdFile.fileName,
-            filePath: createdFile.filePath,
-            fileSize: createdFile.fileSize,
-          },
+          data: newFile,
           isSuccess: true,
           message: 'File uploaded successfully',
         },
       };
     } catch (error) {
-      console.error('Error uploading file:', error);
       return {
         status: 500,
         body: {
+          message: 'Failed to upload file',
           isSuccess: false,
-          message: 'Internal server error',
         },
       };
     }
   },
 
-  // Update File by ID
   updateFile: async ({ params, body }) => {
     const file = await fileRepo.findById(Number(params.id));
 
@@ -119,29 +97,19 @@ export const fileRouter = s.router(fileContract, {
       };
     }
 
-    await fileRepo.updateById(Number(params.id), {
-      fileName: body.fileName,
-      filePath: body.filePath,
-      fileSize: body.fileSize,
-    });
+    const updatedFile = await fileRepo.updateById(Number(params.id), body);
 
     return {
       status: 200,
       body: {
-        data: {
-          id: file.id,
-          fileName: body.fileName,
-          filePath: body.filePath,
-          fileSize: body.fileSize,
-        },
+        data: updatedFile,
         isSuccess: true,
         message: 'File updated successfully',
       },
     };
   },
 
-  // Delete File by ID
-  deleteFile: async ({ params }: { params: { id: string } }) => {
+  deleteFile: async ({ params }) => {
     const file = await fileRepo.findById(Number(params.id));
 
     if (!file) {
@@ -150,7 +118,6 @@ export const fileRouter = s.router(fileContract, {
         body: {
           message: 'File not found',
           isSuccess: false,
-          data: null,
         },
       };
     }
@@ -162,24 +129,7 @@ export const fileRouter = s.router(fileContract, {
       body: {
         isSuccess: true,
         message: 'File deleted successfully',
-        data: null,
       },
     };
   },
 });
-
-// Multer middleware for handling uploads
-router.post(
-  '/api/files/upload',
-  upload.single('file'),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const response = await fileRouter.uploadFile({ req });
-      res.status(response.status).json(response.body);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-export default router;

@@ -18,7 +18,7 @@ export const quizRouter = s.router(quizContract, {
         title: body.title,
         max_score: body.max_score,
         passing_score: body.passing_score,
-        chapter: { connect: { id: body.chapter_id } }, // Connect the chapter
+        chapter: { connect: { id: body.chapter_id } },
       });
 
       return {
@@ -29,7 +29,7 @@ export const quizRouter = s.router(quizContract, {
             title: quiz.title,
             max_score: quiz.max_score,
             passing_score: quiz.passing_score,
-            chapter_id: quiz.chapter_id, // Returning the connected chapter_id
+            chapter_id: quiz.chapter_id,
           },
           isSuccess: true,
           message: 'The quiz has been successfully created',
@@ -45,7 +45,6 @@ export const quizRouter = s.router(quizContract, {
       checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params, body }) => {
-      // Find the quiz by its quiz_id
       const quiz = await quizRepo.findById({
         quizId: params.quiz_id,
         chapter_id: params.chapter_id,
@@ -61,7 +60,7 @@ export const quizRouter = s.router(quizContract, {
         };
       }
 
-      // Update the quiz with the provided details
+      // Update the quiz
       const updatedQuiz = await quizRepo.updateById({
         quizId: params.quiz_id,
         chapter_id: params.chapter_id,
@@ -70,7 +69,7 @@ export const quizRouter = s.router(quizContract, {
           title: body.title,
           max_score: body.max_score,
           passing_score: body.passing_score,
-          chapter: { connect: { id: body.chapter_id } }, // Connect chapter
+          chapter: { connect: { id: body.chapter_id } },
         },
       });
 
@@ -82,7 +81,7 @@ export const quizRouter = s.router(quizContract, {
             title: updatedQuiz.title,
             max_score: updatedQuiz.max_score,
             passing_score: updatedQuiz.passing_score,
-            chapter_id: updatedQuiz.chapter_id, // Returning the correct chapter_id
+            chapter_id: updatedQuiz.chapter_id,
           },
           isSuccess: true,
           message: 'The quiz has been successfully updated',
@@ -98,7 +97,7 @@ export const quizRouter = s.router(quizContract, {
       checkRole([Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
-      // Find the quiz to be deleted
+      //  quiz to be deleted
       const quiz = await quizRepo.findById({
         quizId: params.quiz_id,
         chapter_id: params.chapter_id,
@@ -118,7 +117,7 @@ export const quizRouter = s.router(quizContract, {
       await quizRepo.deleteById({
         quizId: params.quiz_id,
         chapter_id: params.chapter_id,
-        input: {}, // Add an empty input object as required
+        input: {},
       });
       return {
         status: 200,

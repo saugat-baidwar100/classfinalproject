@@ -5,7 +5,6 @@ import { Role } from '@prisma/client';
 const s = initServer();
 
 export const taskProgressRouter = s.router(taskProgressContract, {
-  // Create Task Progress
   createTaskProgress: async ({ body }) => {
     try {
       const progress = await taskProgressRepo.createTaskProgress({
@@ -40,7 +39,6 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  // Update Task Progress
   updateTaskProgress: async ({ params, body }) => {
     try {
       const updated = await taskProgressRepo.updateTaskProgress(
@@ -80,7 +78,6 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  // Delete Task Progress
   deleteTaskProgress: async ({ params }) => {
     try {
       const deleted = await taskProgressRepo.deleteTaskProgress(
@@ -88,7 +85,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
         params.course_id
       );
 
-      if (deleted.count === 0) {
+      if (!deleted) {
         return {
           status: 404,
           body: {
@@ -117,7 +114,6 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  // Get Task Progress by User and Course
   getTaskProgress: async ({
     params,
   }: {
@@ -162,14 +158,13 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  // Get All Task Progress for a Course
   getAllTaskProgress: async ({ params }) => {
     try {
       const progressList = await taskProgressRepo.findAllTaskProgress(
         params.course_id
       );
 
-      if (progressList.length === 0) {
+      if (!progressList) {
         return {
           status: 404,
           body: {
@@ -275,7 +270,6 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     } catch (error) {
       console.error('Error calculating total progress:', error);
 
-      // Handle errors and return a response
       return {
         status: 500,
         body: {
@@ -286,7 +280,6 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  // Calculate Completed Contents for a User in a Course
   calculateCompletedContents: async ({ params }) => {
     try {
       const completedContents =
@@ -315,7 +308,6 @@ export const taskProgressRouter = s.router(taskProgressContract, {
     }
   },
 
-  // Calculate Completed Quizzes for a User in a Course
   calculateCompletedQuizzes: async ({ params }) => {
     try {
       const completedQuizzes = await taskProgressRepo.calculateCompletedQuizzes(
@@ -342,7 +334,7 @@ export const taskProgressRouter = s.router(taskProgressContract, {
       };
     }
   },
-  // Calculate Completed Chapters for a User
+
   calculateCompletedChapters: async ({ params }) => {
     try {
       const completedChapters =

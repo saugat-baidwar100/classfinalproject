@@ -10,13 +10,14 @@ const SuccessSchema = z.object({
   message: z.string(),
   isSuccess: z.boolean(),
 });
+const roleSchema = z.enum(['admin', 'instructor', 'student']);
 export const categoriesSchema = z.object({
   id: z.string(),
   title: z.string(),
   price: z.string(),
   instructor: z.string(),
   description: z.string(),
-  role: z.string(),
+  role: roleSchema,
 });
 export type TcategoriesSchema = z.infer<typeof categoriesSchema>;
 

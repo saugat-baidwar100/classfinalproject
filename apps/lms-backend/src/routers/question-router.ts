@@ -12,7 +12,7 @@ export const questionRouter = s.router(questionContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const questions = await questionRepo.findAll({});
