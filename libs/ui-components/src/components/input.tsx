@@ -10,23 +10,8 @@ interface InputProps extends Omit<NUIInputProps, 'labelPlacement'> {
   endContent?: ReactNode; // Add this for rendering custom elements
 }
 
-function InputWithRef(
-  { endContent, errorMessage, ...props }: InputProps,
-  ref: any
-) {
-  return (
-    <div>
-      <NUIInput
-        labelPlacement="outside"
-        ref={ref}
-        {...props}
-        endContent={endContent} // Pass endContent to the Input
-      />
-      {errorMessage && (
-        <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
-      )}
-    </div>
-  );
+function InputWithRef(props: InputProps, ref: React.Ref<HTMLInputElement>) {
+  return <NUIInput labelPlacement="outside" ref={ref} {...props} />;
 }
 
 export const Input = forwardRef(InputWithRef);
