@@ -1,20 +1,17 @@
-import express, { NextFunction, Request, Response } from 'express';
-import { courseContract } from '@skillprompt-lms/libs/api-contract/modules/courses';
+import express, { Request, Response } from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { APIError } from './utils/error';
 import { env } from './utils/env';
-import { generateOpenApi } from '@ts-rest/open-api';
 import * as swaggerUi from 'swagger-ui-express';
-import { courseRepo } from '@skillprompt-lms/libs/lms-prisma/course-repo';
 import { createAuth } from './auth';
-import { courseRouter } from './routers/course-router';
 import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { generateEndPoints } from './routers/merge';
 import { openApiDocument } from './utils/swagger';
 import { errorHandler, notFoundHandler } from './utils/error-handler';
+import { validateAccessToken } from '@baijanstack/express-auth';
 
 // logger.debug(env,'Environment variables');
 
@@ -29,7 +26,6 @@ app.use(helmet());
 app.use(compression());
 
 //-------ts-rest with swagger----------
-
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
@@ -59,10 +55,8 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-
-
 // ------------------------- Testing Routes -------------------------
-app.get('/', (req: Request, res: Response) => {
+app.get('/', validateAccessToken, (req: Request, res: Response) => {
   res.json({
     message: 'Welcome to Backend',
     data: null,
@@ -72,7 +66,7 @@ app.get('/', (req: Request, res: Response) => {
 
 // ------------------------- Routes -------------------------
 // Add your application routes here
-createAuth(app)
+createAuth(app);
 
 // generateEndPoints(app)
 generateEndPoints(app);
@@ -82,7 +76,7 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 // ------------------------- General Error Handler -------------------------
-app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
+app.use((error: APIError, req: Request, res: Response) => {
   console.log(error);
 
   if (error instanceof APIError) {
@@ -101,9 +95,14 @@ app.use((error: APIError, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+// Use authentication middleware and admin check middleware
+
 // Start Server
 app.listen(env.PORT, () => {
   console.log(
     `Server starting at port ${env.PORT} http://localhost:${env.PORT}`
+  );
+  console.log(
+    `🚀Swagger UI starting at port ${env.PORT} http://localhost:${env.PORT}/api-docs`
   );
 });

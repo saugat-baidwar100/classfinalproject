@@ -19,20 +19,18 @@ async function updateById({
   questionId,
   quiz_id,
   input,
-}:
-{
+}: {
   questionId: string;
   quiz_id: string;
   input: Prisma.ContentUpdateInput;
 }) {
   return db.question.update({
     where: {
-    id_quiz_id: {
-      // Use the generated name for the compound unique constraint
-      id: questionId,
-      quiz_id: quiz_id,
+      id_quiz_id: {
+        id: questionId,
+        quiz_id: quiz_id,
+      },
     },
-  },
     data: input,
   });
 }
@@ -47,31 +45,29 @@ async function deleteById({
   return db.question.delete({
     where: {
       id_quiz_id: {
-        // Correct compound unique constraint field name
         id: questionId,
-      quiz_id: quiz_id,
+        quiz_id: quiz_id,
       },
     },
   });
 }
 
- export async function findById({
+export async function findById({
   questionId,
   quiz_id,
-  }: {
-    questionId: string;
-    quiz_id: string;
-  }) {
+}: {
+  questionId: string;
+  quiz_id: string;
+}) {
   return db.question.findUnique({
     where: {
       id_quiz_id: {
-        // Correct compound unique constraint field name
         id: questionId,
-      quiz_id: quiz_id,
+        quiz_id: quiz_id,
       },
     },
   });
-  }
+}
 async function findAll(input: Prisma.QuestionWhereInput) {
   return db.question.findMany({
     where: input,
