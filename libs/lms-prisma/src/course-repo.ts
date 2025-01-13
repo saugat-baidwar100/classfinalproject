@@ -27,8 +27,8 @@ async function updateById({
   return db.course.update({
     where: {
       id_categories_id: {
-        id: courseId, // The unique course ID
-        categories_id: categories_id, // The categories ID (foreign key)
+        id: courseId,
+        categories_id: categories_id,
       },
     },
     data: input,
@@ -45,8 +45,8 @@ async function deleteById({
   return db.course.delete({
     where: {
       id_categories_id: {
-        id: courseId, // The unique course ID
-        categories_id: categories_id, // The categories ID (foreign key)
+        id: courseId,
+        categories_id: categories_id,
       },
     },
   });
@@ -62,8 +62,8 @@ async function findById({
   return db.course.findUnique({
     where: {
       id_categories_id: {
-        id: courseId, // The unique course ID
-        categories_id: categories_id, // The categories ID (foreign key)
+        id: courseId,
+        categories_id: categories_id,
       },
     },
   });

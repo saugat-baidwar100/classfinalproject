@@ -27,7 +27,6 @@ export async function findAll(input: Prisma.FileWhereInput) {
   });
 }
 
-// Update file by ID
 export async function updateById(id: number, data: Prisma.FileUpdateInput) {
   return db.file.update({
     where: { id },
@@ -35,7 +34,6 @@ export async function updateById(id: number, data: Prisma.FileUpdateInput) {
   });
 }
 
-// Delete file by ID
 export async function deleteById(id: number) {
   return db.file.delete({
     where: { id },

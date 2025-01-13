@@ -10,10 +10,9 @@ export const userRepo = {
   findByUsername,
   updateByUsername,
   deleteUserById,
-  findAll
+  findAll,
 };
 
-// User creation
 async function create(input: Prisma.UserCreateInput) {
   return db.user.create({
     data: input,
@@ -21,10 +20,7 @@ async function create(input: Prisma.UserCreateInput) {
 }
 
 // Update user by ID with role check (admin only)
-async function updateById(id: string, input: Prisma.UserUpdateInput, role: string) {
-  if (role !== 'admin') {
-    throw new Error('Permission Denied: Admin role required');
-  }
+async function updateById(id: string, input: Prisma.UserUpdateInput) {
   return db.user.update({
     where: {
       id,
@@ -33,11 +29,7 @@ async function updateById(id: string, input: Prisma.UserUpdateInput, role: strin
   });
 }
 
-// Update user by email with role check (admin only)
-async function updateByEmail(email: string, input: Prisma.UserUpdateInput, role: string) {
-  if (role !== 'admin') {
-    throw new Error('Permission Denied: Admin role required');
-  }
+async function updateByEmail(email: string, input: Prisma.UserUpdateInput) {
   return db.user.update({
     where: {
       email,
@@ -46,7 +38,6 @@ async function updateByEmail(email: string, input: Prisma.UserUpdateInput, role:
   });
 }
 
-// Find user by ID
 async function findById(id: string) {
   return db.user.findUnique({
     where: {
@@ -55,7 +46,6 @@ async function findById(id: string) {
   });
 }
 
-// Find user by email
 async function findByEmail(email: string) {
   return db.user.findUnique({
     where: {
@@ -64,7 +54,6 @@ async function findByEmail(email: string) {
   });
 }
 
-// Find user by username
 async function findByUsername(username: string) {
   return db.user.findUnique({
     where: {
@@ -73,15 +62,10 @@ async function findByUsername(username: string) {
   });
 }
 
-// Update user by username with role check (admin only)
 async function updateByUsername(
   username: string,
-  input: Prisma.UserUpdateInput,
-  role: string
+  input: Prisma.UserUpdateInput
 ) {
-  if (role !== 'admin') {
-    throw new Error('Permission Denied: Admin role required');
-  }
   return db.user.update({
     where: {
       username,
@@ -90,19 +74,15 @@ async function updateByUsername(
   });
 }
 
-// Delete user by ID with role check (admin only)
-async function deleteUserById(id: string, role: string) {
-  if (role !== 'admin') {
-    throw new Error('Permission Denied: Admin role required');
-  }
+async function deleteUserById(id: string) {
   return db.user.delete({
     where: {
       id,
     },
   });
 }
-async function findAll(input:Prisma.UserWhereUniqueInput) {
+async function findAll(input: Prisma.UserWhereUniqueInput) {
   return db.user.findMany({
-    where:input,
+    where: input,
   });
 }

@@ -19,18 +19,18 @@ export const quizSchema = z.object({
   id: z.string(),
   chapter_id: z.string(),
   title: z.string(),
-content: z.string(),
-max_score: z.number(),
-passing_score: z.number(),
-quiz: z.string(),
+  content: z.string(),
+  max_score: z.number(),
+  passing_score: z.number(),
+  quiz: z.string(),
 });
 export const createquizSchema = z.object({
   chapter_id: z.string(),
   id: z.string(),
   title: z.string(),
-chapter: z.string(),
-max_score: z.number(),
-passing_score: z.number(),
+  chapter: z.string(),
+  max_score: z.number(),
+  passing_score: z.number(),
   quiz: z.string(),
 });
 
@@ -65,7 +65,7 @@ export const quizContract = c.router({
   },
   deleteQuiz: {
     method: 'DELETE',
-    path: '/api/chapter/:chapter_id/delete-quiz/:quiz_id', // Include chapter_id in the path
+    path: '/api/chapter/:chapter_id/delete-quiz/:quiz_id',
     body: z.object({}), // No body required
     responses: {
       200: successSchema.extend({
@@ -78,5 +78,3 @@ export const quizContract = c.router({
     summary: 'Delete Quiz by ID and Chapter ID',
   },
 });
-
-
