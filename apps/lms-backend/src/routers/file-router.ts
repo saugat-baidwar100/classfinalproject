@@ -1,27 +1,32 @@
-import { fileRepo } from '../../../../libs/lms-prisma/src/file-repo';
-import { fileContract } from '@skillprompt-lms/libs/api-contract/modules/file';
-import { initServer } from '@ts-rest/express';
 import multer from 'multer';
+import { initServer } from '@ts-rest/express';
+import { fileContract } from '@skillprompt-lms/libs/api-contract/modules/file';
+import { fileRepo } from '@skillprompt-lms/libs/lms-prisma/file-repo';
 
+const upload = multer({ dest: 'uploads/' }); // Files will be stored in the 'uploads/' directory
 const s = initServer();
 
-//  Multer for file uploads
-const upload = multer({ dest: 'uploads/' });
-
 export const fileRouter = s.router(fileContract, {
-  // Get all files
+  // Get All Files
   getAllFiles: async () => {
     const files = await fileRepo.findAll({});
     return {
       status: 200,
       body: {
-        data: files,
+        data: files.map((file) => ({
+          id: file.id,
+          fileName: file.fileName,
+          filePath: file.filePath,
+          fileSize: file.fileSize,
+          createdAt: file.createdAt.toISOString(),
+        })),
         isSuccess: true,
-        message: 'Files retrieved successfully',
+        message: 'All files are retrieved successfully',
       },
     };
   },
 
+  // Get File by ID
   getFileById: async ({ params }) => {
     const file = await fileRepo.findById(Number(params.id));
 
@@ -38,52 +43,57 @@ export const fileRouter = s.router(fileContract, {
     return {
       status: 200,
       body: {
-        data: file,
+        data: {
+          id: file.id,
+          fileName: file.fileName,
+          filePath: file.filePath,
+          fileSize: file.fileSize,
+          createdAt: file.createdAt.toISOString(),
+        },
         isSuccess: true,
-        message: 'File retrieved successfully',
+        message: 'File retrieved successfully by ID',
       },
     };
   },
 
-  uploadFile: async ({ body, req }) => {
-    const file = req.file;
+  uploadFile: {
+    handler: async ({ req }) => {
+      const { file } = req;
+      if (!file) {
+        return {
+          status: 400,
+          body: {
+            message: 'No file uploaded',
+            isSuccess: false,
+          },
+        };
+      }
 
-    if (!file) {
-      return {
-        status: 400,
-        body: {
-          message: 'No file uploaded',
-          isSuccess: false,
-        },
-      };
-    }
-
-    try {
-      const newFile = await fileRepo.create({
+      const createdFile = await fileRepo.create({
         fileName: file.originalname,
         filePath: file.path,
         fileSize: file.size,
       });
 
       return {
-        status: 200,
+        status: 201,
         body: {
-          data: newFile,
+          data: {
+            id: createdFile.id,
+            fileName: createdFile.fileName,
+            filePath: createdFile.filePath,
+            fileSize: createdFile.fileSize,
+            createdAt: createdFile.createdAt.toISOString(),
+          },
           isSuccess: true,
           message: 'File uploaded successfully',
         },
       };
-    } catch (error) {
-      return {
-        status: 500,
-        body: {
-          message: 'Failed to upload file',
-          isSuccess: false,
-        },
-      };
-    }
+    },
+    middleware: [upload.single('file')],
   },
 
+  // Update File by ID
   updateFile: async ({ params, body }) => {
     const file = await fileRepo.findById(Number(params.id));
 
@@ -97,19 +107,29 @@ export const fileRouter = s.router(fileContract, {
       };
     }
 
-    const updatedFile = await fileRepo.updateById(Number(params.id), body);
+    await fileRepo.updateById(Number(params.id), {
+      fileName: body.fileName,
+      filePath: body.filePath,
+      fileSize: body.fileSize,
+    });
 
     return {
       status: 200,
       body: {
-        data: updatedFile,
+        data: {
+          id: file.id,
+          fileName: body.fileName,
+          filePath: body.filePath,
+          fileSize: body.fileSize,
+        },
         isSuccess: true,
         message: 'File updated successfully',
       },
     };
   },
 
-  deleteFile: async ({ params }) => {
+  // Delete File by ID
+  deleteFile: async ({ params }: { params: { id: string } }) => {
     const file = await fileRepo.findById(Number(params.id));
 
     if (!file) {
@@ -118,6 +138,7 @@ export const fileRouter = s.router(fileContract, {
         body: {
           message: 'File not found',
           isSuccess: false,
+          data: null,
         },
       };
     }
@@ -129,6 +150,7 @@ export const fileRouter = s.router(fileContract, {
       body: {
         isSuccess: true,
         message: 'File deleted successfully',
+        data: null,
       },
     };
   },

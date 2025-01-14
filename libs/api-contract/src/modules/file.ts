@@ -76,9 +76,6 @@ export const fileContract = c.router({
   updateFile: {
     method: 'PUT',
     path: '/api/files/update/:id',
-    pathParams: z.object({
-      id: z.string(),
-    }),
     body: fileSchema.omit({ id: true }),
     responses: {
       200: successSchema.extend({
