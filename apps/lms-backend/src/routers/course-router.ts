@@ -14,7 +14,7 @@ export const courseRouter = s.router(courseContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ req }) => {
       const courses = await courseRepo.findAll({});
@@ -43,7 +43,7 @@ export const courseRouter = s.router(courseContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ req, params }) => {
       const course = await courseRepo.findById({

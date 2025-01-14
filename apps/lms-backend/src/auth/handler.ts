@@ -153,7 +153,6 @@ export class MeRouteHandler implements IMeRouteHandler {
 
 export class VerifyEmailHandler implements IVerifyEmailHandler {
   updateIsEmailVerifiedField = async (email: string): Promise<void> => {
-    // Same for role, fetch role within the method if needed, or pass role from elsewhere
     await userRepo.updateByEmail(email, { is_email_verified: true });
   };
 
@@ -174,7 +173,6 @@ export class SendOtpHandler implements ISendOtpHandler {
 export class ForgotPasswordHandler implements IForgotPasswordHandler {
   saveNewPassword = async (email: string, password: string): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Same here, role is needed for permission checks; handle it outside this method
     await userRepo.updateByEmail(email, { password: hashedPassword });
   };
 }

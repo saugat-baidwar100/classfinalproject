@@ -11,7 +11,7 @@ export const contentRouter = s.router(contentContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async ({ params }) => {
       const content = await contentRepo.findById({
