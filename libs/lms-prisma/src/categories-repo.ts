@@ -15,26 +15,6 @@ async function create(input: Prisma.CategoriesCreateInput) {
   });
 }
 
-// async function updateById({
-//   categories_id,
-//   courseId,
-//   input,
-// }: {
-//   categories_id: string;
-//   courseId: string;
-//   input: Prisma.CourseUpdateInput;
-// }) {
-//   return db.course.update({
-//     where: {
-//       // Use the compound unique constraint with correct field names: 'id' and 'categories_id'
-//       id_categories_id: {
-//         id: courseId,         // The unique course ID
-//         categories_id: categories_id, // The categories ID (foreign key)
-//       },
-//     },
-//     data: input,
-//   });
-// }
 
 async function updateById(id: string, input: Prisma.CategoriesUpdateInput) {
   return db.categories.update({

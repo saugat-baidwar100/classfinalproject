@@ -13,7 +13,7 @@ export const chapterRouter = s.router(chapterContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
     handler: async () => {
       const chapters = await chapterRepo.findAll({});
@@ -35,7 +35,7 @@ export const chapterRouter = s.router(chapterContract, {
     middleware: [
       validateAccessToken,
       storeUserDataFromToken,
-      checkRole([Role.student]),
+      checkRole([Role.student, Role.admin, Role.instructor]),
     ],
 
     handler: async ({ params }) => {
