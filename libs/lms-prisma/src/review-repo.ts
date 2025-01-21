@@ -14,13 +14,11 @@ export async function create(input: Prisma.ReviewCreateInput) {
     data: {
       ...input,
       user: {
-        connect: { username: input.username},  // Make sure user_id is part of the input
+        connect: { username: input.username },
       },
     },
   });
 }
-
-
 
 export async function updateById({
   reviewId,
@@ -34,8 +32,8 @@ export async function updateById({
   return db.review.update({
     where: {
       id_course_id: {
-        id: reviewId,         // Corrected key
-        course_id: course_id, // Corrected key
+        id: reviewId,
+        course_id: course_id,
       },
     },
     data: input,
@@ -52,8 +50,8 @@ export async function deleteById({
   return db.review.delete({
     where: {
       id_course_id: {
-        id: reviewId,         // Corrected key
-        course_id: course_id, // Corrected key
+        id: reviewId,
+        course_id: course_id,
       },
     },
   });
@@ -70,10 +68,10 @@ export async function findById({
   return db.review.findUnique({
     where: {
       id_course_id: {
-        id: reviewId,         // Corrected key
-        course_id: course_id, // Corrected key
+        id: reviewId,
+        course_id: course_id,
       },
-      username: username,    // Keep the username as is for filtering
+      username: username,
     },
   });
 }

@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  student
+  admin
+  instructor
+}
+
 model Categories {
   id          String   @id @default(cuid())
   title       String
@@ -122,12 +128,6 @@ model Task {
   description String
   course_id   String
   course      Course @relation(fields: [course_id], references: [id])
-}
-
-enum Role {
-  student
-  admin
-  instructor
 }
 
 model User {

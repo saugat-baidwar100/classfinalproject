@@ -1,6 +1,5 @@
 import { z } from 'zod';
 import { initContract } from '@ts-rest/core';
-import { courseSchema } from './courses';
 
 const c = initContract();
 
@@ -21,9 +20,8 @@ export const reviewSchema = z.object({
   username: z.string(),
   rating: z.number(),
 
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
-  // course: courseSchema,
+  created_at: z.date().default(() => new Date()),
+  updated_at: z.date().default(() => new Date()),
 });
 
 export type TreviewSchema = z.infer<typeof reviewSchema>;
@@ -98,6 +96,3 @@ export const reviewContract = c.router({
     summary: 'Delete a review for a specific user',
   },
 });
-
-
-// Use reviewSchema to avoid unused variable error
