@@ -76,13 +76,14 @@ export function CreateNewCourse() {
       {
         body: {
           description: data.description,
+          categories_id: Math.random().toString(),
           type: data.type,
           title: data.title,
           category: data.category,
           price: data.price?.toString() || '',
           thumbnail: data.thumbnail?.toString(),
-          created_at: '1/8/2025',
-          updated_at: '1/8/2025',
+          created_at: new Date('2025-01-08'),
+          updated_at: new Date('2025-01-08'),
           completed: true,
           instructor: 'john doe',
           level: 'Intermediate',

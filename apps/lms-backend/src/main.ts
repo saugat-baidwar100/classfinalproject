@@ -11,6 +11,7 @@ import { logger } from '@skillprompt-lms/libs/api-contract/utils/logger';
 import { generateEndPoints } from './routers/merge';
 import { openApiDocument } from './utils/swagger';
 import { errorHandler, notFoundHandler } from './utils/error-handler';
+import { validateAccessToken } from '@baijanstack/express-auth';
 
 // logger.debug(env,'Environment variables');
 
@@ -55,7 +56,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // ------------------------- Testing Routes -------------------------
-app.get('/', (req: Request, res: Response) => {
+app.get('/', validateAccessToken, (req: Request, res: Response) => {
   res.json({
     message: 'Welcome to Backend',
     data: null,
@@ -93,6 +94,8 @@ app.use((error: APIError, req: Request, res: Response) => {
     isSuccess: false,
   });
 });
+
+// Use authentication middleware and admin check middleware
 
 // Start Server
 app.listen(env.PORT, () => {

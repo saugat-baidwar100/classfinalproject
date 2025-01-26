@@ -120,10 +120,10 @@ export function MeetTheHeroes() {
                   <h3 className="text-white text-sm sm:text-base md:text-lg lg:text-[20px] font-poppins font-semibold mb-2">
                     {hero.name}
                   </h3>
-                  <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-poppins mb-3 sm:mb-4">
+                  <p className="text-white text-xs sm:text-sm md:text-base lg:text-[16px] font-poppins mb-3 sm:mb-4">
                     {hero.role}
                   </p>
-                  <p className="text-white text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed font-poppins">
+                  <p className="text-white text-xs sm:text-sm md:text-base lg:text-[16px] leading-relaxed font-poppins">
                     {hero.description}
                   </p>
                 </div>

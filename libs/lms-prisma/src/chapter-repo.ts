@@ -26,7 +26,6 @@ async function updateById({
   return db.chapter.update({
     where: {
       id_course_id: {
-        // Use the generated name for the compound unique constraint
         id: chapterId,
         course_id: courseId,
       },
@@ -45,7 +44,6 @@ async function deleteById({
   return db.chapter.delete({
     where: {
       id_course_id: {
-        // Correct compound unique constraint field name
         id: chapterId,
         course_id: courseId,
       },

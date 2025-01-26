@@ -17,7 +17,25 @@ import { taskProgressContract } from '@skillprompt-lms/libs/api-contract/modules
 import { taskProgressRouter } from './track-progress';
 import { reviewContract } from '@skillprompt-lms/libs/api-contract/modules/review';
 import { reviewRouter } from './review-router';
+import { categoriesContract } from '@skillprompt-lms/libs/api-contract/modules/categories';
+import { categoriesRouter } from './categories-router';
+// import { userRouter } from './user-repo';
+// import { userContract } from '@skillprompt-lms/libs/api-contract/modules/user';
+import { fileContract } from '@skillprompt-lms/libs/api-contract/modules/file';
+import { fileRouter } from './file-router';
 const routers = [
+  // {
+  //   contract: userContract,
+  //   router: userRouter
+  // },
+  {
+    contract: fileContract,
+    router: fileRouter,
+  },
+  {
+    contract: categoriesContract,
+    router: categoriesRouter,
+  },
   {
     contract: courseContract,
     router: courseRouter,
@@ -43,10 +61,10 @@ const routers = [
     router: taskProgressRouter,
   },
 
-{
-  contract:reviewContract,
-  router:reviewRouter
-}
+  {
+    contract: reviewContract,
+    router: reviewRouter,
+  },
 ];
 export function generateEndPoints(app: any) {
   return routers.map(({ contract, router }) => {

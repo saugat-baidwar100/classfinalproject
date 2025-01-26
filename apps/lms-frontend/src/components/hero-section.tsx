@@ -47,7 +47,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ HeroSectionLogoSrc }) => {
             <div className="flex justify-center md:justify-start">
               <button
                 onClick={() => navigate('/courses')}
-                className="bg-custom-teal px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base text-custom-white font-medium hover:bg-custom-teal transition-all duration-300 ease-in-out"
+                className="bg-[#31B991] px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-sm sm:text-base text-custom-white font-medium hover:bg-[#289675] transition-all duration-300 ease-in-out"
                 aria-label="Explore courses"
               >
                 Explore Courses

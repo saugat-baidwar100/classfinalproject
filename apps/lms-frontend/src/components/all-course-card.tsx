@@ -3,6 +3,7 @@ import { AllCourse } from './types/course';
 import { GiOpenBook, GiGraduateCap } from 'react-icons/gi';
 import courseImage from '../assets/images/popular-courses.png';
 import { Divider } from '@nextui-org/react';
+import { Link } from 'react-router-dom';
 
 export const AllCourseCard: React.FC<AllCourse> = ({
   instructor,

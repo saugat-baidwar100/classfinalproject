@@ -9,6 +9,8 @@ export const userRepo = {
   findByEmail,
   findByUsername,
   updateByUsername,
+  deleteUserById,
+  findAll,
 };
 
 async function create(input: Prisma.UserCreateInput) {
@@ -16,6 +18,8 @@ async function create(input: Prisma.UserCreateInput) {
     data: input,
   });
 }
+
+// Update user by ID with role check (admin only)
 async function updateById(id: string, input: Prisma.UserUpdateInput) {
   return db.user.update({
     where: {
@@ -24,6 +28,7 @@ async function updateById(id: string, input: Prisma.UserUpdateInput) {
     data: input,
   });
 }
+
 async function updateByEmail(email: string, input: Prisma.UserUpdateInput) {
   return db.user.update({
     where: {
@@ -66,5 +71,18 @@ async function updateByUsername(
       username,
     },
     data: input,
+  });
+}
+
+async function deleteUserById(id: string) {
+  return db.user.delete({
+    where: {
+      id,
+    },
+  });
+}
+async function findAll(input: Prisma.UserWhereUniqueInput) {
+  return db.user.findMany({
+    where: input,
   });
 }

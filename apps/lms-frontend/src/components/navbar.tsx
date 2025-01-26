@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
   ];
 
   const getNavItemClass = (path: string) =>
-    `px-3 py-2 rounded-md text-sm lg:text-base transition-colors duration-300 ${
+    `px-3 py-2 rounded-md text-sm lg:text-[20px] transition-colors duration-300 ${
       location.pathname === path
         ? 'text-custom-teal font-semibold'
         : 'text-custom-white hover:text-custom-teal'
@@ -70,13 +70,13 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
         {/* Desktop Buttons */}
         <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
           <button
-            className="border-2 border-custom-teal text-custom-teal px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-custom-teal hover:text-custom-white transition duration-300"
+            className="border-2 border-[#31B991] text-[#31B991] px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-[#31B991] hover:text-custom-white transition duration-300"
             onClick={() => navigate('/auth/login')}
           >
             Login
           </button>
           <button
-            className="bg-custom-teal text-custom-white px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-custom-teal-dark transition duration-300"
+            className="bg-[#3EBD98] text-custom-white px-3 py-1.5 rounded-md text-sm lg:text-base font-semibold hover:bg-[#289675]  transition duration-300"
             onClick={() => navigate('/auth/register')}
           >
             Signup
@@ -121,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
             </button>
           ))}
           <button
-            className="w-full border-2 border-custom-teal text-custom-teal px-3 py-2 rounded-md text-base font-semibold hover:bg-custom-teal hover:text-custom-white transition duration-300"
+            className="w-full border-2 border-[#31B991] text-[#31B991] px-3 py-2 rounded-md text-base font-semibold hover:bg-[#31B991] hover:text-custom-white transition duration-300"
             onClick={() => {
               navigate('/auth/login');
               closeMenu();
@@ -130,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({ logoSrc }) => {
             Login
           </button>
           <button
-            className="w-full bg-custom-teal text-custom-white px-3 py-2 rounded-md text-base font-semibold hover:bg-custom-teal-dark transition duration-300"
+            className="w-full bg-[#3EBD98] text-custom-white px-3 py-2 rounded-md text-base font-semibold hover:bg-custom-teal-dark transition duration-300"
             onClick={() => {
               navigate('/auth/register');
               closeMenu();

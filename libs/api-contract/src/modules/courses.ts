@@ -16,14 +16,15 @@ export const courseSchema = z.object({
   title: z.string(),
   type: z.string(),
   instructor: z.string(),
+  categories_id: z.string(),
   description: z.string(),
   category: z.string(),
   level: z.string(),
   thumbnail: z.string().optional(),
   price: z.string(),
   completed: z.boolean(),
-  created_at: z.string().optional(),
-  updated_at: z.string().optional(),
+  created_at: z.date().default(() => new Date()),
+  updated_at: z.date().default(() => new Date()),
 });
 export type TcourseSchema = z.infer<typeof courseSchema>;
 

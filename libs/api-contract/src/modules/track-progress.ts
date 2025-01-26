@@ -16,23 +16,25 @@ const successSchema = z.object({
 
 // Schema for TaskProgress
 export const taskProgressSchema = z.object({
-  username: z.string().optional(),    // User's username
-  chapter_id: z.string().optional(),  // Make chapter_id optional
-  quiz_id: z.string().optional(),     // Make quiz_id optional
-  course_id: z.string(),    
-  
+  username: z.string().optional(),
+  chapter_id: z.string().optional(),
+  quiz_id: z.string().optional(),
+  course_id: z.string(),
+
   progress: z.number().min(0).max(100), // Progress in percentage (0–100)
-  last_updated: z.string().optional(), // ISO string for the last update timestamp
+  last_updated: z.string().optional(),
 });
 
 // Schema for creating TaskProgress
-export const createTaskProgressSchema = taskProgressSchema.omit({ last_updated: true });
+export const createTaskProgressSchema = taskProgressSchema.omit({
+  last_updated: true,
+});
 
 // Schema for updating TaskProgress
 export const updateTaskProgressSchema = z.object({
   progress: z.number().min(0).max(100),
-  chapter_id: z.string().optional(),  // Make chapter_id optional for updating
-  quiz_id: z.string().optional(),     // Make quiz_id optional for updating
+  chapter_id: z.string().optional(),
+  quiz_id: z.string().optional(),
   username: z.string(),
 });
 
@@ -72,7 +74,7 @@ export const taskProgressContract = c.router({
   deleteTaskProgress: {
     method: 'DELETE',
     path: '/api/courses/:course_id/progress/user/:username/delete',
-    body: z.object({}), // No body required for deletion
+    body: z.object({}),
     responses: {
       200: successSchema,
       404: errorSchema,
@@ -107,7 +109,6 @@ export const taskProgressContract = c.router({
     summary: 'Get All Task Progress for a Course',
   },
 
-  // Updated endpoint to include completed contents, quizzes, and courses
   getUserProgress: {
     method: 'GET',
     path: '/api/courses/:course_id/progress/user/:username',
@@ -116,20 +117,19 @@ export const taskProgressContract = c.router({
         data: z.object({
           username: z.string(),
           course_id: z.string(),
-          progress: z.number().min(0).max(100), // Overall progress in percentage
-          completedContents: z.number(),        // Number of completed contents
-          completedQuizzes: z.number(),         // Number of completed quizzes
-          completedCourses: z.number(),         // Number of completed courses (assuming the user has multiple courses)
-          totalProgress: z.number(),            // Total progress percentage (0-100)
+          progress: z.number().min(0).max(100),
+          completedContents: z.number(),
+          completedQuizzes: z.number(),
+          completedCourses: z.number(),
+          totalProgress: z.number(),
         }),
       }),
       404: errorSchema,
       500: errorSchema,
     },
-    summary: 'Get Overall User Progress with Completed Contents, Quizzes, and Courses',
+    summary:
+      'Get Overall User Progress with Completed Contents, Quizzes, and Courses',
   },
-
-  //New route for total progress
 
   calculateTotalProgress: {
     method: 'GET',
@@ -137,16 +137,14 @@ export const taskProgressContract = c.router({
     responses: {
       200: successSchema.extend({
         data: z.object({
-          totalProgress: z.number(), // Total progress percentage (0-100)
+          totalProgress: z.number(),
         }),
       }),
-      404: errorSchema, // For cases where user or course is not found
-      500: errorSchema, // For server-side errors
+      404: errorSchema,
+      500: errorSchema,
     },
     summary: 'Get the Total Progress for a User in a Course',
-    description: 'Calculates the total progress of a user in a specific course, taking into account completed contents, quizzes, chapters, and other progress-related metrics.',
   },
-  
 
   // New route for calculating completed contents, quizzes, and courses for a user
   calculateCompletedContents: {
@@ -155,7 +153,7 @@ export const taskProgressContract = c.router({
     responses: {
       200: successSchema.extend({
         data: z.object({
-          completedContents: z.number(),  // Number of completed contents
+          completedContents: z.number(), // Number of completed contents
         }),
       }),
       404: errorSchema,
@@ -170,7 +168,7 @@ export const taskProgressContract = c.router({
     responses: {
       200: successSchema.extend({
         data: z.object({
-          completedQuizzes: z.number(),  // Number of completed quizzes
+          completedQuizzes: z.number(),
         }),
       }),
       404: errorSchema,
@@ -184,7 +182,7 @@ export const taskProgressContract = c.router({
     responses: {
       200: successSchema.extend({
         data: z.object({
-          completedChapters: z.number(),  // Number of completed courses
+          completedChapters: z.number(),
         }),
       }),
       404: errorSchema,
@@ -193,14 +191,13 @@ export const taskProgressContract = c.router({
     summary: 'Get the Number of Completed Chapters for a User',
   },
 
-
   calculateCompletedCourses: {
     method: 'GET',
     path: '/api/courses/:course_id/progress/user/:username/courses',
     responses: {
       200: successSchema.extend({
         data: z.object({
-          completedCourses: z.number(),  // Number of completed courses
+          completedCourses: z.number(),
         }),
       }),
       404: errorSchema,
@@ -208,6 +205,4 @@ export const taskProgressContract = c.router({
     },
     summary: 'Get the Number of Completed Courses for a User',
   },
-
-  
 });

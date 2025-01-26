@@ -80,7 +80,7 @@ export const AllCoursePage = () => {
             title={title}
             totalLecture={12}
             totalStudents={122}
-            lastUpdated={updated_at ?? ''}
+            lastUpdated={updated_at ? updated_at.toISOString() : ''}
             originalPrice="100"
             currentPrice={price}
             type={type}

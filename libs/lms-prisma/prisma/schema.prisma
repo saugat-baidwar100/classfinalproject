@@ -7,66 +7,87 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  student
+  admin
+  instructor
+}
+
+model Categories {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  instructor  String
+  price       Float
+  role        String
+  courses     Course[] // One-to-many relation with Course
+
+  @@map("categories")
+}
+
 model Course {
-  id           String    @id @default(cuid())
-  title        String
-  type         String    @default("general") // Default value
-  instructor   String    @default("TBD")     // Default value
-  description  String
-  category     String
-  level        String
-  thumbnail    String
-  price        Float
-  is_completed Boolean   @default(false)
-  chapters     Chapter[] // one-to-many relation with Chapter
-  tasks        Task[]    // one-to-many relation with Task
-  reviews      Review[]
-  created_at   DateTime  @default(now())
-  updated_at   DateTime  @updatedAt
-  progress     TaskProgress[] // one-to-many relation with TaskProgress
-  @@map("courses")
+  id            String         @id @default(cuid())
+  title         String
+  type          String         @default("general") // Default value
+  instructor    String         @default("TBD") // Default value
+  description   String
+  categories_id String // Foreign key for Categories (Updated field name)
+  categories    Categories     @relation(fields: [categories_id], references: [id]) // Relation with Categories
+  level         String
+  thumbnail     String
+  category      String
+  price         Float
+  is_completed  Boolean        @default(false)
+  chapters      Chapter[] // One-to-many relation with Chapter
+  tasks         Task[] // One-to-many relation with Task
+  reviews       Review[]
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  progress      TaskProgress[] // One-to-many relation with TaskProgress
+
+  @@unique([id, categories_id]) // Compound unique constraint
 }
 
 model Quiz {
-  id            String     @id @default(cuid())
+  id            String         @id @default(cuid())
   title         String
   max_score     Int
   passing_score Int
-  chapter_id    String?    @unique
-  chapter       Chapter?   @relation(fields: [chapter_id], references: [id])
+  chapter_id    String?        @unique
+  chapter       Chapter?       @relation(fields: [chapter_id], references: [id])
   questions     Question[] // Relation to Question model
   taskProgress  TaskProgress[] // Relation to TaskProgress
-  created_at    DateTime   @default(now())
-  updated_at    DateTime   @updatedAt
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
 
   @@unique([id, chapter_id])
 }
+
 model Question {
   id             String   @id @default(cuid())
   quiz_id        String
   question_text  String
-  options        String   // JSON string for options
+  options        String // JSON string for options
   correct_option Int
   explanation    String?
   quiz           Quiz     @relation(fields: [quiz_id], references: [id])
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
 
-  @@unique([id, quiz_id]) 
+  @@unique([id, quiz_id])
 }
 
-
-
 model Chapter {
-  id          String    @id @default(uuid())
-  title       String
-  description String
-  course_id   String
-  course      Course    @relation(fields: [course_id], references: [id])
-  content     Content[] // one-to-many relation with Content
-  quiz        Quiz?     // optional one-to-one relation with Quiz
-  order       Int      @default(0)
+  id           String         @id @default(uuid())
+  title        String
+  description  String
+  course_id    String
+  course       Course         @relation(fields: [course_id], references: [id])
+  content      Content[] // one-to-many relation with Content
+  quiz         Quiz? // optional one-to-one relation with Quiz
+  order        Int            @default(0)
   taskProgress TaskProgress[] // one-to-many relation with TaskProgress
+
   @@unique([id, course_id])
 }
 
@@ -81,6 +102,7 @@ model Content {
   updated_at   DateTime @updatedAt
   completed    Boolean  @default(false)
   chapter      Chapter  @relation(fields: [chapter_id], references: [id])
+
   @@unique([id, chapter_id])
 }
 
@@ -88,49 +110,59 @@ model TaskProgress {
   id           String   @id @default(cuid())
   user_id      String
   course_id    String
-  progress     Int      // progress percentage (0-100)
-  chapter_id   String?  // optional relation with Chapter
-  quiz_id      String?  // optional relation with Quiz
+  progress     Int // progress percentage (0-100)
+  chapter_id   String? // optional relation with Chapter
+  quiz_id      String? // optional relation with Quiz
   last_updated DateTime @updatedAt // auto-updated timestamp
   user         User     @relation(fields: [user_id], references: [id])
   course       Course   @relation(fields: [course_id], references: [id])
   chapter      Chapter? @relation(fields: [chapter_id], references: [id])
   quiz         Quiz?    @relation(fields: [quiz_id], references: [id])
+
   @@unique([user_id, chapter_id])
 }
 
 model Task {
-  id          String     @id @default(cuid())
+  id          String @id @default(cuid())
   title       String
   description String
   course_id   String
-  course      Course     @relation(fields: [course_id], references: [id])
+  course      Course @relation(fields: [course_id], references: [id])
 }
 
 model User {
-  id                String  @id @default(cuid())
-  email             String  @unique
+  id                String         @id @default(cuid())
+  email             String         @unique
   fullname          String
-  username          String  @unique
+  username          String         @unique
   password          String
   reviews           Review[]
-  is_email_verified Boolean @default(false)
+  role              Role           @default(student)
+  is_email_verified Boolean        @default(false)
   progress          TaskProgress[] // one-to-many relation with TaskProgress
+
   @@map("users")
 }
 
+model Review {
+  id         String   @id @default(cuid())
+  rating     Int
+  comment    String?  @db.Text
+  user_id    String
+  username   String
+  user       User     @relation(fields: [user_id], references: [id])
+  course_id  String
+  course     Course   @relation(fields: [course_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
+  @@unique([id, course_id])
+}
 
-model Review{
-  id         String @id @default( cuid())
-  rating      Int
-  comment     String? @db.Text
-  user_id     String
-  username    String
-  user        User   @relation(fields: [user_id], references: [id])
-  course_id   String
-  course       Course  @relation(fields: [course_id], references: [id])
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-    @@unique([id, course_id]) 
+model File {
+  id        Int      @id @default(autoincrement())
+  fileName  String
+  filePath  String
+  fileSize  Int // File size in bytes
+  createdAt DateTime @default(now())
 }

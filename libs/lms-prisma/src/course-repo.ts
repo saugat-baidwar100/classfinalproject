@@ -15,30 +15,60 @@ async function create(input: Prisma.CourseCreateInput) {
   });
 }
 
-async function updateById(id: string, input: Prisma.CourseUpdateInput) {
+async function updateById({
+  categories_id,
+  courseId,
+  input,
+}: {
+  categories_id: string;
+  courseId: string;
+  input: Prisma.CourseUpdateInput;
+}) {
   return db.course.update({
     where: {
-      id,
+      id_categories_id: {
+        id: courseId,
+        categories_id: categories_id,
+      },
     },
     data: input,
   });
 }
 
-async function deleteById(id: string) {
+async function deleteById({
+  categories_id,
+  courseId,
+}: {
+  categories_id: string;
+  courseId: string;
+}) {
   return db.course.delete({
     where: {
-      id,
+      id_categories_id: {
+        id: courseId,
+        categories_id: categories_id,
+      },
     },
   });
 }
 
-export async function findById(id: string) {
+async function findById({
+  categories_id,
+  courseId,
+}: {
+  categories_id: string;
+  courseId: string;
+}) {
   return db.course.findUnique({
     where: {
-      id,
+      id_categories_id: {
+        id: courseId,
+        categories_id: categories_id,
+      },
     },
   });
 }
+
 async function findAll(input: Prisma.CourseWhereInput) {
   return db.course.findMany({
     where: input,
