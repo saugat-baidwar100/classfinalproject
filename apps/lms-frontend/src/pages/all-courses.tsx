@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Navbar from '../components/navbar';
 import { Sidebar } from '../modules/sidebar/sidebar-container';
 import logo from '../assets/images/logo.png';
@@ -9,12 +9,46 @@ import { TcourseSchema } from '@skillprompt-lms/libs/api-contract/modules/course
 
 export const AllCoursePage = () => {
   const [isSelectedCheckbox, setIsSelectedCheckbox] = useState<string[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<TcourseSchema[]>([]);
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
-  // Fetching courses from API
   const { data, isLoading, error } = courseApi.getCourse.useQuery({
     queryKey: ['getCourse'],
   });
+
+  // Extract the courses from the API data
+  const courses = useMemo(() => data?.body?.data || [], [data]);
+
+  useEffect(() => {
+    if (isSelectedCheckbox.length === 0) {
+      // If no filters are selected, show all courses
+      setFilteredCourses(courses);
+      return;
+    }
+
+    // Filter logic without using `every()`
+    const filtered = courses.filter((course) => {
+      const { category, instructor, type } = course;
+      const courseValues = [
+        category?.toLowerCase(),
+        instructor?.toLowerCase(),
+        type?.toLowerCase(),
+      ];
+
+      for (const filter of isSelectedCheckbox) {
+        if (!courseValues.includes(filter.toLowerCase())) {
+          return false; // If any filter is not matched, exclude the course
+        }
+      }
+      return true; // Include the course if all filters are matched
+    });
+
+    setFilteredCourses(filtered);
+  }, [isSelectedCheckbox, courses]);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   if (isLoading) {
     return (
@@ -23,84 +57,21 @@ export const AllCoursePage = () => {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="flex items-center justify-center w-full h-screen">
-        <h2 className="text-sm">An error occurred. Please try again.</h2>
+        <h2 className="text-sm">
+          An error occurred. Please try again. {JSON.stringify(error)}
+        </h2>
       </div>
     );
   }
 
-  console.log('Course Data:', data?.body?.data);
-  console.log('Selected Filters:', isSelectedCheckbox);
-
-  // Filter courses based on selected filters
-  const filteredData = (courses: TcourseSchema[], selected: string[]) => {
-    if (!courses || courses.length === 0) return [];
-
-    // Normalize selected filters to lowercase
-    const normalizedFilters = selected.map((filter) => filter.toLowerCase());
-
-    const selectedCategories = normalizedFilters.filter((value) =>
-      courses.some((course) => course.category?.toLowerCase() === value)
-    );
-    const selectedAuthors = normalizedFilters.filter((value) =>
-      courses.some((course) => course.instructor?.toLowerCase() === value)
-    );
-    const selectedTypes = normalizedFilters.filter((value) =>
-      courses.some((course) => course.type?.toLowerCase() === value)
-    );
-
-    return courses
-      .filter(({ category, instructor, type }) => {
-        return (
-          (selectedCategories.length === 0 ||
-            selectedCategories.includes(category?.toLowerCase() || '')) &&
-          (selectedAuthors.length === 0 ||
-            selectedAuthors.includes(instructor?.toLowerCase() || '')) &&
-          (selectedTypes.length === 0 ||
-            selectedTypes.includes(type?.toLowerCase() || ''))
-        );
-      })
-      .map(
-        ({
-          id,
-          title,
-          instructor,
-          category,
-          type,
-          price,
-          thumbnail,
-          updated_at,
-        }) => (
-          <AllCourseCard
-            key={id}
-            id={id}
-            thumbnail={thumbnail}
-            title={title}
-            totalLecture={12}
-            totalStudents={122}
-            lastUpdated={updated_at ? updated_at.toISOString() : ''}
-            originalPrice="100"
-            currentPrice={price}
-            type={type}
-            instructor={instructor}
-            category={category}
-          />
-        )
-      );
-  };
-
-  const result = filteredData(data?.body?.data ?? [], isSelectedCheckbox);
-
-  const toggleSidebar = () => {
-    setIsSidebarVisible(!isSidebarVisible);
-  };
-
   return (
     <>
       <Navbar logoSrc={logo} />
-      <div className="mx-auto px-4 sm:px-6 mt-20 bg-red sm:mt-24 md:mt-28 xl:mt-28 lg:mt-28 mb-14 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[4fr,1fr] lg:gap-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-20 md:mt-28 mb-14 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-[4fr,1fr] lg:gap-16 relative">
         <div>
           <div className="flex justify-between items-center mb-10">
             <h2 className="text-[20px] sm:text-[24px] md:text-[26px] lg:text-[36px] font-bold font-poppins text-black">
@@ -115,13 +86,30 @@ export const AllCoursePage = () => {
               Filter
             </button>
           </div>
+
           <div className="flex flex-col gap-6 sm:gap-8 lg:gap-11">
-            {(!data || data.body.data.length === 0) && (
-              <div className="text-custom-teal text-lg">
-                No Courses Available
+            {filteredCourses.length === 0 ? (
+              <div className="text-custom-teal text-lg text-center">
+                No match found
               </div>
+            ) : (
+              filteredCourses.map((course) => (
+                <AllCourseCard
+                  key={course.id}
+                  id={course.id}
+                  thumbnail={course.thumbnail}
+                  title={course.title}
+                  totalLecture={12} 
+                  totalStudents={122} 
+                  lastUpdated={''} 
+                  originalPrice="100" 
+                  currentPrice={course.price}
+                  type={course.type}
+                  instructor={course.instructor}
+                  category={course.category}
+                />
+              ))
             )}
-            {result}
           </div>
         </div>
 
@@ -131,15 +119,13 @@ export const AllCoursePage = () => {
             onClick={toggleSidebar}
           ></div>
         )}
-
         <div
+          style={{
+            paddingTop: isSidebarVisible ? '6rem' : '2rem',
+          }}
           className={`fixed lg:relative top-0 right-0 h-full bg-white transform transition-transform duration-300 z-20 ${
             isSidebarVisible ? 'translate-x-0' : 'translate-x-full'
-          } lg:translate-x-0 lg:h-auto md:w-80 lg:w-80 xl:w-80 w-48 p-6 ${
-            isSidebarVisible
-              ? 'overflow-y-auto md:overflow-y-auto lg:overflow-visible'
-              : ''
-          }`}
+          } lg:translate-x-0 lg:h-auto md:w-80 lg:w-80 xl:w-80 w-48 p-6`}
         >
           <Sidebar
             handleChange={(selected: string[]) =>

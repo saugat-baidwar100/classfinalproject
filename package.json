@@ -7,7 +7,9 @@
     "prisma:generate": "prisma generate --schema=./libs/lms-prisma/prisma/schema.prisma",
     "prisma:push": "npx prisma db push --schema=./libs/lms-prisma/prisma/schema.prisma",
     "dev:frontend": "npx nx run lms-frontend:serve",
-    "dev:backend": "npx nx run lms-backend:serve"
+    "dev:backend": "npx nx run lms-backend:serve",
+    "build:frontend": "npx nx run lms-frontend:build",
+    "build:backend": "npx nx run lms-backend:build"
   },
   "private": true,
   "dependencies": {
