@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { Role } from '@prisma/client';
 import {
   ISignUpHandler,
   ILoginHandler,
@@ -21,13 +22,12 @@ export type TUser = {
   username: string;
   email: string;
   password: string;
-  is_email_verified: boolean;
-  role: string;
+  role: Role;
 };
 
 interface TSignUpBodyInput {
   fullname: string;
-  role: string;
+  role: Role;
   username: string;
   email: string;
   password: string;
@@ -49,6 +49,7 @@ export class SignUpHandler implements ISignUpHandler {
       fullname: body.fullname,
       username: body.username,
       email: body.email,
+      role: body.role as Role,
       password: hashedPassword,
       is_email_verified: false,
     });
@@ -79,7 +80,7 @@ export class LoginHandler implements ILoginHandler {
   ): Promise<{
     fullname: string;
     username: string;
-    role: string;
+    role: Role;
     email: string;
   } | null> => {
     const user = await this.getUserByEmail(email);
@@ -103,7 +104,7 @@ export class RefreshHandler implements IRefreshHandler {
   ): Promise<{
     fullname: string;
     username: string;
-    role: string;
+    role: Role;
     email: string;
   } | null> => {
     const user = await userRepo.findByEmail(email);
@@ -137,7 +138,7 @@ export class MeRouteHandler implements IMeRouteHandler {
   ): Promise<{
     fullname: string;
     username: string;
-    role: string;
+    role: Role;
     email: string;
   } | null> => {
     const user = await userRepo.findByEmail(email);
@@ -153,7 +154,6 @@ export class MeRouteHandler implements IMeRouteHandler {
 
 export class VerifyEmailHandler implements IVerifyEmailHandler {
   updateIsEmailVerifiedField = async (email: string): Promise<void> => {
-    // Same for role, fetch role within the method if needed, or pass role from elsewhere
     await userRepo.updateByEmail(email, { is_email_verified: true });
   };
 
@@ -174,7 +174,6 @@ export class SendOtpHandler implements ISendOtpHandler {
 export class ForgotPasswordHandler implements IForgotPasswordHandler {
   saveNewPassword = async (email: string, password: string): Promise<void> => {
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Same here, role is needed for permission checks; handle it outside this method
     await userRepo.updateByEmail(email, { password: hashedPassword });
   };
 }
